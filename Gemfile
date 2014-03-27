@@ -8,6 +8,8 @@ gem 'pg'
 
 gem 'hirb'
 
+gem 'devise'
+
 #testing gems
 gem 'rspec-rails'
 gem 'factory_girl_rails'
