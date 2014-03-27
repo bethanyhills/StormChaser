@@ -1,0 +1,13 @@
+/home/vagrant/.rbenv/versions/2.1.0/bin/ruby extconf.rb 
+checking for libkern/OSAtomic.h... no
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+compiling atomic_reference.c
+linking shared-object atomic_reference.so
+
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 atomic_reference.so ./.gem.20140327-3710-bck4kt
+installing default atomic_reference libraries
