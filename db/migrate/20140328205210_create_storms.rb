@@ -1,7 +1,8 @@
-class CreateTornados < ActiveRecord::Migration
+class CreateStorms < ActiveRecord::Migration
   def change
-    create_table :tornados do |t|
-      t.references :tornado_dates, index: true
+    create_table :storms do |t|
+      t.references :tornado_date, index: true
+      t.references :path, index: true
       t.integer :f_scale
       t.integer :hour
       t.integer :minute
@@ -17,13 +18,22 @@ class CreateTornados < ActiveRecord::Migration
       t.float :stop_long
       t.float :distance
       t.float :width
-      t.integer :states_crossed
-      t.boolean :complete_track
-      t.integer :segment_num
       t.integer :county_code_one
       t.integer :county_code_two
       t.integer :county_code_three
       t.integer :county_code_four
+
+      t.timestamps
+    end
+  end
+end
+
+
+class CreateTornados < ActiveRecord::Migration
+  def change
+    create_table :tornados do |t|
+      t.references :tornado_dates, index: true
+
 
       t.timestamps
     end

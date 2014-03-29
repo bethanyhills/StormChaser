@@ -11,21 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327205925) do
+ActiveRecord::Schema.define(version: 20140328205210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "tornado_dates", force: true do |t|
-    t.integer  "day"
-    t.integer  "month"
-    t.integer  "year"
+  create_table "paths", force: true do |t|
+    t.integer  "states_crossed"
+    t.boolean  "complete_track"
+    t.integer  "segment_num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tornados", force: true do |t|
-    t.integer  "tornado_dates_id"
+  create_table "storms", force: true do |t|
+    t.integer  "tornado_date_id"
+    t.integer  "path_id"
     t.integer  "f_scale"
     t.integer  "hour"
     t.integer  "minute"
@@ -41,9 +42,6 @@ ActiveRecord::Schema.define(version: 20140327205925) do
     t.float    "stop_long"
     t.float    "distance"
     t.float    "width"
-    t.integer  "states_crossed"
-    t.boolean  "complete_track"
-    t.integer  "segment_num"
     t.integer  "county_code_one"
     t.integer  "county_code_two"
     t.integer  "county_code_three"
@@ -52,7 +50,16 @@ ActiveRecord::Schema.define(version: 20140327205925) do
     t.datetime "updated_at"
   end
 
-  add_index "tornados", ["tornado_dates_id"], name: "index_tornados_on_tornado_dates_id", using: :btree
+  add_index "storms", ["path_id"], name: "index_storms_on_path_id", using: :btree
+  add_index "storms", ["tornado_date_id"], name: "index_storms_on_tornado_date_id", using: :btree
+
+  create_table "tornado_dates", force: true do |t|
+    t.integer  "day"
+    t.integer  "month"
+    t.integer  "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
