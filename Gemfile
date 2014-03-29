@@ -9,6 +9,12 @@ gem 'pg'
 gem 'hirb'
 
 gem 'devise'
+gem 'figaro'
+
+gem 'foundation-rails'
+group :development do
+  gem 'rails_layout'
+end
 
 #testing gems
 gem 'rspec-rails'
