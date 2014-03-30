@@ -10,6 +10,7 @@ gem 'hirb'
 
 gem 'devise'
 gem 'figaro'
+gem 'gon'
 
 gem "rails-backbone"
 
