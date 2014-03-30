@@ -61,36 +61,6 @@ ActiveRecord::Schema.define(version: 20140328205210) do
     t.datetime "updated_at"
   end
 
-  create_table "tornados", force: true do |t|
-    t.integer  "tornado_dates_id"
-    t.integer  "f_scale"
-    t.integer  "hour"
-    t.integer  "minute"
-    t.integer  "time_zone"
-    t.string   "state"
-    t.integer  "injuries"
-    t.integer  "fatalities"
-    t.float    "property_loss"
-    t.float    "crop_loss"
-    t.float    "start_lat"
-    t.float    "start_long"
-    t.float    "stop_lat"
-    t.float    "stop_long"
-    t.float    "distance"
-    t.float    "width"
-    t.integer  "states_crossed"
-    t.boolean  "complete_track"
-    t.integer  "segment_num"
-    t.integer  "county_code_one"
-    t.integer  "county_code_two"
-    t.integer  "county_code_three"
-    t.integer  "county_code_four"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tornados", ["tornado_dates_id"], name: "index_tornados_on_tornado_dates_id", using: :btree
-
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

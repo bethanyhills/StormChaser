@@ -11,6 +11,8 @@ gem 'hirb'
 gem 'devise'
 gem 'figaro'
 
+gem "rails-backbone"
+
 gem 'foundation-rails'
 group :development do
   gem 'rails_layout'
