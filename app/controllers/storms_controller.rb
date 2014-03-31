@@ -1,9 +1,11 @@
 class StormsController < ApplicationController
   def index
-  	gon.storms = Storm.where(path_id: [1,2,5])
+  	gon.storms = Storm.where(path_id: [1,2,5])  #Works for only Cat 5s
   end
 
   def show
-    gon.storms = Storm.find(params[:id])
+    @storm = Storm.find(params[:id])
+    @date = TornadoDate.find(@storm.tornado_date_id)
+    gon.storms = @storm
   end
 end
