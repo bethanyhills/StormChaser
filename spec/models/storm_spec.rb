@@ -25,10 +25,10 @@ end
 describe "#index_map" do 
 	it "returns all storms with a complete path " do
 	@storm = Storm.index_map
-	@bad_storm = Storm.joins(:path).where("!paths.complete_track").first
+	@bad_storm = Storm.joins(:path).where(paths: {complete_track: false}).first
 
-   expect(@storm.find(@bad_storm.id)).to be_empty
-	end
-	
+   expect {@storm.find(@bad_storm.id)}.to raise_error
+	end	
 end
+
 end
