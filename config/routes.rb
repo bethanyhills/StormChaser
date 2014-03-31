@@ -3,6 +3,9 @@ StormChaser::Application.routes.draw do
   root "storms#index"
     resources :users
     resources :storms
+    get '/storms/:id/histweather', to: 'storms#hist_weather_api'
+
+  # get '/movies/gladiator', to: 'movies#show_gladiator'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

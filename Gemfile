@@ -7,7 +7,7 @@ gem 'rails', '4.0.3'
 gem 'pg'
 
 gem 'hirb'
-
+gem 'unirest'
 gem 'devise'
 gem 'figaro'
 gem 'gon'

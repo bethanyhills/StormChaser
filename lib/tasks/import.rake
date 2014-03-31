@@ -47,7 +47,7 @@ namespace :import do
         all_data << line.concat([false]) if line[f_scale].to_i >= strength
       end
     end
-    
+
     all_data.each_with_index do |line, index|
       unless line[corrected] == true
 
@@ -137,7 +137,7 @@ namespace :import do
     puts "Added #{count} tornados to the Storm model"
   end
 
-  task all: [:torn_1950_2013] # add future tasks in here (CCRS, ELPS, etc.)
+  task all: [:year_1950_2013] # add future tasks in here (CCRS, ELPS, etc.)
 
   task year_2011: :environment do
 
