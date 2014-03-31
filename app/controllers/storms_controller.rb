@@ -1,6 +1,6 @@
 class StormsController < ApplicationController
   def index
-  	gon.storms = Storm.joins(:paths).where(paths: {complete_track: true})
+  	gon.storms = Storm.where(path_id: [1,2,5])
   end
 
   def show
