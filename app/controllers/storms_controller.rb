@@ -4,6 +4,6 @@ class StormsController < ApplicationController
   end
 
   def show
-    gon.storms = Storm.find_by(id: params[:id])
+    gon.storms = Storm.find(params[:id])
   end
 end

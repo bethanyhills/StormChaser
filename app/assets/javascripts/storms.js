@@ -51,7 +51,7 @@ function initialize() {
 
 
 		google.maps.event.addListener(tornadoCircle, "click", function() {
-  		window.location.href = "/storms/" + tornadoCircle["id"];
+  		window.location.href = "/storms/" + this.id;
  		});
 	}
 }
