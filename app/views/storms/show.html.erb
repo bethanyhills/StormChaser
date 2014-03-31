@@ -1,4 +1,6 @@
 <%= javascript_include_tag "storms" %>
+<%= javascript_include_tag "storms-gauges" %>
+
 <%= render 'storms/title_show' %>
 <div class="row container">
 <!-- left column -->
@@ -6,12 +8,14 @@
 <!-- middle column -->
 <div class="small-10 columns middle">
 	<div class="small-6 columns">
+		<!-- display map -->
 		<div id="map-canvas" class="map-medium"></div>
 	</div>
 <div class="small-6 columns">
-	<p>THIS IS WHERE OUR GAUGES GO!!</p>
+	<!-- display gauges -->
+	<div id='chart_div'></div>
 </div>
-      <!-- right column -->
+<!-- right column -->
 <div class="small-1 columns side"></div>
 </div>
 <%= render 'storms/footer_show' %>

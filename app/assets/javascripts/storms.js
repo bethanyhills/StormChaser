@@ -1,22 +1,5 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-// You can use CoffeeScript in this file: http://coffeescript.org/
 
-// var citymap = {};
-// citymap['chicago'] = {
-  // center: new google.maps.LatLng(41.878113, -87.629798),
-//   population: 2842518
-// };
-// citymap['newyork'] = {
-//   center: new google.maps.LatLng(40.714352, -74.005973),
-//   population: 8143197
-// };
-// citymap['losangeles'] = {
-//   center: new google.maps.LatLng(34.052234, -118.243684),
-//   population: 3844829
-// };
-// var tornadoCircle=[];
-
+//Javascript to use Google Maps Javascript API to create map and plot our tornadoes.
 function initialize() {
   // Create the map.
   var mapOptions = {
@@ -42,13 +25,13 @@ function initialize() {
     bounds.extend(new google.maps.LatLng(stop_lat*1.02, stop_long*1.02));
     mapOptions.center = bounds.getCenter()
   }
-
+  //instantiate the map
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   if (!gon.storms.length) {
     map.fitBounds(bounds);
   }
 
-  // Construct the circle for each value in citymap.
+  // Construct the circle for each value in tornado.
 	for (var i = 0; i < gon.storms.length; i++) {
       var start_loc = new google.maps.LatLng(gon.storms[i]["start_lat"], gon.storms[i]["start_long"])
       if (gon.storms[i]["stop_lat"] == 0) {
@@ -56,7 +39,7 @@ function initialize() {
       } else {
         var stop_loc = new google.maps.LatLng(gon.storms[i]["stop_lat"], gon.storms[i]["stop_long"])
       }
-
+      //specifications for tornado circl
     var stormCircleOptions = {
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
@@ -68,7 +51,7 @@ function initialize() {
       id: gon.storms[i]["id"],
       radius: 20000
     };
-
+    //specifications for tornado line
     var stormLineOptions = {
       path: [start_loc, stop_loc],
       geodesic: true,
@@ -78,11 +61,11 @@ function initialize() {
       map: map
     };
 
-    // Add the circle for this city to the map.
+    // Add the circle for this tornado to the map.
     var tornadoCircle = new google.maps.Circle(stormCircleOptions);
     var tornadoLine = new google.maps.Polyline(stormLineOptions)
 
-
+    //Listens for a click event on a specific tornado and redirects to that specific tornadoe's show page.
 		google.maps.event.addListener(tornadoCircle, "click", function() {
   		window.location.href = "/storms/" + this.id;
  		});

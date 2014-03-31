@@ -6,6 +6,7 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Storm Chaser" %>">
     <%= include_gon %>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <%= stylesheet_link_tag 'application', media: 'all'%>
     <%# Modernizr is required for Zurb Foundation %>
     <%= javascript_include_tag 'vendor/modernizr' %>
