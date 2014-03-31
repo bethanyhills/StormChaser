@@ -16,6 +16,10 @@ class StormsController < ApplicationController
     month = '0' + month if month.length == 1
     day = storm.tornado_date.day.to_s
     day = '0' + day if day.length == 1
+    hour = storm.hour.to_s #16
+    hour = '0' + hour if hour.length == 1
+    minute = storm.minute.to_s #10
+    minute = '0' + minute if minute.length == 1
     time = storm.tornado_date.year.to_s + '-' + month + '-' + day + 'T' + storm.hour.to_s + ':' + storm.minute.to_s + ':00-0600'
     puts time
 
