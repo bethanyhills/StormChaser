@@ -1,16 +1,35 @@
 // Place all the styles related to the Storms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
- html, body {
-        height: 100%;
-        width: 100%;
-        margin: 0px;
-        padding: 0px
-      }
 
- #map-canvas {
- 				height: 500px;
-        width: 100%;
-        margin: 0px;
-        padding: 0px
- }
+.side {
+	width: 100%;	
+}
+
+.middle {
+	width: 100%;
+}
+
+#map-canvas {
+	height: 500px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: 4px inset white;
+}
+
+#index-title h1, #index-title h3 {
+	text-align: center;
+}
+
+#index-footer h3 {
+	text-align: center;
+}
+
+#show-title h3 {
+	text-align: center;
+}
+
+#show-footer {
+	text-align: center;
+}

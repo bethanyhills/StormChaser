@@ -1,4 +1,23 @@
 <%= javascript_include_tag "storms" %>
-<h1>Storms#show</h1>
-<p>Find me in app/views/storms/index.html.erb</p>
-<div id="map-canvas"></div>
+<%= render 'storms/title_show' %>
+<div class="row container">
+<!-- left column -->
+<div class="small-1 columns side"></div>
+<!-- middle column -->
+<div class="small-10 columns middle">
+	<div class="small-6 columns">
+		<div id="map-canvas" class="map-medium"></div>
+	</div>
+<div class="small-6 columns">
+	<p>THIS IS WHERE OUR GAUGES GO!!</p>
+</div>
+      <!-- right column -->
+<div class="small-1 columns side"></div>
+</div>
+<%= render 'storms/footer_show' %>
+
+
+
+
+
+

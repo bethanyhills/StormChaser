@@ -13,12 +13,13 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <!-- header -->
     <header>
-      <%= render 'layouts/navigation' %>
+    <%= render 'layouts/navigation' %>
     </header>
-    <main role="main">
-       <%= render 'layouts/messages' %>
-       <%= yield %>
-    </main>
+        <%= yield %>
+        <main role="main">
+           <%= render 'layouts/messages' %>
+        </main>
   </body>
 </html>
