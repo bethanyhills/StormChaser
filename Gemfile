@@ -20,9 +20,12 @@ group :development do
 end
 
 #testing gems
-gem 'rspec-rails'
-gem 'factory_girl_rails'
-gem 'database_cleaner'
+group :development, :test do
+	gem 'rspec-rails'
+	gem 'factory_girl_rails'
+	gem 'database_cleaner'
+	gem 'jazz_hands'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

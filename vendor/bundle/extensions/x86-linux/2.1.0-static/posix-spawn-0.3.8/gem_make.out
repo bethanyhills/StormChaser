@@ -1,0 +1,28 @@
+/home/vagrant/.rbenv/versions/2.1.0/bin/ruby extconf.rb 
+creating Makefile
+
+make "DESTDIR=" clean
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+make "DESTDIR="
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+compiling posix-spawn.c
+In file included from /home/vagrant/.rbenv/versions/2.1.0/include/ruby-2.1.0/ruby/ruby.h:24:0,
+                 from /home/vagrant/.rbenv/versions/2.1.0/include/ruby-2.1.0/ruby.h:33,
+                 from posix-spawn.c:14:
+/home/vagrant/.rbenv/versions/2.1.0/include/ruby-2.1.0/i686-linux/ruby/config.h:17:0: warning: "_GNU_SOURCE" redefined [enabled by default]
+posix-spawn.c:3:0: note: this is the location of the previous definition
+posix-spawn.c: In function 'rb_posixspawn_pspawn':
+posix-spawn.c:341:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+posix-spawn.c:381:4: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+posix-spawn.c:414:8: warning: ignoring return value of 'chdir', declared with attribute warn_unused_result [-Wunused-result]
+posix-spawn.c:420:9: warning: ignoring return value of 'chdir', declared with attribute warn_unused_result [-Wunused-result]
+linking shared-object posix_spawn_ext.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+make "DESTDIR=" install
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+/usr/bin/install -c -m 0755 posix_spawn_ext.so ./.gem.20140331-19430-20seb
+installing default posix_spawn_ext libraries
+make: warning:  Clock skew detected.  Your build may be incomplete.

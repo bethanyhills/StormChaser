@@ -1,0 +1,17 @@
+/home/vagrant/.rbenv/versions/2.1.0/bin/ruby extconf.rb 
+
+make "DESTDIR=" clean
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+make: *** No rule to make target `clean'.  Stop.
+
+make "DESTDIR="
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+echo "Nada."
+Nada.
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+make "DESTDIR=" install
+make: Warning: File `Makefile' has modification time 9.1e+02 s in the future
+echo "Nada."
+Nada.
+make: warning:  Clock skew detected.  Your build may be incomplete.
