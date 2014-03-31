@@ -28,6 +28,11 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
+  if (!gon.storms.length) {
+    holder = gon.storms
+    gon.storms = [holder]
+  }
+
   // Construct the circle for each value in citymap.
 	for (var i = 0; i < gon.storms.length; i++) {
     var stormOptions = {

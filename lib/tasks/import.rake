@@ -101,9 +101,9 @@ namespace :import do
             end
           end
 
-        all_data[segs[-1]][complete_track] = false
-        all_data[segs[-1]][segment_num] = segs.length - 1
-        all_data[segs[-1]][corrected] = true
+          all_data[segs[-1]][complete_track] = false
+          all_data[segs[-1]][segment_num] = segs.length - 1
+          all_data[segs[-1]][corrected] = true
 
         elsif line[states_crossed] == 3
           puts "Three state tornado, will add later"
@@ -131,9 +131,9 @@ namespace :import do
         Storm.create(tornado_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
 
       end
-     count += 1
-   end
-   puts "Added #{count} tornados to the Storm model"
+      count += 1
+    end
+    puts "Added #{count} tornados to the Storm model"
   end
 
   task all: [:torn_1950_2013] # add future tasks in here (CCRS, ELPS, etc.)
