@@ -1,6 +1,6 @@
 class StormsController < ApplicationController
   def index
-  	gon.storms = Storm.where(path_id: [1,2,5]).many_storm_map_data  #Works for only Cat 5s
+    gon.storms = Storm.index_map()
   end
 
   def show
