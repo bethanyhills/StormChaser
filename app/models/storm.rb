@@ -7,7 +7,7 @@ class Storm < ActiveRecord::Base
   end
 
   def self.index_map()
-    Storm.joins(:path).where("paths.complete_track").order(f_scale: :desc).limit(500).many_storm_map_data
+    self.joins(:path).where("paths.complete_track").order(f_scale: :desc).limit(500).many_storm_map_data
   end
 
   def self.historical_data(id)
@@ -31,4 +31,30 @@ class Storm < ActiveRecord::Base
     location_data = response.body
   end
 
+  def self.radius_search(xc, yc, radius)
+    all = Storm.all
+    all.select{|storm| storm._radius_search(xc, yc, radius)}
+  end
+
+  def _radius_search(xc, yc, radius)
+    #Start Point
+    x1 = self.start_lat
+    y1 = self.start_long
+    #Stop Point
+    self.stop_lat == 0 ? x2 = x1 : x2 = self.stop_lat
+    self.stop_long == 0 ? y2 = y1 : y2 = self.stop_long
+    #Slope of Tornado Path
+    x2 == x1 ? m1 = 0 : m1 = (y2-y1)/(x2-x1)
+    #Y Intercept of Tornado Path
+    b1 = y1 - m1*x1
+    #X and Y Intercept Points between Tornado Path and Tangent Line from Circle Center
+    x2 = x1 ? xi = x2 : xi = (yc + (xc/m1) - b1)/(m1 - (1/m1))
+    y2 = y1 ? yi = y2 : yi = m1*xi + b1
+    #Distance in degrees of the line from the Circle Center to the X,Y Intercept
+    dist = Math.sqrt((xi-xc)**2+(yi-yc)**2)
+    #Distance in Miles
+    dist_in_miles = dist*25.0/0.3617
+    #Return true if in the circle, false if out of the circle
+    dist_in_miles <= radius
+  end
 end
