@@ -3,8 +3,8 @@ StormChaser::Application.routes.draw do
   root "storms#index"
     resources :users
     get '/storms/radiussearch', to: 'storms#search_api_call'
-    resources :storms
     get '/storms/:id/histweather', to: 'storms#hist_weather_api'
+    resources :storms
     get '/search', to: 'storms#search_radius'
 
   # get '/movies/gladiator', to: 'movies#show_gladiator'

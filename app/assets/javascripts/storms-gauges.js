@@ -1,7 +1,8 @@
 //create guages for individual storms
 
 google.load('visualization', '1', {packages:['gauge']});
-google.setOnLoadCallback($.get("/storms/" + gon["storms"]["id"] + "/histweather", function(data) {drawChart(data)}, "json"));
+console.log("Hello")
+google.setOnLoadCallback($.get("/storms/" + gon["storms"]["id"] + "/histweather", function(data) {console.log("hi");drawChart(data)}, "json"));
 // No idea why it's gon["storms"]["id"] instead of gon["storms"][0]["id"]
 
 
@@ -51,7 +52,7 @@ function drawChart(histdata) {
 
   var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
   chart2.draw(temp, temp_options);
-  
+
   var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
   chart3.draw(wind_speed, wind_speed_options);
 }
