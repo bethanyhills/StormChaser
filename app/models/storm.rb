@@ -17,13 +17,13 @@ class Storm < ActiveRecord::Base
     month = '0' + month if month.length == 1
     day = storm.tornado_date.day.to_s
     day = '0' + day if day.length == 1
-    hour = storm.hour.to_s #16
+    hour = storm.hour.to_s
     hour = '0' + hour if hour.length == 1
-    minute = storm.minute.to_s #10
+    minute = storm.minute.to_s
     minute = '0' + minute if minute.length == 1
-    time = storm.tornado_date.year.to_s + '-' + month + '-' + day + 'T' + storm.hour.to_s + ':' + storm.minute.to_s + ':00-0600'
+    time = storm.tornado_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
 
-    #2013-05-06T12:00:00-0400
+    #2013-05-06T12:00:00-0400  <- Final time must be in this format for the Historical Data API call
 
     response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+storm.start_lat.to_s+','+storm.start_long.to_s + ',' + time,
       headers: { "Accept" => "application/json" })
