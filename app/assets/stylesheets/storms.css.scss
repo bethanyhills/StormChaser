@@ -11,11 +11,11 @@
 }
 
 #map-canvas {
-	height: 500px;
+	height: 400px;
   width: 100%;
   margin: 0px;
-  padding: 0px;
-  border: 4px inset white;
+  padding-top: 0px;
+  border: 4px inset gray;
 }
 
 #map-canvas label {
@@ -29,16 +29,36 @@
 
 #index-title h1, #index-title h3 {
 	text-align: center;
+	color: white;
+	font-family: Futura;
 }
 
 #index-footer h3 {
 	text-align: center;
+	color: white;
+	font-family: Futura;
 }
 
 #show-title h3 {
 	text-align: center;
+	color: white;
+	font-family: Futura;
 }
 
 #show-footer {
 	text-align: center;
+	color: white;
+	font-family: Futura;
+}
+
+.dashboard {
+	border: 4px inset #BDBDBD;
+	height: 500px;
+	background: black;
+	padding-top: 45px;
+}
+
+
+div table {
+	background: black;
 }

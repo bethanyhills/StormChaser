@@ -31,7 +31,7 @@ function initialize() {
     map.fitBounds(bounds);
   }
 
-  // Construct the circle for each value in tornado.
+  // Construct the lat and long for each tornado.
 	for (var i = 0; i < gon.storms.length; i++) {
       var start_loc = new google.maps.LatLng(gon.storms[i]["start_lat"], gon.storms[i]["start_long"])
       if (gon.storms[i]["stop_lat"] == 0) {
@@ -39,34 +39,42 @@ function initialize() {
       } else {
         var stop_loc = new google.maps.LatLng(gon.storms[i]["stop_lat"], gon.storms[i]["stop_long"])
       }
-      //specifications for tornado circl
-    var stormCircleOptions = {
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      //specifications for tornado icon
+    var image = '../tornado-small.png';
+    var stormIconOptions = {
+      icon: image,
       map: map,
-      center: start_loc,
+      position: start_loc,
       id: gon.storms[i]["id"],
-      radius: 20000
     };
     //specifications for tornado line
     var stormLineOptions = {
       path: [start_loc, stop_loc],
       geodesic: true,
-      strokeColor: '#FF0000',
+      strokeColor: '#2E2E2E',
       strokeOpacity: 1.0,
       strokeWeight: 2,
       map: map
     };
 
-    // Add the circle for this tornado to the map.
-    var tornadoCircle = new google.maps.Circle(stormCircleOptions);
-    var tornadoLine = new google.maps.Polyline(stormLineOptions)
+    // Add the icon for this tornado to the map.
+    var tornadoIcon = new google.maps.Marker(stormIconOptions);
+    var tornadoLine = new google.maps.Polyline(stormLineOptions);
+
+  //   animateIcon();
+
+  //   function animateIcon() {
+  //     var count = 0;
+  //     window.setInterval(function() {
+  //       count = (count + 1) % 200;
+  //       var icons = tornadoLine.get('icons')
+  //       icons[0].offset = (count / 2) + '%';
+  //       tornadoLine.set('icons', icons);
+  //   }, 20);
+  // }
 
     //Listens for a click event on a specific tornado and redirects to that specific tornadoe's show page.
-		google.maps.event.addListener(tornadoCircle, "click", function() {
+		google.maps.event.addListener(tornadoIcon, "click", function() {
   		window.location.href = "/storms/" + this.id;
  		});
 	}
