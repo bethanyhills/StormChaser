@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .side {
-	width: 100%;	
+	width: 100%;
 }
 
 .middle {
@@ -67,10 +67,6 @@ div table {
 	background: black;
 }
 
-#city {
-	width: 200px;
-}
-
-#state {
+#city, #state, #radius {
 	width: 200px;
 }
