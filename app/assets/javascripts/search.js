@@ -14,6 +14,7 @@ $(document).ready(function() {
 function initialize() {
 	//Create markers array
 	markers = [];
+  polylines = [];
   // Create the map.
   var mapOptions = {
     zoom: 4,
@@ -30,12 +31,16 @@ function plotData(data) {
 		function deleteMarkers() {
   		setAllMap(null);
   		markers = [];
+      polylines = [];
 		}
-		
+
 		function setAllMap(map) {
 		  for (var i = 0; i < markers.length; i++) {
 		    markers[i].setMap(map);
 	  	}
+      for (var i = 0; i < polylines.length; i++) {
+        polylines[i].setMap(map);
+      }
 		}
 
 	deleteMarkers();
@@ -68,7 +73,7 @@ function plotData(data) {
 
     // Add the icon for this tornado to the map.
     markers.push(new google.maps.Marker(stormIconOptions));
-    var tornadoLine = new google.maps.Polyline(stormLineOptions);
+    polylines.push(new google.maps.Polyline(stormLineOptions));
 
 		//Listens for a click event on a specific tornado and redirects to that specific tornadoe's show page.
 		google.maps.event.addListener(markers[i], "click", function() {
