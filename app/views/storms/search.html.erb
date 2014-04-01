@@ -1,0 +1,28 @@
+<%= javascript_include_tag "storms" %>
+<%= javascript_include_tag "storms-gauges" %>
+
+<%= render 'storms/title_show' %>
+<div class="row container">
+<!-- left column -->
+<div class="small-1 columns side"></div>
+
+<!-- middle column -->
+<div class="small-10 columns middle">
+	<div class="dashboard">
+		<div class="small-6 columns">
+			<!-- display map -->
+			<div id="map-canvas" class="map-medium"></div>
+		</div>
+		<div class="small-6 columns">
+			<!-- display gauges -->
+			<div id='chart_div1'></div>
+			<div id='chart_div2'></div>
+			<div id='chart_div3'></div>
+		</div>
+	</div> <!-- closes dashboard -->
+</div> <!-- closes middle column -->
+
+<!-- right column -->
+<div class="small-1 columns side"></div>
+</div> <!-- closes container -->
+<%= render 'storms/footer_show' %>

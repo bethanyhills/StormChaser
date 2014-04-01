@@ -14,4 +14,8 @@ class StormsController < ApplicationController
       format.json { render :json => Storm.historical_data(params[:id]) }
     end
   end
+
+  def search_radius
+    gon.storms = Storm.index_map()
+  end
 end

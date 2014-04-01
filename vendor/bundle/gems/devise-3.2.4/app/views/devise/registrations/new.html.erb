@@ -1,3 +1,8 @@
+<div class="row container">
+<!-- left column -->
+<div class="small-1 columns side"></div>
+<!-- middle column -->
+<div class="small-10 columns middle">
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -12,7 +17,13 @@
   <div><%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= f.submit "Sign up", class: "submit" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+</div> <!-- closes middle column -->
+
+<!-- right column -->
+<div class="small-1 columns side"></div>
+</div> <!-- closes container -->
