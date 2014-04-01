@@ -1,4 +1,5 @@
 <%= javascript_include_tag "storms" %>
+<%= javascript_include_tag "search" %>
 
 <div class="row container">
 <!-- left column -->
@@ -19,7 +20,9 @@
 			  <%= f.text_field :city, autofocus: true, id: "city" %></div>
 			  <div><%= f.label :state %>
 			    <%= f.text_field :state, autofocus: true, id: "state" %></div>
-			    <div><%= f.submit "Search", class: "submit" %></div>
+		    <div><%= f.label :radius %>
+		    <%= f.text_field :radius, autofocus: true, id: "radius" %></div>
+		    <div><%= f.submit "Search", class: "submit" %></div>
 		  		<% end -%>
 		  	</div>
 	</div> <!-- closes search -->

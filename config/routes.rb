@@ -2,9 +2,11 @@ StormChaser::Application.routes.draw do
   devise_for :users
   root "storms#index"
     resources :users
+    get '/storms/radiussearch', to: 'storms#search_api_call'
     resources :storms
     get '/storms/:id/histweather', to: 'storms#hist_weather_api'
     get '/search', to: 'storms#search_radius'
+
 
   # get '/movies/gladiator', to: 'movies#show_gladiator'
   # The priority is based upon order of creation: first created -> highest priority.
