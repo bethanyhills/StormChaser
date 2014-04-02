@@ -13,12 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require foundation-init
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/storm_chaser
 
-$(function() {
-  $(document).foundation();
-});
+
