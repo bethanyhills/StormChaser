@@ -19,6 +19,10 @@ group :development do
   gem 'rails_layout'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
+
 #testing gems
 group :development, :test do
 	gem 'rspec-rails'
