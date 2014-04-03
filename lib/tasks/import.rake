@@ -58,7 +58,7 @@ namespace :import do
 
         elsif line[states_crossed].to_i >= 2 && line[corrected] == false #If the tornado is part of a 2 segment track,
           segs = [index]  #Adds the line to an array of segments, more will be added as we search
-          for i in index+1...all_data.length  # Runs through the rest of the array looking for the other two segments
+          (index+1...all_data.length).each do |i| # Runs through the rest of the array looking for the other two segments
             if all_data[i][year] == line[year] && all_data[i][tornado_id] == line[tornado_id]
               segs << i  #Adds the other two segments to the segs array
             end
@@ -76,7 +76,7 @@ namespace :import do
           all_data[segs[0]][segment_num] = 1    #Sets the segment number to 1
           all_data[segs[0]][corrected] = true #Sets the entire path seg to fixed
           # Finds the second segment and saves the correct data to the all_data array
-          for i in 1...segs.length
+          (1...segs.length).each do |i|
             if all_data[segs[i]][start_lat] == all_data[segs[0]][start_lat]
               segs[1], segs[i] = segs[i], segs[1]
               all_data[segs[1]][complete_track] = false
@@ -87,8 +87,8 @@ namespace :import do
           end
 
           if segs.length > 3
-            for i in 2...segs.length-1
-              for j in i...segs.length
+            (2...segs.length-1).each do |i|
+              (i...segs.length).each do |j|
                 if all_data[segs[i-1]][stop_lat] == all_data[segs[j]][start_lat]
                   segs[i], segs[j] = segs[j], segs[i]
                   all_data[segs[i]][complete_track] = false
