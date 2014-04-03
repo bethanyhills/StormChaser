@@ -80,12 +80,14 @@ class Cyclone < ActiveRecord::Base
   end
 
   def add_weather(data)
+
+
     currently = data["currently"]
     weather = self.historical_weather.new
     weather.temperature = currently["temperature"] if currently["temperature"]
     weather.pressure = currently["pressure"] if currently["pressure"]
-    weather.wind_speed = currently["windSpeed"]
-    weather.wind_bearing = currently["windBearing"]
+    weather.wind_speed = currently["windSpeed"] if currently["windSpeed"]
+    weather.wind_bearing = currently["windBearing"] if currently["windBearing"]
     weather.hour = -9
     weather.save
 
@@ -98,7 +100,6 @@ class Cyclone < ActiveRecord::Base
       weather.wind_bearing = hour["windBearing"] if hour["windBearing"]
       weather.hour = index
       weather.save
-
     end
   end
 

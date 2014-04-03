@@ -1,12 +1,14 @@
 //create guages for individual cyclones
 
+
+
 google.load('visualization', '1', {packages:['gauge']});
 // console.log("Hello")
-google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {drawChart(data)}, "json"));
+google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
 // No idea why it's gon["cyclones"]["id"] instead of gon["cyclones"][0]["id"]
 
 
-function drawChart(histdata) {
+drawChart = function(histdata) {
   // console.log("ehh")
   window.x = histdata;
   // console.log("In the drawChart")
@@ -59,4 +61,6 @@ function drawChart(histdata) {
   var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
   chart3.draw(wind_speed, wind_speed_options);
 }
+
+
 
