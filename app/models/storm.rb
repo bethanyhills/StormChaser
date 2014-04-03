@@ -2,11 +2,10 @@ class Storm < ActiveRecord::Base
   belongs_to :tornado_date
   belongs_to :path
 
-  #scope :published, -> { where(published: true) }
   scope :many_storm_map_data, -> { select("start_lat", "start_long", "stop_lat", "stop_long", "storms.id", "f_scale") }
-  scope :strongest_first, -> { order(f_scale: :desc) }
-  scope :complete_track, -> { joins(:path).where("paths.complete_track") }
-  scope :index_map, -> { complete_track.strongest_first.limit(500).many_storm_map_data }
+  scope :complete_storm_tracks, -> { joins(:path).where("paths.complete_track")}
+  scope :strongest_storms_first, -> { order(f_scale: :desc) }
+  scope :index_map, -> { complete_storm_tracks.strongest_storms_first.limit(500).many_storm_map_data }
 
   def self.historical_data(id)
     storm = Storm.find(id)
@@ -28,12 +27,21 @@ class Storm < ActiveRecord::Base
     location_data = response.body
   end
 
-  def self.radius_search(xc, yc, radius)
-    all = Storm.all
-    all.select{|storm| storm._radius_search(xc, yc, radius)}
+  def self.radius_search(params)
+
+
+    city = params["city"].gsub(" ", "+")
+    state = params["state"]
+    radius = params["radius"]
+    response = Unirest.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city},+#{state}&sensor=false&key=#{ENV["GOOGLE_GEO_KEY"]}")
+
+    lat = response.body["results"][0]["geometry"]["location"]["lat"]
+    lng = response.body["results"][0]["geometry"]["location"]["lng"]
+
+    self.complete_storm_tracks.strongest_storms_first.select{|storm| storm.radius_search_results(lat, lng, radius)}
   end
 
-  def _radius_search(xc, yc, radius)
+  def radius_search_results(xc, yc, radius)
     #Start Point
     x1 = self.start_lat
     y1 = self.start_long
@@ -52,6 +60,6 @@ class Storm < ActiveRecord::Base
     #Distance in Miles
     dist_in_miles = dist*25.0/0.3617
     #Return true if in the circle, false if out of the circle
-    dist_in_miles <= radius
+    dist_in_miles <= radius.to_f
   end
 end
