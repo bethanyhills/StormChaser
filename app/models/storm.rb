@@ -2,24 +2,21 @@ class Storm < ActiveRecord::Base
   belongs_to :tornado_date
   belongs_to :path
 
-  def self.many_storm_map_data()
-    self.select("start_lat", "start_long", "stop_lat", "stop_long", "storms.id", "f_scale")
-  end
-
-  def self.index_map()
-    self.joins(:path).where("paths.complete_track").order(f_scale: :desc).limit(500).many_storm_map_data
-  end
+  #scope :published, -> { where(published: true) }
+  scope :many_storm_map_data, -> { select("start_lat", "start_long", "stop_lat", "stop_long", "storms.id", "f_scale") }
+  scope :strongest_first, -> { order(f_scale: :desc) }
+  scope :complete_track, -> { joins(:path).where("paths.complete_track") }
+  scope :index_map, -> { complete_track.strongest_first.limit(500).many_storm_map_data }
 
   def self.historical_data(id)
-    require 'unirest'
     storm = Storm.find(id)
     month = storm.tornado_date.month.to_s
-    month = '0' + month if month.length == 1
     day = storm.tornado_date.day.to_s
-    day = '0' + day if day.length == 1
     hour = storm.hour.to_s
-    hour = '0' + hour if hour.length == 1
     minute = storm.minute.to_s
+    month = '0' + month if month.length == 1
+    day = '0' + day if day.length == 1
+    hour = '0' + hour if hour.length == 1
     minute = '0' + minute if minute.length == 1
     time = storm.tornado_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
 

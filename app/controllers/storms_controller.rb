@@ -7,9 +7,15 @@ class StormsController < ApplicationController
     @storm = Storm.find(params[:id])
     @date = @storm.tornado_date
     gon.storms = @storm
+
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => @storm, status: 200 }
+    end
   end
 
   def hist_weather_api
+    #Add to the database
     respond_to do |format|
       format.json { render :json => Storm.historical_data(params[:id]) }
     end
@@ -20,6 +26,7 @@ class StormsController < ApplicationController
   end
 
   def search_api_call
+
     city = params["city"].gsub(" ", "+")
     state = params["state"]
     radius = params["radius"]
