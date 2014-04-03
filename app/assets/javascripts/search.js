@@ -59,7 +59,7 @@ function plotData(data) {
     icon: image,
     map: map,
     position: start_loc,
-    id: data[i]["id"],
+    id: data[i]["id"]
   };
   //specifications for tornado line
   var stormLineOptions = {
