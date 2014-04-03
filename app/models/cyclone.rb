@@ -6,6 +6,11 @@ class Cyclone < ActiveRecord::Base
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
   scope :index_map, -> { complete_cyclone_tracks.strongest_cyclones_first.limit(500).many_cyclone_map_data }
+  scope :deadly_cyclones, -> { where('fatalities >= 1') }
+  scope :deadliest_cyclones_first, -> { order(fatalities: :desc) }
+  scope :costliest_cyclones_first, -> { order(property_loss: :desc) }
+  scope :scale_5_cyclones, -> { where('f_scale == 5') }
+
 
   def self.historical_data(id)
     cyclone = Cyclone.find(id)
@@ -26,6 +31,11 @@ class Cyclone < ActiveRecord::Base
       headers: { 'Accept' => 'application/json' })
 
     response.body
+  end
+
+  def self.same_day_cyclones(id)
+    date_id = Cyclone.find(id).cyclone_date_id
+    Cyclone.where(cyclone_date_id: date_id)
   end
 
   def self.radius_search(params)

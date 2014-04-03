@@ -6,9 +6,9 @@ require 'pry'
 describe Cyclone do
 
 
-    StormChaser::Application.load_tasks
-    Rake::Task.define_task(:environment)
-    Rake::Task['import:only_5s'].invoke
+  StormChaser::Application.load_tasks
+  Rake::Task.define_task(:environment)
+  Rake::Task['import:only_5s'].invoke
 
 
   describe "#many_cyclone_map_data" do
