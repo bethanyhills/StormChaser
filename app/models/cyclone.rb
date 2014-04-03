@@ -30,7 +30,6 @@ class Cyclone < ActiveRecord::Base
 
   def self.radius_search(params)
 
-
     city = params["city"].gsub(" ", "+")
     state = params["state"]
     radius = params["radius"]
