@@ -1,17 +1,20 @@
 //create guages for individual cyclones
 
 google.load('visualization', '1', {packages:['gauge']});
-console.log("Hello")
-google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {console.log("hi");drawChart(data)}, "json"));
+// console.log("Hello")
+google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {drawChart(data)}, "json"));
 // No idea why it's gon["cyclones"]["id"] instead of gon["cyclones"][0]["id"]
 
 
 function drawChart(histdata) {
+  // console.log("ehh")
   window.x = histdata;
+  // console.log("In the drawChart")
   var pressure = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
     ['Pressure', histdata.currently.pressure],
   ]);
+  // console.log(pressure)
 
   var temp = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
@@ -25,9 +28,9 @@ function drawChart(histdata) {
 
   var pressure_options = {
     width: 400, height: 120,
-    max: 1050, min: 0,
+    max: 1050, min: 900,
     redFrom: 1000, redTo: 1050,
-    yellowFrom:900, yellowTo: 9999,
+    yellowFrom:975, yellowTo: 9999,
     minorTicks: 5
   };
 
