@@ -1,5 +1,5 @@
-require 'spec_helper'
+# require 'spec_helper'
 
-describe "cyclones/show.html.erb" do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
+# describe "cyclones/show.html.erb" do
+#   pending "add some examples to (or delete) #{__FILE__}"
+# end
