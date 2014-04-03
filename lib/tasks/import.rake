@@ -12,7 +12,7 @@ namespace :import do
     error_count = 0
 
     #Setting up the array indices as their values in the line item
-    tornado_id = 0
+    cyclone_id = 0
     year = 1
     month = 2
     day = 3
@@ -59,7 +59,7 @@ namespace :import do
         elsif line[states_crossed].to_i >= 2 && line[corrected] == false #If the tornado is part of a 2 segment track,
           segs = [index]  #Adds the line to an array of segments, more will be added as we search
           (index+1...all_data.length).each do |i| # Runs through the rest of the array looking for the other two segments
-            if all_data[i][year] == line[year] && all_data[i][tornado_id] == line[tornado_id]
+            if all_data[i][year] == line[year] && all_data[i][cyclone_id] == line[cyclone_id]
               segs << i  #Adds the other two segments to the segs array
             end
             break if all_data[i][year] > all_data[segs[0]][year]
@@ -119,8 +119,8 @@ namespace :import do
 
     all_data.each do |line|
       if line[start_lat].to_i != 0 && line[start_long].to_i != 0
-        unless date = TornadoDate.where(year: line[year]).where(month: line[month]).find_by(day: line[day])
-          date = TornadoDate.create(year: line[year], month: line[month], day: line[day])
+        unless date = CycloneDate.where(year: line[year]).where(month: line[month]).find_by(day: line[day])
+          date = CycloneDate.create(year: line[year], month: line[month], day: line[day])
         end
 
         unless path = Path.where(states_crossed: line[states_crossed]).where(complete_track: line[complete_track]).find_by(segment_num: line[segment_num])
@@ -129,7 +129,7 @@ namespace :import do
         hour = line[time].split(':')[0].to_i
         minute = line[time].split(':')[1].to_i
 
-        Storm.create(tornado_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
+        Cyclone.create(cyclone_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
 
       end
       count += 1

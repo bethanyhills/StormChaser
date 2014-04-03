@@ -1,3 +1,3 @@
 class Path < ActiveRecord::Base
-  has_many :storms
+  has_many :cyclones
 end

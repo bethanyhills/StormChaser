@@ -5,7 +5,7 @@ $(document).ready(function() {
 		var city = $("#city").val();
 		var state = $("#state").val();
 		var radius = $("#radius").val();
-		var url = "/storms/radiussearch";
+		var url = "/cyclones/radiussearch";
 		$.get(url, {city: city, state: state, radius: radius}, function(data) {plotData(data)}, "json");
 	})
 })
@@ -55,14 +55,14 @@ function plotData(data) {
   }
   //specifications for tornado icon
   var image = '../tornado-small.png';
-  var stormIconOptions = {
+  var cycloneIconOptions = {
     icon: image,
     map: map,
     position: start_loc,
     id: data[i]["id"]
   };
   //specifications for tornado line
-  var stormLineOptions = {
+  var cycloneLineOptions = {
     path: [start_loc, stop_loc],
     geodesic: true,
     strokeColor: '#2E2E2E',
@@ -72,12 +72,12 @@ function plotData(data) {
   };
 
   // Add the icon for this tornado to the map.
-  markers.push(new google.maps.Marker(stormIconOptions));
-  polylines.push(new google.maps.Polyline(stormLineOptions));
+  markers.push(new google.maps.Marker(cycloneIconOptions));
+  polylines.push(new google.maps.Polyline(cycloneLineOptions));
 
 	//Listens for a click event on a specific tornado and redirects to that specific tornadoe's show page.
 	google.maps.event.addListener(markers[i], "click", function() {
-		window.location.href = "/storms/" + this.id;
+		window.location.href = "/cyclones/" + this.id;
 	});
 	}
 }

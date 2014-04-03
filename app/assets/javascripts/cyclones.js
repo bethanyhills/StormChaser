@@ -1322,13 +1322,13 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
-  if (!gon.storms.length) {
-    holder = gon.storms
-    gon.storms = [holder]
-    start_lat = gon.storms[0]["start_lat"]
-    stop_lat = gon.storms[0]["stop_lat"]
-    start_long = gon.storms[0]["start_long"]
-    stop_long = gon.storms[0]["stop_long"]
+  if (!gon.cyclones.length) {
+    holder = gon.cyclones
+    gon.cyclones = [holder]
+    start_lat = gon.cyclones[0]["start_lat"]
+    stop_lat = gon.cyclones[0]["stop_lat"]
+    start_long = gon.cyclones[0]["start_long"]
+    stop_long = gon.cyclones[0]["stop_long"]
     mapOptions.zoom = 6
   if (stop_lat == 0) {
     stop_lat = start_lat
@@ -1342,30 +1342,30 @@ function initialize() {
 
   //instantiate the map
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  if (!gon.storms.length) {
+  if (!gon.cyclones.length) {
     map.fitBounds(bounds);
   }
 
   var markers = []
 
   // Construct the lat and long for each tornado.
-	for (var i = 0; i < gon.storms.length; i++) {
-    var start_loc = new google.maps.LatLng(gon.storms[i]["start_lat"], gon.storms[i]["start_long"])
-    if (gon.storms[i]["stop_lat"] == 0) {
+	for (var i = 0; i < gon.cyclones.length; i++) {
+    var start_loc = new google.maps.LatLng(gon.cyclones[i]["start_lat"], gon.cyclones[i]["start_long"])
+    if (gon.cyclones[i]["stop_lat"] == 0) {
       var stop_loc = start_loc
     } else {
-      var stop_loc = new google.maps.LatLng(gon.storms[i]["stop_lat"], gon.storms[i]["stop_long"])
+      var stop_loc = new google.maps.LatLng(gon.cyclones[i]["stop_lat"], gon.cyclones[i]["stop_long"])
     }
     //specifications for tornado icon
     var image = '../tornado-small.png';
-    var stormIconOptions = {
+    var cycloneIconOptions = {
       icon: image,
       map: map,
       position: start_loc,
-      id: gon.storms[i]["id"]
+      id: gon.cyclones[i]["id"]
     };
     //specifications for tornado line
-    var stormLineOptions = {
+    var cycloneLineOptions = {
       path: [start_loc, stop_loc],
       geodesic: true,
       strokeColor: '#2E2E2E',
@@ -1375,18 +1375,18 @@ function initialize() {
     };
 
     // Add the icon for this tornado to the map.
-    //var tornadoIcon = new google.maps.Marker(stormIconOptions);
-    var tornadoLine = new google.maps.Polyline(stormLineOptions);
+    //var tornadoIcon = new google.maps.Marker(cycloneIconOptions);
+    var tornadoLine = new google.maps.Polyline(cycloneLineOptions);
 
-    markers.push(new google.maps.Marker(stormIconOptions));
+    markers.push(new google.maps.Marker(cycloneIconOptions));
 
 
     //Listens for a click event on a specific tornado and redirects to that specific tornadoe's show page.
 		google.maps.event.addListener(markers[i], "click", function() {
-  		window.location.href = "/storms/" + this.id;
+  		window.location.href = "/cyclones/" + this.id;
  		});
   } //closes for loop
-  
+
   var mc = new MarkerClusterer(map, markers);
 
 } //closes initialize function

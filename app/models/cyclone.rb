@@ -1,28 +1,28 @@
-class Storm < ActiveRecord::Base
-  belongs_to :tornado_date
+class Cyclone < ActiveRecord::Base
+  belongs_to :cyclone_date
   belongs_to :path
 
-  scope :many_storm_map_data, -> { select("start_lat", "start_long", "stop_lat", "stop_long", "storms.id", "f_scale") }
-  scope :complete_storm_tracks, -> { joins(:path).where("paths.complete_track")}
-  scope :strongest_storms_first, -> { order(f_scale: :desc) }
-  scope :index_map, -> { complete_storm_tracks.strongest_storms_first.limit(500).many_storm_map_data }
+  scope :many_cyclone_map_data, -> { select("start_lat", "start_long", "stop_lat", "stop_long", "cyclones.id", "f_scale") }
+  scope :complete_cyclone_tracks, -> { joins(:path).where("paths.complete_track")}
+  scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
+  scope :index_map, -> { complete_cyclone_tracks.strongest_cyclones_first.limit(500).many_cyclone_map_data }
 #scope :published, -> { where(published: true) }
 
   def self.historical_data(id)
-    storm = Storm.find(id)
-    month = storm.tornado_date.month.to_s
+    cyclone = Cyclone.find(id)
+    month = cyclone.cyclone_date.month.to_s
     month = '0' + month if month.length == 1
-    day = storm.tornado_date.day.to_s
+    day = cyclone.cyclone_date.day.to_s
     day = '0' + day if day.length == 1
-    hour = storm.hour.to_s
+    hour = cyclone.hour.to_s
     hour = '0' + hour if hour.length == 1
-    minute = storm.minute.to_s
+    minute = cyclone.minute.to_s
     minute = '0' + minute if minute.length == 1
-    time = storm.tornado_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
+    time = cyclone.cyclone_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
 
     #2013-05-06T12:00:00-0400  <- Final time must be in this format for the Historical Data API call
 
-    response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+storm.start_lat.to_s+','+storm.start_long.to_s + ',' + time,
+    response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+cyclone.start_lat.to_s+','+cyclone.start_long.to_s + ',' + time,
       headers: { "Accept" => "application/json" })
 
     location_data = response.body
@@ -39,7 +39,7 @@ class Storm < ActiveRecord::Base
     lat = response.body["results"][0]["geometry"]["location"]["lat"]
     lng = response.body["results"][0]["geometry"]["location"]["lng"]
 
-    self.complete_storm_tracks.strongest_storms_first.select{|storm| storm.radius_search_results(lat, lng, radius)}
+    self.complete_cyclone_tracks.strongest_cyclones_first.select{|cyclone| cyclone.radius_search_results(lat, lng, radius)}
   end
 
   def radius_search_results(xc, yc, radius)

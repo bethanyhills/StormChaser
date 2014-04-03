@@ -1,9 +1,9 @@
-//create guages for individual storms
+//create guages for individual cyclones
 
 google.load('visualization', '1', {packages:['gauge']});
 console.log("Hello")
-google.setOnLoadCallback($.get("/storms/" + gon["storms"]["id"] + "/histweather", function(data) {console.log("hi");drawChart(data)}, "json"));
-// No idea why it's gon["storms"]["id"] instead of gon["storms"][0]["id"]
+google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {console.log("hi");drawChart(data)}, "json"));
+// No idea why it's gon["cyclones"]["id"] instead of gon["cyclones"][0]["id"]
 
 
 function drawChart(histdata) {
