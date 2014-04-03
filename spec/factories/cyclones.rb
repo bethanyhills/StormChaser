@@ -1,8 +1,8 @@
 # Read about factories at https//github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :storm do |x|
-    x.tornado_date nil
+  factory :cyclone do |x|
+    x.cyclone_date nil
     x.path nil
 		x.county_code_four 185
 		x.county_code_one 1
