@@ -11,21 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328205210) do
+ActiveRecord::Schema.define(version: 20140403154350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "paths", force: true do |t|
-    t.integer  "states_crossed"
-    t.boolean  "complete_track"
-    t.integer  "segment_num"
+  create_table "cyclone_dates", force: true do |t|
+    t.integer  "day"
+    t.integer  "month"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "storms", force: true do |t|
-    t.integer  "tornado_date_id"
+  create_table "cyclones", force: true do |t|
+    t.integer  "cyclone_date_id"
     t.integer  "path_id"
     t.integer  "f_scale"
     t.integer  "hour"
@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 20140328205210) do
     t.datetime "updated_at"
   end
 
-  add_index "storms", ["path_id"], name: "index_storms_on_path_id", using: :btree
-  add_index "storms", ["tornado_date_id"], name: "index_storms_on_tornado_date_id", using: :btree
+  add_index "cyclones", ["cyclone_date_id"], name: "index_cyclones_on_cyclone_date_id", using: :btree
+  add_index "cyclones", ["path_id"], name: "index_cyclones_on_path_id", using: :btree
 
-  create_table "tornado_dates", force: true do |t|
-    t.integer  "day"
-    t.integer  "month"
-    t.integer  "year"
+  create_table "paths", force: true do |t|
+    t.integer  "states_crossed"
+    t.boolean  "complete_track"
+    t.integer  "segment_num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
