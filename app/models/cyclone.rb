@@ -1,6 +1,7 @@
 class Cyclone < ActiveRecord::Base
   belongs_to :cyclone_date
   belongs_to :path
+  has_many :historical_weather
 
   scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
@@ -14,24 +15,38 @@ class Cyclone < ActiveRecord::Base
 
 
   def self.historical_data(id)
+
     cyclone = Cyclone.find(id)
-    month = cyclone.cyclone_date.month.to_s
-    day = cyclone.cyclone_date.day.to_s
-    hour = cyclone.hour.to_s
-    minute = cyclone.minute.to_s
-    month = '0' + month if month.length == 1
-    day = '0' + day if day.length == 1
-    hour = '0' + hour if hour.length == 1
-    minute = '0' + minute if minute.length == 1
-    time = cyclone.cyclone_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
 
-    # 2013-05-06T12:00:00-0400  <- Final time must be in this format for the Historical Data API call
+    if cyclone.historical_weather.length > 0
+      weather = cyclone.historical_weather
+      location_data = {}
+      location_data["hourly"] = {}
+      location_data["hourly"]["data"] = []
+      weather.each do |data_arr|
+        location_data = self.get_weather(location_data, data_arr)
+      end
+      return location_data
+    else
+      month = cyclone.cyclone_date.month.to_s
+      day = cyclone.cyclone_date.day.to_s
+      hour = cyclone.hour.to_s
+      minute = cyclone.minute.to_s
+      month = '0' + month if month.length == 1
+      day = '0' + day if day.length == 1
+      hour = '0' + hour if hour.length == 1
+      minute = '0' + minute if minute.length == 1
+      time = cyclone.cyclone_date.year.to_s + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':00-0600'
 
-    response = Unirest.get('https://api.forecast.io/forecast/' + ENV['FORECAST_IO_KEY'].to_s + '/' +
-      cyclone.start_lat.to_s + ',' + cyclone.start_long.to_s + ',' + time,
-      headers: { 'Accept' => 'application/json' })
+      #2013-05-06T12:00:00-0400  <- Final time must be in this format for the Historical Data API call
 
-    response.body
+      response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+cyclone.start_lat.to_s+','+cyclone.start_long.to_s + ',' + time,
+        headers: { "Accept" => "application/json" })
+
+      cyclone.add_weather(response.body)
+
+      location_data = response.body
+    end
   end
 
   def self.radius_search(params)
@@ -68,4 +83,48 @@ class Cyclone < ActiveRecord::Base
     # Return true if in the circle, false if out of the circle
     dist_in_miles <= radius.to_f
   end
+
+  def add_weather(data)
+
+
+    currently = data["currently"]
+    weather = self.historical_weather.new
+    weather.temperature = currently["temperature"] if currently["temperature"]
+    weather.pressure = currently["pressure"] if currently["pressure"]
+    weather.wind_speed = currently["windSpeed"] if currently["windSpeed"]
+    weather.wind_bearing = currently["windBearing"] if currently["windBearing"]
+    weather.hour = -9
+    weather.save
+
+    hourly = data["hourly"]["data"]
+    hourly.each_with_index do |hour, index|
+      weather = self.historical_weather.new
+      weather.temperature = hour["temperature"] if hour["temperature"]
+      weather.pressure = hour["pressure"] if hour["pressure"]
+      weather.wind_speed = hour["windSpeed"] if hour["windSpeed"]
+      weather.wind_bearing = hour["windBearing"] if hour["windBearing"]
+      weather.hour = index
+      weather.save
+    end
+  end
+
+private
+  def self.get_weather(weather_obj, data_arr)
+    if data_arr["hour"] == -9
+      current = weather_obj["currently"] = {}
+      current["temperature"] = data_arr["temperature"]
+      current["pressure"] = data_arr["pressure"]
+      current["windSpeed"] = data_arr["wind_speed"]
+      current["windBearing"] = data_arr["wind_bearing"]
+    else
+      hour_data = weather_obj["hourly"]["data"]
+      hour_data[data_arr["hour"]] = {}
+      hour_data[data_arr["hour"]]["temperature"] = data_arr["temperature"]
+      hour_data[data_arr["hour"]]["pressure"] = data_arr["pressure"]
+      hour_data[data_arr["hour"]]["wind_speed"] = data_arr["wind_speed"]
+      hour_data[data_arr["hour"]]["wind_bearing"] = data_arr["wind_bearing"]
+    end
+    weather_obj
+  end
+
 end
