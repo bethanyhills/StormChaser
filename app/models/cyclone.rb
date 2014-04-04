@@ -10,7 +10,7 @@ class Cyclone < ActiveRecord::Base
   scope :deadly_cyclones, -> { where('fatalities >= 1') }
   scope :deadliest_cyclones_first, -> { order(fatalities: :desc) }
   scope :costliest_cyclones_first, -> { order(property_loss: :desc) }
-  scope :scale_5_cyclones, -> { where('f_scale == 5') }
+  scope :scale_5_cyclones, -> { where('f_scale = 5') }
   scope :same_day_cyclones, ->(id) { where(cyclone_date_id: Cyclone.find(id).cyclone_date_id) }
 
 
