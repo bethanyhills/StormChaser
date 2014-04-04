@@ -2,12 +2,12 @@
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l',
   {center: [38.5, -98.00], 
   zoom: 4,
-  })
+})
 
 //create tornado icon
 var myIcon = L.icon({
   iconUrl: '../tornado-small.png'
-  });
+});
 
 // Construct the lat and long for this tornado.
   var start_lat = gon.cyclones["start_lat"]
