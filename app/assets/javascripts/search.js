@@ -51,7 +51,7 @@ var plotData = function(data) {
     var marker = L.marker(new L.latLng(start_lat, start_long), {icon: myIcon});
 
     //bind popup to show info and redirect link to individual cyclone dashboard
-    marker.bindPopup('<p>Category ' + scale + ' Tornado</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
+    marker.bindPopup('<p>Category ' + scale + ' Tornado on </p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
     //add marker to holding array
     markerArray.push(marker)
     //add marker to markers layer
