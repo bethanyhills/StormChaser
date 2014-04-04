@@ -1,11 +1,17 @@
+//specify map bounds
+
+var southWest = L.latLng(24.396308, -124.848974),
+    northEast = L.latLng(49.384358, -66.885444),
+    bounds = L.latLngBounds(southWest, northEast);
+
 // Create the map
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
-  .setView([38.5, -98.00], 4);
+  .setMaxBounds(bounds)
 
 //create tornado icon
 var myIcon = L.icon({
   iconUrl: 'tornado-small.png'
-});
+  });
 
 //create array to hold cluster group data
 var markers = new L.MarkerClusterGroup();

@@ -1,8 +1,11 @@
+//specify map bounds
+var southWest = L.latLng(24.396308, -124.848974),
+    northEast = L.latLng(49.384358, -66.885444),
+    bounds = L.latLngBounds(southWest, northEast);
+
 // Create the map
-var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l',
-  {center: [38.5, -98.00], 
-  zoom: 4,
-})
+var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
+  .setMaxBounds(bounds)
 
 //create tornado icon
 var myIcon = L.icon({
