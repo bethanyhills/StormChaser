@@ -5,8 +5,14 @@
     <title><%= content_for?(:title) ? yield(:title) : "Storm Chaser" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Storm Chaser" %>">
     <%= include_gon %>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    
     <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+  
     <%= stylesheet_link_tag 'application', media: 'all'%>
     <%# Modernizr is required for Zurb Foundation %>
     <%= javascript_include_tag 'vendor/modernizr' %>
