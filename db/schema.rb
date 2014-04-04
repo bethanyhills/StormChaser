@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403154350) do
+ActiveRecord::Schema.define(version: 20140403163550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,19 @@ ActiveRecord::Schema.define(version: 20140403154350) do
 
   add_index "cyclones", ["cyclone_date_id"], name: "index_cyclones_on_cyclone_date_id", using: :btree
   add_index "cyclones", ["path_id"], name: "index_cyclones_on_path_id", using: :btree
+
+  create_table "historical_weathers", force: true do |t|
+    t.float    "wind_speed"
+    t.float    "wind_bearing"
+    t.float    "temperature"
+    t.float    "pressure"
+    t.integer  "hour"
+    t.integer  "cyclone_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "historical_weathers", ["cyclone_id"], name: "index_historical_weathers_on_cyclone_id", using: :btree
 
   create_table "paths", force: true do |t|
     t.integer  "states_crossed"
