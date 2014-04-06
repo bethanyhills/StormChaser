@@ -6,4 +6,12 @@ StormChaser::Application.routes.draw do
   get '/cyclones/:id/histweather', to: 'cyclones#hist_weather_api'
   resources :cyclones
   get '/search', to: 'cyclones#search_radius'
+  namespace :api do
+    namespace :v1 do
+      resources :cyclones
+      get 'search', to: 'searches#index'
+      get 'search/deadliest', to: 'searches#deadliest'
+      get 'search/deadliest/:selectors', to: 'searches#deadliest'
+    end
+  end
 end

@@ -108,6 +108,9 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
+  def package_other_data()
+  end
+
 private
   def self.get_weather(weather_obj, data_arr)
     if data_arr["hour"] == -9
@@ -126,5 +129,7 @@ private
     end
     weather_obj
   end
+
+
 
 end
