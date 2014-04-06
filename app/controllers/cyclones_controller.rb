@@ -1,7 +1,7 @@
 class CyclonesController < ApplicationController
   def index
-    # gon.cyclones = Cyclone.index_map
-    gon.cyclones = {'cyclones' => Cyclone.index_map, 'date' => CycloneDate.all}
+    gon.cyclones = Cyclone.index_map
+    # gon.cyclones = {'cyclones' => Cyclone.index_map, 'date' => CycloneDate.all}
   end
 
   def show
