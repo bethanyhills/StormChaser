@@ -1,11 +1,10 @@
-//create guages for individual cyclones
-
-
-
+id = window.location.href.split("/").pop();
+var url = "../api/v1/cyclones/" + id
 google.load('visualization', '1', {packages:['gauge']});
 // console.log("Hello")
-google.setOnLoadCallback($.get("/cyclones/" + gon["cyclones"]["id"] + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
+google.setOnLoadCallback($.get("/cyclones/" + id + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
 // No idea why it's gon["cyclones"]["id"] instead of gon["cyclones"][0]["id"]
+
 
 
 drawChart = function(histdata) {

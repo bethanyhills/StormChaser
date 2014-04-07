@@ -1,3 +1,9 @@
+$(document).ready(function() {  
+    id = window.location.href.split("/").pop();
+    var url = "../api/v1/cyclones/" + id
+    $.get(url, function(data) {window.x = data, plotData(data)}, "json");
+  })
+
 //specify map bounds
 var southWest = L.latLng(24.396308, -124.848974),
     northEast = L.latLng(49.384358, -66.885444),
@@ -12,13 +18,15 @@ var myIcon = L.icon({
   iconUrl: '../tornado-small.png'
 });
 
+var plotData = function(data) {
 // Construct the lat and long for this tornado.
-  var start_lat = gon.cyclones["start_lat"]
-  var start_long = gon.cyclones["start_long"]
-  var id = gon.cyclones["id"]
-  var scale = gon.cyclones["f_scale"]
+  var start_lat = data["location"]["start_lat"]
+  var start_long = data["location"]["start_long"]
+  var id = data["id"]
+  var scale = data["f_scale"]
 
   // add icon to map for this tornado, bind popup, and set url to redirect to specific storm dashboard.
 L.marker([start_lat, start_long], {icon: myIcon, alt: id})
   .addTo(map)
+} //closes plotData function
 
