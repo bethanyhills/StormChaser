@@ -4,8 +4,8 @@ $(document).ready(function() {
 		var city = $("#city").val();
 		var state = $("#state").val();
 		var radius = $("#radius").val();
-		var url = "/cyclones/radiussearch";
-		$.get(url, {city: city, state: state, radius: radius}, function(data) {window.x = data; plotData(data)}, "json");
+		var url = "../api/v1/cyclones/radius_search,city:"+city + ",state:" + state + ",radius:" + radius;
+		$.get(url, function(data) {window.x = data; plotData(data)}, "json");
 	})
 })
 
