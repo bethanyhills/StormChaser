@@ -5,16 +5,51 @@
 <div class="small-1 columns side"></div>
 <!-- middle column -->
 <div class="small-10 columns middle">
-	<div id="map" class="map-large"></div>
-	</div>
+  <!-- add foundation tabs -->
+  <dl class="tabs vertical" data-tab>
+  <dd class="active"><a href="#panel1a">Tab 1</a></dd>
+  <dd><a href="#panel2a">Tab 2</a></dd>
+  <dd><a href="#panel3a">Tab 3</a></dd>
+  <dd><a href="#panel4a">Tab 4</a></dd>
+</dl>
+<div class="tabs-content vertical">
+  <!-- First tab -->
+  <div class="content active" id="panel1a">
+    <!-- First tab content: Category 5 storms -->
+  	<p>Panel 2 content goes here.</p>
+  </div>
+  <!-- Second tab -->
+  <div class="content" id="panel2a">
+    <div id="map" class="map-large"></div>
+    </div>
+  </div>
+  <!-- Third tab -->
+  <div class="content" id="panel3a">
+    <p>Panel 3 content goes here.</p>
+  </div>
+  <!-- Fourth tab -->
+  <div class="content" id="panel4a">
+    <p>Panel 4 content goes here.</p>
+  </div>
+</div>
       <!-- right column -->
 <div class="small-1 columns side"></div>
 </div>
 <%= render 'cyclones/footer_index' %>
 
-
-
 <%= javascript_include_tag "cyclones" %>
+<script>
+  $(document).foundation({
+    tab: {
+      callback : function (tab) {
+        console.log(tab);
+        $(tab).on('click', function() {
+          $(this).attr('class', 'active');
+        })
+      }
+    }
+  });
+</script>
 
 
 
