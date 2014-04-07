@@ -1,6 +1,3 @@
-<%= javascript_include_tag "cyclones" %>
-<%= javascript_include_tag "cyclones-gauges" %>
-
 <%= render 'cyclones/title_show' %>
 <div class="row container">
 <!-- left column -->
@@ -11,7 +8,7 @@
 	<div class="dashboard">
 		<div class="small-6 columns">
 			<!-- display map -->
-			<div id="map-canvas" class="map-medium"></div>
+			<div id="map" class="map-medium"></div>
 		</div>
 		<div class="small-6 columns">
 			<!-- display gauges -->
@@ -26,3 +23,7 @@
 <div class="small-1 columns side"></div>
 </div> <!-- closes container -->
 <%= render 'cyclones/footer_show' %>
+
+<%= javascript_include_tag "cyclones" %>
+<%= javascript_include_tag "search" %>
+<%= javascript_include_tag "cyclones-gauges" %>
