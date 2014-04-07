@@ -4,13 +4,18 @@
 // override for the 'Home' navigation link
 .top-bar .name {
   font-size: rem-calc(13);
-  line-height: 45px; }
+  line-height: 55px; }
 .top-bar .name a {
   font-weight: normal;
   color: white;
-  padding: 0 15px; }
+  padding: 0 25px; }
+.top-bar-section li .name a {
+  font-weight: normal;
+  color: white;
+  padding: 0 25px; }
 .top-bar {
   background: black;
+  height: 55px;
 }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY

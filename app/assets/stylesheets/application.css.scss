@@ -18,10 +18,10 @@
  	background: #2E2E2E;
  }
 
- #title {
- 	font-family: Futura;
- 	color: white;
- 	font-style: italic;
+ #logo img {
+ 	float: right;
+  padding-top: 5px;
+  padding-right: 5px;
  }
 
 @import 'foundation-icons'
