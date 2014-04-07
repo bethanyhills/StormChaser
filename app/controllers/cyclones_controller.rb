@@ -7,6 +7,11 @@ class CyclonesController < ApplicationController
   def show
     @cyclone = Cyclone.find(params[:id])
     gon.cyclones = @cyclone
+
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => @cyclone, status: 200 }
+    end
   end
 
   def hist_weather_api
