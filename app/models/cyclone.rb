@@ -73,7 +73,7 @@ class Cyclone < ActiveRecord::Base
     # Y Intercept of Tornado Path
     b1 = y1 - (m1 * x1)
     # X and Y Intercept Points between Tornado Path and Tangent Line from Circle Center
-    x2 == x1 ? xi = x2 : xi = ((yc + (xc / m1) - b1) / (m1 - (1 / m1)))
+    m1 == 0 ? xi = x2 : xi = ((yc + (xc / m1) - b1) / (m1 - (1 / m1)))
     y2 == y1 ? yi = y2 : yi = ((m1 * xi) + b1)
     # Distance in degrees of the line from the Circle Center to the X,Y Intercept
     dist = Math.sqrt((xi - xc)**2 + (yi - yc)**2)
@@ -219,12 +219,23 @@ class Cyclone < ActiveRecord::Base
 
   def self.searches(params)
     if params["search_name"]
-      if params["search_name"][-2..-1] == "st"
-        search = params["search_name"] + "_cyclones_first"
+      if params["search_name"].include? ","
+        search_arg_obj
+        search_params = params["search_name"].split(",")
+        search = search_params.shift
+        search_params.each do |x|
+          x = x.split(":")
+          search_arg_obj[x[0]] = x[1]
+        end
+        cyclone = Cyclone.send(search, search_arg_obj)
       else
-        search = params["search_name"] + "_cyclones"
+        if params["search_name"][-2..-1] == "st"
+          search = params["search_name"] + "_cyclones_first"
+        else
+          search = params["search_name"] + "_cyclones"
+        end
+        cyclone = Cyclone.send(search)
       end
-      cyclone = Cyclone.send(search)
     end
     return cyclone
   end
