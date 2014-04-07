@@ -6,7 +6,7 @@ class API::V1::SearchesController < ApplicationController
     respond_with(Cyclone.limit(500))
   end
 
-  def deadliest
+  def search
     @cyclone = Cyclone.deadliest_cyclones_first
     if params["selectors"]
       selectors = params["selectors"].split(',')
@@ -23,8 +23,8 @@ class API::V1::SearchesController < ApplicationController
         end
       end
     end
-    # @cyclone.where('f_scale = 4')
-    respond_with(@cyclone)
+    @cyclone = @cyclone.limit(500)
+    respond_with(@cyclone.to_json)
   end
 
 end

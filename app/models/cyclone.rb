@@ -3,7 +3,7 @@ class Cyclone < ActiveRecord::Base
   belongs_to :path
   has_many :historical_weather
 
-  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale') }
+  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
   scope :index_map, -> { complete_cyclone_tracks.strongest_cyclones_first.limit(500).many_cyclone_map_data }
@@ -12,7 +12,6 @@ class Cyclone < ActiveRecord::Base
   scope :costliest_cyclones_first, -> { order(property_loss: :desc) }
   scope :scale_5_cyclones, -> { where('f_scale = 5') }
   scope :same_day_cyclones, ->(id) { where(cyclone_date_id: Cyclone.find(id).cyclone_date_id) }
-
 
   def self.historical_data(id)
 
@@ -70,12 +69,12 @@ class Cyclone < ActiveRecord::Base
     self.stop_lat == 0 ? x2 = x1 : x2 = self.stop_lat
     self.stop_long == 0 ? y2 = y1 : y2 = self.stop_long
     # Slope of Tornado Path
-    x2 == x1 ? m1 = 0 : m1 = (y2 - y1) / (x2 - x1)
+    y2 == y1 ? m1 = 0 : m1 = (y2 - y1) / (x2 - x1)
     # Y Intercept of Tornado Path
-    b1 = y1 - m1 * x1
+    b1 = y1 - (m1 * x1)
     # X and Y Intercept Points between Tornado Path and Tangent Line from Circle Center
-    x2 == x1 ? xi = x2 : xi = (yc + (xc / m1) - b1) / (m1 - (1 / m1))
-    y2 == y1 ? yi = y2 : yi = m1 * xi + b1
+    x2 == x1 ? xi = x2 : xi = ((yc + (xc / m1) - b1) / (m1 - (1 / m1)))
+    y2 == y1 ? yi = y2 : yi = ((m1 * xi) + b1)
     # Distance in degrees of the line from the Circle Center to the X,Y Intercept
     dist = Math.sqrt((xi - xc)**2 + (yi - yc)**2)
     # Distance in Miles
@@ -85,7 +84,6 @@ class Cyclone < ActiveRecord::Base
   end
 
   def add_weather(data)
-
 
     currently = data["currently"]
     weather = self.historical_weather.new
@@ -108,7 +106,46 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
-  def package_other_data()
+  def as_json(cyclones)
+    {
+      date: {
+        day: self.cyclone_date.day,
+        month: self.cyclone_date.month,
+        year: self.cyclone_date.year,
+        hour: self.hour,
+        minute: self.minute,
+        time_zone: self.time_zone
+      },
+      cyclone_strength: {
+        f_scale: self.f_scale,
+        width: self.width
+      },
+      loss: {
+        injuries: self.injuries,
+        fatalities: self.fatalities,
+        property_loss: self.property_loss,
+        crop_loss: self.crop_loss
+      },
+      location: {
+        start_lat: self.start_lat,
+        start_long: self.start_long,
+        stop_lat: self.stop_lat,
+        stop_long: self.stop_long,
+        distance: self.distance,
+        state: self.state,
+        county_code_one: self.county_code_one,
+        county_code_two: self.county_code_two,
+        county_code_three: self.county_code_three,
+        county_code_four: self.county_code_four,
+        states_crossed: self.path.states_crossed
+      },
+      path: {
+        complete_track: self.path.complete_track,
+        segment_num: self.path.segment_num
+      },
+      touchdown_weather: self.historical_weather.first, #where('hour = 0'),
+      historical_weather: self.historical_weather.offset(1).limit(24)
+    }
   end
 
 private
