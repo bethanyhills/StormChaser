@@ -7,7 +7,13 @@ class API::V1::CyclonesController < ApplicationController
   end
 
   def show
-    respond_with(@cyclone = Cyclone.find(params[:id]))
+    if params[:id].to_i == 0
+      params[:selectors] = params[:id]
+      @cyclone = Cyclone.selectors(Cyclone.all, params)
+    else
+      @cyclone = Cyclone.find(params[:id])
+    end
+    respond_with(@cyclone)
   end
 
 end

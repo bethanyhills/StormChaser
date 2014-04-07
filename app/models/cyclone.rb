@@ -119,64 +119,102 @@ class Cyclone < ActiveRecord::Base
   end
 
   def as_json(cyclones)
-    {
-      date: {
-        day: self.cyclone_date.day,
-        month: self.cyclone_date.month,
-        year: self.cyclone_date.year,
-        hour: self.hour,
-        minute: self.minute,
-        time_zone: self.time_zone
-      },
-      cyclone_strength: {
-        f_scale: self.f_scale,
-        width: self.width
-      },
-      loss: {
-        injuries: self.injuries,
-        fatalities: self.fatalities,
-        property_loss: self.property_loss,
-        crop_loss: self.crop_loss
-      },
-      location: {
-        start_lat: self.start_lat,
-        start_long: self.start_long,
-        stop_lat: self.stop_lat,
-        stop_long: self.stop_long,
-        distance: self.distance,
-        state: self.state,
-        county_code_one: self.county_code_one,
-        county_code_two: self.county_code_two,
-        county_code_three: self.county_code_three,
-        county_code_four: self.county_code_four,
-        states_crossed: self.path.states_crossed
-      },
-      path: {
-        complete_track: self.path.complete_track,
-        segment_num: self.path.segment_num
-      },
-      touchdown_weather: self.historical_weather.first, #where('hour = 0'),
-      historical_weather: self.historical_weather.offset(1).limit(24)
-    }
+    if self.has_attribute?(:hour)
+      {
+        id: self.id,
+        date: {
+          day: self.cyclone_date.day,
+          month: self.cyclone_date.month,
+          year: self.cyclone_date.year,
+          hour: self.hour,
+          minute: self.minute,
+          time_zone: self.time_zone
+        },
+        cyclone_strength: {
+          f_scale: self.f_scale,
+          width: self.width
+        },
+        loss: {
+          injuries: self.injuries,
+          fatalities: self.fatalities,
+          property_loss: self.property_loss,
+          crop_loss: self.crop_loss
+        },
+        location: {
+          start_lat: self.start_lat,
+          start_long: self.start_long,
+          stop_lat: self.stop_lat,
+          stop_long: self.stop_long,
+          distance: self.distance,
+          state: self.state,
+          county_code_one: self.county_code_one,
+          county_code_two: self.county_code_two,
+          county_code_three: self.county_code_three,
+          county_code_four: self.county_code_four,
+          states_crossed: self.path.states_crossed
+        },
+        path: {
+          complete_track: self.path.complete_track,
+          segment_num: self.path.segment_num
+        },
+        touchdown_weather: self.historical_weather.first, #where('hour = 0'),
+        historical_weather: self.historical_weather.offset(1).limit(24)
+      }
+    else
+      {
+        location: {
+          start_lat: self.start_lat,
+          start_long: self.start_long,
+          stop_lat: self.stop_lat,
+          stop_long: self.stop_long
+        },
+        cyclone_strength: {
+          f_scale: self.f_scale
+        },
+        id: self.id,
+        date: {
+          day: self.cyclone_date.day,
+          month: self.cyclone_date.month,
+          year: self.cyclone_date.year
+        }
+      }
+    end
   end
 
   def self.selectors(cyclone, params)
     if params["selectors"]
       selectors = params["selectors"].split(',')
+      cyclone_limit = 500
+      only_map_data = false
       selectors.each do |selector|
         x = selector.split(':')
-
-
-        if x[1][-1] == '+'
-          cyclone = cyclone.where(x[0] + ' >= ' + x[1][0...-1])
-        elsif x[1][-1] == '-'
-          cyclone = cyclone.where(x[0] + ' <= ' + x[1][0...-1])
+        if x[0] == 'month' || x[0] == 'day' || x[0] == 'year'
+          if x[1][-1] == '+'
+            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' >= ' + x[1][0...-1])
+          elsif x[1][-1] == '-'
+            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' <= ' + x[1][0...-1])
+          else
+            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' = ' + x[1])
+          end
+        elsif x[0] == 'records'
+          cyclone_limit = x[1]
+        elsif x[1] == 'state'
+          cyclone = cyclone.where(state: "TN")
+        elsif x[0] == "only_map_data"
+          only_map_data = x[1]
         else
-          cyclone = cyclone.where(x[0] + ' = ' + x[1])
+          if x[1][-1] == '+'
+            cyclone = cyclone.where(x[0] + ' >= ' + x[1][0...-1])
+          elsif x[1][-1] == '-'
+            cyclone = cyclone.where(x[0] + ' <= ' + x[1][0...-1])
+          else
+            cyclone = cyclone.where(x[0] + ' = ' + x[1])
+          end
         end
       end
     end
-    cyclone = cyclone.limit(10)
+    cyclone = cyclone.many_cyclone_map_data if only_map_data
+    cyclone = cyclone.limit(cyclone_limit)
   end
 
   def self.searches(params)
