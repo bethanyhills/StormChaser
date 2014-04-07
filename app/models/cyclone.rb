@@ -106,6 +106,18 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
+  def as_json_all(cyclones)
+    {
+      start_lat: self.start_lat,
+      start_long: self.start_long,
+      stop_lat: self.stop_lat,
+      stop_long: self.stop_long,
+      f_scale: self.f_scale,
+      id: self.id,
+      cyclone_date_id: self.cyclone_date_id
+    }
+  end
+
   def as_json(cyclones)
     {
       date: {
@@ -147,6 +159,39 @@ class Cyclone < ActiveRecord::Base
       historical_weather: self.historical_weather.offset(1).limit(24)
     }
   end
+
+  def self.selectors(cyclone, params)
+    if params["selectors"]
+      selectors = params["selectors"].split(',')
+      selectors.each do |selector|
+        x = selector.split(':')
+
+
+        if x[1][-1] == '+'
+          cyclone = cyclone.where(x[0] + ' >= ' + x[1][0...-1])
+        elsif x[1][-1] == '-'
+          cyclone = cyclone.where(x[0] + ' <= ' + x[1][0...-1])
+        else
+          cyclone = cyclone.where(x[0] + ' = ' + x[1])
+        end
+      end
+    end
+    cyclone = cyclone.limit(10)
+  end
+
+  def self.searches(params)
+    if params["search_name"]
+      if params["search_name"][-2..-1] == "st"
+        search = params["search_name"] + "_cyclones_first"
+      else
+        search = params["search_name"] + "_cyclones"
+      end
+      cyclone = Cyclone.send(search)
+    end
+    return cyclone
+  end
+
+
 
 private
   def self.get_weather(weather_obj, data_arr)

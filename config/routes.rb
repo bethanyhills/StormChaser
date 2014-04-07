@@ -12,8 +12,6 @@ StormChaser::Application.routes.draw do
       get 'search', to: 'searches#index'
       get 'search/:search_name', to: 'searches#search'
       get 'search/:search_name/:selectors', to: 'searches#search'
-      get 'search/deadliest', to: 'searches#deadliest'
-      get 'search/deadliest/:selectors', to: 'searches#deadliest'
     end
   end
 end

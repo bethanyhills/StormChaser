@@ -3,27 +3,13 @@ class API::V1::SearchesController < ApplicationController
   respond_to :html, :xml, :json
 
   def index
-    respond_with(Cyclone.limit(500))
+    respond_with(Cyclone.selectors(Cyclone.all, params))
   end
 
   def search
-    @cyclone = Cyclone.deadliest_cyclones_first
-    if params["selectors"]
-      selectors = params["selectors"].split(',')
-      selectors.each do |selector|
-        x = selector.split(':')
-
-
-        if x[1][-1] == '+'
-          @cyclone = @cyclone.where(x[0] + ' >= ' + x[1][0...-1])
-        elsif x[1][-1] == '-'
-          @cyclone = @cyclone.where(x[0] + ' <= ' + x[1][0...-1])
-        else
-          @cyclone = @cyclone.where(x[0] + ' = ' + x[1])
-        end
-      end
-    end
-    @cyclone = @cyclone.limit(500)
+    # @cyclone = Cyclone.deadliest_cyclones_first
+    @cyclone = Cyclone.searches(params)
+    @cyclone = Cyclone.selectors(@cyclone, params)
     respond_with(@cyclone.to_json)
   end
 
