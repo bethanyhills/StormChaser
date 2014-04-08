@@ -74,9 +74,6 @@ GEM
     foundation-icons-sass-rails (3.0.0)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
-    foundation-rails (5.2.1.0)
-      railties (>= 3.1.0)
-      sass (>= 3.2.0)
     gon (5.0.4)
       actionpack (>= 2.3.0)
       json
@@ -242,7 +239,6 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   foundation-icons-sass-rails
-  foundation-rails
   gon
   hirb
   jazz_hands

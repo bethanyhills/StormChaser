@@ -12,8 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require foundation
-//= require foundation-init
+//= require bootstrap.min
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
