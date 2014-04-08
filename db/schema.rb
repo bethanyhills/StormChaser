@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403163550) do
+ActiveRecord::Schema.define(version: 20140407222717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "avg_cyclone_data", force: true do |t|
+    t.string   "year"
+    t.float    "fatalities"
+    t.float    "property_loss"
+    t.float    "crop_loss"
+    t.float    "injuries"
+    t.float    "distance"
+    t.float    "f_scale"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cyclone_dates", force: true do |t|
     t.integer  "day"
