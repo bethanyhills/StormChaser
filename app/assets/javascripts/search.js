@@ -45,13 +45,15 @@ var plotData = function(data) {
     var start_long = data[i]["location"]["start_long"]
     var id = data[i]["id"]
     var scale = data[i]["cyclone_strength"]["f_scale"]
-    console.log(data[i]);
+    var month = data[i]["date"]["month"]
+    var day = data[i]["date"]["day"]
+    var year = data[i]["date"]["year"]
 
     // add icon to map for this tornado
     var marker = L.marker(new L.latLng(start_lat, start_long), {icon: myIcon});
 
     //bind popup to show info and redirect link to individual cyclone dashboard
-    marker.bindPopup('<p>Category ' + scale + ' Tornado on </p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
+    marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
     //add marker to holding array
     markerArray.push(marker)
     //add marker to markers layer

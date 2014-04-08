@@ -230,9 +230,6 @@ class Cyclone < ActiveRecord::Base
   end
 
   def self.searches(params)
-    puts "hello"
-    puts params
-    puts "goodbye"
     if params["search_name"]
       if params["search_name"].include? ","
         search_arg_obj = {}
