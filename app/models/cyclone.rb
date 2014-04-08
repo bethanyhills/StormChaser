@@ -58,6 +58,9 @@ class Cyclone < ActiveRecord::Base
     lat = response.body['results'][0]['geometry']['location']['lat']
     lng = response.body['results'][0]['geometry']['location']['lng']
 
+    puts "lat: #{lat}"
+    puts "long: #{lng}"
+
     self.complete_cyclone_tracks.strongest_cyclones_first.select{|cyclone| cyclone.radius_search_results(lat, lng, radius) }
   end
 
@@ -65,9 +68,13 @@ class Cyclone < ActiveRecord::Base
     # Start Point
     x1 = self.start_lat
     y1 = self.start_long
+    # Check if the start point is in the circle
+    return true if radius.to_f >= Math.sqrt((x1-xc)**2+(y1-yc)**2)*25/0.3617
     # Stop Point
     self.stop_lat == 0 ? x2 = x1 : x2 = self.stop_lat
     self.stop_long == 0 ? y2 = y1 : y2 = self.stop_long
+    #Check if the stop point is in the circle
+    return true if radius.to_f >= Math.sqrt((x2-xc)**2+(y2-yc)**2)*25/0.3617
     # Slope of Tornado Path
     y2 == y1 ? m1 = 0 : m1 = (y2 - y1) / (x2 - x1)
     # Y Intercept of Tornado Path
@@ -75,6 +82,11 @@ class Cyclone < ActiveRecord::Base
     # X and Y Intercept Points between Tornado Path and Tangent Line from Circle Center
     m1 == 0 ? xi = x2 : xi = ((yc + (xc / m1) - b1) / (m1 - (1 / m1)))
     y2 == y1 ? yi = y2 : yi = ((m1 * xi) + b1)
+    #Figure out if xi and yi is on the line segment path
+    return false if xi > x1 && xi > x2
+    return false if xi < x1 && xi < x2
+    return false if yi > y1 && yi > y2
+    return false if yi < y1 && yi < y2
     # Distance in degrees of the line from the Circle Center to the X,Y Intercept
     dist = Math.sqrt((xi - xc)**2 + (yi - yc)**2)
     # Distance in Miles
@@ -218,9 +230,12 @@ class Cyclone < ActiveRecord::Base
   end
 
   def self.searches(params)
+    puts "hello"
+    puts params
+    puts "goodbye"
     if params["search_name"]
       if params["search_name"].include? ","
-        search_arg_obj
+        search_arg_obj = {}
         search_params = params["search_name"].split(",")
         search = search_params.shift
         search_params.each do |x|
@@ -237,6 +252,7 @@ class Cyclone < ActiveRecord::Base
         cyclone = Cyclone.send(search)
       end
     end
+    p cyclone
     return cyclone
   end
 

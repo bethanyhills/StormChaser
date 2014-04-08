@@ -1,10 +1,10 @@
-$(document).ready(function() {  
+$(document).ready(function() {
 	$(".submit").on("click", function (e) {
 		e.preventDefault();
 		var city = $("#city").val();
 		var state = $("#state").val();
 		var radius = $("#radius").val();
-		var url = "../api/v1/cyclones/radius_search,city:"+city + ",state:" + state + ",radius:" + radius;
+		var url = "../api/v1/search/radius_search,city:"+city + ",state:" + state + ",radius:" + radius;
 		$.get(url, function(data) {window.x = data; plotData(data)}, "json");
 	})
 })
@@ -18,7 +18,7 @@ var southWest = L.latLng(24.396308, -124.848974),
 //create map and set bounds
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
 .setMaxBounds(bounds)
- 
+
 //array to hold markers, resets to empty with each submit
 var markerArray = [];
 //create cluster group data
@@ -34,17 +34,17 @@ var plotData = function(data) {
   var deleteMarkers = function() {
     for(i=0;i<markerArray.length;i++) {
     markers.removeLayer(markerArray[i]);
-    }  
-  } 
+    }
+  }
   //call deleteMarkers to clear map on submit
   deleteMarkers();
 
   // Construct the lat and long for each tornado.
   for (var i = 0; i < data.length; i++) {
-    var start_lat = data[i]["start_lat"]
-    var start_long = data[i]["start_long"]
+    var start_lat = data[i]["location"]["start_lat"]
+    var start_long = data[i]["location"]["start_long"]
     var id = data[i]["id"]
-    var scale = data[i]["f_scale"]
+    var scale = data[i]["cyclone_strength"]["f_scale"]
     console.log(data[i]);
 
     // add icon to map for this tornado
