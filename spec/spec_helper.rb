@@ -4,6 +4,15 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+
+StormChaser::Application.load_tasks
+Rake::Task.define_task(:environment)
+Rake::Task['db:drop']
+Rake::Task['db:create']
+Rake::Task['db:migrate']
+Rake::Task['import:only_5s'].invoke
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }

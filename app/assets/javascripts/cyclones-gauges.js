@@ -1,21 +1,16 @@
 
- // ---------
-// Gauges
-// ---------
-
 id = window.location.href.split("/").pop();
 var url = "../api/v1/cyclones/" + id
 google.load('visualization', '1', {packages:['gauge']});
-// console.log("Hello")
 google.setOnLoadCallback($.get("/cyclones/" + id + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
-// No idea why it's gon["cyclones"]["id"] instead of gon["cyclones"][0]["id"]
+
 
 
 
 drawChart = function(histdata) {
   // console.log("ehh")
   window.x = histdata;
-  // console.log("In the drawChart")
+  console.log(histdata);
   var pressure = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
     ['Pressure', histdata.currently.pressure],
@@ -72,8 +67,8 @@ drawChart = function(histdata) {
 
 // $("#tab2").on("click", function (e) {
   google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
+  google.setOnLoadCallback(drawBarChart);
+  function drawBarChart() {
     var data = google.visualization.arrayToDataTable([
       ['Item', 'Current Cyclone', 'Average Across All Cyclones'],
       ['Property Loss',  1000,      400],

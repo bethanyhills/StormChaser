@@ -117,6 +117,10 @@ namespace :import do
 
     puts "Total error count with multiple route data: #{error_count}"
 
+    #Adding the object to create the average data sets
+    average_data_obj = Hash.new()
+    average_data_obj["all"] = Hash.new(0)
+
     all_data.each do |line|
       if line[start_lat].to_i != 0 && line[start_long].to_i != 0
         unless date = CycloneDate.where(year: line[year]).where(month: line[month]).find_by(day: line[day])
@@ -131,10 +135,40 @@ namespace :import do
 
         Cyclone.create(cyclone_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
 
+        # p average_data_obj["all"]["fatalities"]
+
+        average_data_obj["all"]["fatalities"] += line[fatalities].to_f
+        average_data_obj["all"]["injuries"] += line[injuries].to_f
+        average_data_obj["all"]["property_loss"] += line[property_loss].to_f
+        average_data_obj["all"]["crop_loss"] += line[crop_loss].to_f
+        average_data_obj["all"]["f_scale"] += line[f_scale].to_f
+        average_data_obj["all"]["distance"] += line[distance].to_f
+        average_data_obj["all"]["count"] += 1
+
+        average_data_obj[line[year]] = Hash.new(0) unless average_data_obj[line[year]]
+        average_data_obj[line[year]]["fatalities"] += line[fatalities].to_f
+        average_data_obj[line[year]]["injuries"] += line[injuries].to_f
+        average_data_obj[line[year]]["property_loss"] += line[property_loss].to_f
+        average_data_obj[line[year]]["crop_loss"] += line[crop_loss].to_f
+        average_data_obj[line[year]]["f_scale"] += line[f_scale].to_f
+        average_data_obj[line[year]]["distance"] += line[distance].to_f
+        average_data_obj[line[year]]["count"] += 1
       end
       count += 1
     end
-    puts "Added #{count} tornados to the Storm model"
+    puts "Added #{count} tornados to the Cyclone model"
+    average_data_obj.each do |year, value|
+      avg_data = AvgCycloneData.new
+      avg_data.year = year
+      avg_data.fatalities = value["count"] > 0 ? value["fatalities"]/value["count"] : 0
+      avg_data.injuries = value["count"] > 0 ? value["injuries"]/value["count"] : 0
+      avg_data.property_loss = value["count"] > 0 ? value["property_loss"]/value["count"] : 0
+      avg_data.crop_loss = value["count"] > 0 ? value["crop_loss"]/value["count"] : 0
+      avg_data.f_scale = value["count"] > 0 ? value["f_scale"]/value["count"] : 0
+      avg_data.distance = value["count"] > 0 ? value["distance"]/value["count"] : 0
+      avg_data.save
+    end
+
   end
 
   task all: [:year_1950_2013] # add future tasks in here (CCRS, ELPS, etc.)

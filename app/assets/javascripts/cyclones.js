@@ -43,8 +43,9 @@ for (var i = 0; i < data.length; i++) {
 //add markers to map for clustering effect
 map.addLayer(markers);
 }//closes plotData function
-//add markers to map for clustering effect
-map.addLayer(markers);
+
+
+
 
 
 
