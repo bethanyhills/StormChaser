@@ -3,33 +3,22 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-#side {
-	display: block;
-	width: 100px;
-}
 
 .middle {
 	width: 100%;
 }
 
 #map {
-	height: 500px;
+	height: 450px;
   width: 100%;
-  margin: 0px;
-  padding-top: 0px;
-  border: 4px inset gray;
-}
-
-#index-title h1, #index-title h3 {
-	text-align: center;
-	color: white;
-	font-family: Futura;
+  margin: auto;
 }
 
 #index-footer h3 {
 	text-align: center;
 	color: white;
 	font-family: Futura;
+	margin-top: 20px;
 }
 
 #show-title h3 {
@@ -62,4 +51,36 @@ div table {
 
 #city, #state, #radius {
 	width: 200px;
+}
+
+.my-legend .legend-title {
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 90%;
+}
+.my-legend .legend-scale ul {
+  margin: 0;
+  padding: 0;
+  float: left;
+  list-style: none;
+}
+.my-legend .legend-scale ul li {
+  display: block;
+  float: left;
+  width: 50px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 80%;
+  list-style: none;
+}
+.my-legend ul.legend-labels li span {
+  display: block;
+  float: left;
+  height: 15px;
+  width: 50px;
+}
+
+.my-legend a {
+  color: #777;
 }

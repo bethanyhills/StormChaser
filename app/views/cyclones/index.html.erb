@@ -1,25 +1,30 @@
 
-<%= render 'cyclones/title_index' %>
-<div class="row container">
-<!-- left column -->
-<div class="col-md-1 side" id="side">
-  <ul class="nav nav-pills nav-stacked">
-  <li class="active"><a href="#">Home</a></li>
-  <li><a href="#">Profile</a></li>
-  <li><a href="#">Messages</a></li>
-</ul>
-</div>
-<!-- middle column -->
-<div class="col-md-10 middle">
+<div class="row">
 
-	<div id="map" class="map-large"></div>
+<!-- middle column -->
+<div class="col-md-12">
+<ul class="nav nav-pills" id="index_tab">
+  <li class="active"><a href="#5_scale">5-Scale Cyclones</a></li>
+  <li><a href="#">Costliest Cyclones</a></li>
+  <li><a href="#">Deadliest</a></li>
+  <li><a href="#">Past Year</a></li>
+</ul>
+	<div id="map"></div>
+    <div id='legend-content' style='display: none;'>
+    <div class='my-legend'>
+    <div class='legend-title'>Aggregate Total for Current View</div>
+    <div class='legend-scale'>
+      <ul class='legend-labels'>
+        <li><span style='background:#F1EEF6;'>150</span>Fatalities</li>
+        <li><span style='background:#BDC9E1;'>200</span>Property Loss</li>
+        <li><span style='background:#74A9CF;'>40</span>Crop Loss</li>
+        <li><span style='background:#2B8CBE;'>5</span>Highest F-Scale</li>
+      </ul>
+    </div>
+    </div>
 	</div>
 
-<div class="col-md-1 side"></div>
-</div>
 <%= render 'cyclones/footer_index' %>
 
 <%= javascript_include_tag "cyclones" %>
-
-
 
