@@ -12,16 +12,25 @@
 			<div id="map" class="map-medium"></div>
 		</div>
 		<div class="col-md-6">
-			<ul class="nav nav-tabs">
-			<li><a href="#" data-toggle="tab">Gauges</a>
+			<ul id="myTab" class="nav nav-tabs">
+				<li id="tab1"><a href="#gauges">Gauges</a></li>
+				<li id="tab2"><a href="#barchart">Bar Charts</a></li>
+				<li id="tab3"><a href="#histdata">Hourly Data</a></li>
+			</ul>
+		<div class="tab-content">
+  		<div class="tab-pane active" id="gauges">
 				<!-- display gauges -->
 				<div id='chart_div1'></div>
 				<div id='chart_div2'></div>
 				<div id='chart_div3'></div>
-			</li>
-			<li><a href="#" data-toggle="tab">Bar Charts</a></li>
-			<li><a href="#" data-toggle="tab">Hourly Data</a></li>
-		</ul>
+			</div>
+			<!-- display BarCharts -->
+			<div class="tab-pane" id="barchart">
+				<div id='chart_div4'></div>
+			</div>
+			<!-- display historical data -->
+			<div class="tab-pane" id="histdata">TAB 3 CONTENT</div>
+			</div>
 		</div>
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->
@@ -33,12 +42,23 @@
 
 <%= javascript_include_tag "cyclones-show" %>
 <%= javascript_include_tag "cyclones-gauges" %>
-
-<script> $('#myTab a').click(function (e) {
+<script>
+$("#myTab a:first").on("click", function (e) {
   e.preventDefault()
   $(this).tab('show')
 })
-</script>
+
+$("#myTab li:eq(1) a").on("click", function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+$("#myTab a:last").on("click", function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+</script
 
 
 

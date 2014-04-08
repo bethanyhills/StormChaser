@@ -1,6 +1,6 @@
-//create guages for individual cyclones
 
 
+  //create guages for individual cyclones
 
 google.load('visualization', '1', {packages:['gauge']});
 // console.log("Hello")
@@ -61,6 +61,35 @@ drawChart = function(histdata) {
   var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
   chart3.draw(wind_speed, wind_speed_options);
 }
+
+
+
+
+// ---------
+// Bar Chart
+// ---------
+
+
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Item', 'Current Cyclone', 'Average Across All Cyclones'],
+      ['Property Loss',  1000,      400],
+      ['Crop Loss',  1170,      460],
+      ['Fatalities',  660,       1120],
+      ['Injuries',  1030,      540]
+    ]);
+
+    var options = {
+      title: 'This Cyclone vs. Cyclone Average',
+      vAxis: {title: 'Cyclone Stats',  titleTextStyle: {color: 'red'}}
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
+    chart.draw(data, options);
+  }
 
 
 
