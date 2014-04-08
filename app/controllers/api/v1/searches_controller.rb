@@ -11,13 +11,13 @@ class API::V1::SearchesController < ApplicationController
     options = { :namespace => "app_v1", :compress => true }
     dc = Dalli::Client.new('localhost:11211', options)
     if params["selectors"]
-      @cyclone = dc.fetch(params["search_name"]+1.to_s+params["selectors"]) {
+      @cyclone = dc.fetch(params["search_name"]+params["selectors"]) {
         cyclone = Cyclone.searches(params)
         cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
         cyclone = cyclone.to_json
       }
     else
-      @cyclone = dc.fetch(params["search_name"]+1.to_s) {
+      @cyclone = dc.fetch(params["search_name"]) {
         cyclone = Cyclone.searches(params)
         cyclone = cyclone.to_json
       }
