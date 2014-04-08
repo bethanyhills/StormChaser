@@ -1,5 +1,9 @@
-//specify map bounds
+$(document).ready(function() {  
+    var url = "./api/v1/cyclones/only_map_data:true"
+    $.get(url, function(data) {window.x = data, plotData(data)}, "json");
+  })
 
+//specify map bounds
 var southWest = L.latLng(24.396308, -124.848974),
     northEast = L.latLng(49.384358, -66.885444),
     bounds = L.latLngBounds(southWest, northEast);
@@ -16,12 +20,13 @@ var myIcon = L.icon({
 //create array to hold cluster group data
 var markers = new L.MarkerClusterGroup();
 
+var plotData = function(data) {
 // Construct the lat and long for each tornado.
-for (var i = 0; i < gon.cyclones.length; i++) {
-  var start_lat = gon.cyclones[i]["start_lat"]
-  var start_long = gon.cyclones[i]["start_long"]
-  var id = gon.cyclones[i]["id"]
-  var scale = gon.cyclones[i]["f_scale"]
+for (var i = 0; i < data.length; i++) {
+  var start_lat = data[i]["location"]["start_lat"]
+  var start_long = data[i]["location"]["start_long"]
+  var id = data[i]["id"]
+  var scale = data[i]["cyclone_strength"]["f_scale"]
 
   // add icon to map for this tornado
   var marker = L.marker(new L.latLng(start_lat, start_long), {
@@ -34,6 +39,10 @@ for (var i = 0; i < gon.cyclones.length; i++) {
 
 }//closes for loop
 
+
+//add markers to map for clustering effect
+map.addLayer(markers);
+}//closes plotData function
 //add markers to map for clustering effect
 map.addLayer(markers);
 

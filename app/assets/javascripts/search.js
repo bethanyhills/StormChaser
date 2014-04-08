@@ -1,12 +1,12 @@
 $(document).ready(function() {  
-	$(".submit").on("click", function (e) {
-		e.preventDefault();
-		var city = $("#city").val();
-		var state = $("#state").val();
-		var radius = $("#radius").val();
-		var url = "/cyclones/radiussearch";
-		$.get(url, {city: city, state: state, radius: radius}, function(data) {window.x = data; plotData(data)}, "json");
-	})
+  $(".submit").on("click", function (e) {
+    e.preventDefault();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var radius = $("#radius").val();
+    var url = "../api/v1/cyclones/radius_search,city:"+city + ",state:" + state + ",radius:" + radius;
+    $.get(url, function(data) {window.x = data; plotData(data)}, "json");
+  })
 })
 
 
@@ -62,7 +62,6 @@ var plotData = function(data) {
   //add markers to map for clustering effect
   map.addLayer(markers);
 }; //close plotData function
-
 
 
 
