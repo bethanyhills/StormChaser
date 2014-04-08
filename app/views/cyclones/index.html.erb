@@ -2,17 +2,22 @@
 <%= render 'cyclones/title_index' %>
 <div class="row container">
 <!-- left column -->
-<div class="col-md-1 side"></div>
+<div class="col-md-1 side" id="side">
+  <ul class="nav nav-pills nav-stacked">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
+</div>
 <!-- middle column -->
 <div class="col-md-10 middle">
+
 	<div id="map" class="map-large"></div>
 	</div>
       <!-- right column -->
 <div class="col-md-1 side"></div>
 </div>
 <%= render 'cyclones/footer_index' %>
-
-
 
 <%= javascript_include_tag "cyclones" %>
 

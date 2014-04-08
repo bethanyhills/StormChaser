@@ -2,8 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.side {
-	width: 100%;
+
+#side {
+	display: block;
+	width: 100px;
 }
 
 .middle {
@@ -11,20 +13,11 @@
 }
 
 #map {
-	height: 400px;
+	height: 500px;
   width: 100%;
   margin: 0px;
   padding-top: 0px;
   border: 4px inset gray;
-}
-
-#map label {
-	width: auto;
-	display: inline;
-}
-
-#map img {
-	max-width: none;
 }
 
 #index-title h1, #index-title h3 {
@@ -53,7 +46,7 @@
 
 .dashboard {
 	border: 4px inset #BDBDBD;
-	height: 500px;
+	height: 600px;
 	background: black;
 	padding-top: 45px;
 }
