@@ -120,6 +120,8 @@ class Cyclone < ActiveRecord::Base
 
   def as_json(cyclones)
     if self.has_attribute?(:hour)
+      all_avg = AvgCycloneData.find_by(year: "all")
+      year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
       {
         id: self.id,
         date: {
@@ -156,6 +158,24 @@ class Cyclone < ActiveRecord::Base
         path: {
           complete_track: self.path.complete_track,
           segment_num: self.path.segment_num
+        },
+        average: {
+          all: {
+            fatalities: all_avg.fatalities,
+            property_loss: all_avg.property_loss,
+            crop_loss: all_avg.crop_loss,
+            injuries: all_avg.injuries,
+            f_scale: all_avg.f_scale,
+            distance: all_avg.distance
+          },
+          year: {
+            fatalities: year_avg.fatalities,
+            property_loss: year_avg.property_loss,
+            crop_loss: year_avg.crop_loss,
+            injuries: year_avg.injuries,
+            f_scale: year_avg.f_scale,
+            distance: year_avg.distance
+          }
         },
         touchdown_weather: self.historical_weather.first, #where('hour = 0'),
         historical_weather: self.historical_weather.offset(1).limit(24)
