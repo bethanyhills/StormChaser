@@ -1,20 +1,19 @@
 
 <%= render 'cyclones/title_show' %>
-<div class="row container">
-<!-- left column -->
-<div class="col-md-1 side"></div>
+<div class="row">
+
 
 <!-- middle column -->
-<div class="col-md-10 middle">
+<div class="col-md-12 middle">
 	<div class="dashboard">
 		<div class="col-md-6">
 			<!-- display map -->
-			<div id="map" class="map-medium"></div>
+			<div id="map"></div>
 		</div>
 		<div class="col-md-6">
 			<ul id="myTab" class="nav nav-tabs">
-				<li id="tab1"><a href="#gauges">Gauges</a></li>
-				<li id="tab2"><a href="#barchart">Bar Charts</a></li>
+				<li id="tab1"><a href="#gauges">TouchDown Data</a></li>
+				<li id="tab2"><a href="#barchart">Loss Comparison</a></li>
 				<li id="tab3"><a href="#histdata">Hourly Data</a></li>
 			</ul>
 		<div class="tab-content">
@@ -36,29 +35,11 @@
 </div> <!-- closes middle column -->
 
 <!-- right column -->
-<div class="col-md-1 side"></div>
-</div> <!-- closes container -->
-<%= render 'cyclones/footer_show' %>
+</div> <!-- closes row -->
 
 <%= javascript_include_tag "cyclones-show" %>
 <%= javascript_include_tag "cyclones-gauges" %>
-<script>
-$("#myTab a:first").on("click", function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
 
-$("#myTab li:eq(1) a").on("click", function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
-$("#myTab a:last").on("click", function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
-</script
 
 
 

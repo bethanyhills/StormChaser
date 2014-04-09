@@ -51,17 +51,10 @@ html, body {
 	font-family: Futura;
 }
 
-#show-footer {
-	text-align: center;
-	color: white;
-	font-family: Futura;
-}
-
 .dashboard {
-	border: 4px inset #BDBDBD;
-	height: 600px;
+	height: 450px;
 	background: black;
-	padding-top: 45px;
+	/*padding-top: 45px;*/
 }
 
 h3 {

@@ -2,11 +2,13 @@
 id = window.location.href.split("/").pop();
 var url = "../api/v1/cyclones/" + id
 google.load('visualization', '1', {packages:['gauge']});
+google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback($.get("/cyclones/" + id + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
 
 
-
-
+// ----------
+// Gauges
+// ----------
 drawChart = function(histdata) {
   // console.log("ehh")
   window.x = histdata;
@@ -64,17 +66,13 @@ drawChart = function(histdata) {
 // ----------
 // Bar Charts
 // ----------
-
-// $("#tab2").on("click", function (e) {
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawBarChart);
-  function drawBarChart() {
+drawBarChart = function(cyclone) {
     var data = google.visualization.arrayToDataTable([
       ['Item', 'Current Cyclone', 'Average Across All Cyclones'],
-      ['Property Loss',  1000,      400],
-      ['Crop Loss',  1170,      460],
-      ['Fatalities',  660,       1120],
-      ['Injuries',  1030,      540]
+      ['Property Loss',  cyclone.loss.property_loss, 10],
+      ['Crop Loss',  cyclone.loss.crop_loss,  50],
+      ['Fatalities',  cyclone.loss.fatalities,  100],
+      ['Injuries',  cyclone.loss.injuries,   25]
     ]);
 
     var options = {
@@ -85,4 +83,25 @@ drawChart = function(histdata) {
     var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
     chart.draw(data, options);
   }
-// })
+
+// -------------
+// Click Handler
+// -------------
+
+$("#myTab a:first").on("click", function (e) {
+  e.preventDefault()
+  google.load('visualization', '1', {packages:['gauge']});
+  google.setOnLoadCallback($.get("/cyclones/" + id + "/histweather", function(data) {setTimeout(function(){drawChart(data)},500);}, "json"));
+  $(this).tab('show')
+})
+
+$("#myTab li:eq(1) a").on("click", function (e) {
+  e.preventDefault()
+  drawBarChart(cyclone)
+  $(this).tab('show')
+})
+
+$("#myTab a:last").on("click", function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
