@@ -26,6 +26,8 @@ var markerArray = [];
 //create array to hold cluster group data
 var markers = new L.MarkerClusterGroup();
 
+
+//Function for 5-Scale Cyclones
 var plotData = function(data) {
 // Construct the lat and long for each tornado.
   var deleteMarkers = function() {
@@ -61,26 +63,30 @@ map.addLayer(markers);
 }//closes plotData function
 
 
-
+//5-Scale Cyclones
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
-  var url = "./api/v1/cyclones/only_map_data:true"
-  $.get(url, function(data) {window.x = data, plotData(data)}, "json");
+  console.log("Hello!")
+  var url = "./api/v1/search/only_map_data:true"
+  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
 })
-
+//Costliest Cyclones
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
-  $(this).tab('show')
+  var url = "./api/v1/search/costliest"
+  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
 })
-
+//Deadliest Cyclones
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
-  $(this).tab('show')
+  var url = "./api/v1/search/deadliest"
+  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
 })
-
+//Past Year
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
-  $(this).tab('show')
+  var url = "./api/v1/cyclones/year:2013"
+  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
 })
 
 
