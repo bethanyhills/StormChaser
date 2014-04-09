@@ -1,4 +1,4 @@
-$(document).ready(function() {  
+$(document).ready(function() {
     var url = "../api/v1/search/strongest/only_map_data:true"
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
@@ -11,7 +11,7 @@ var southWest = L.latLng(24.396308, -124.848974),
 // Create the map
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
   .setMaxBounds(bounds)
-  
+
 map.scrollWheelZoom.disable();
 map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
 
@@ -38,6 +38,11 @@ var plotData = function(data) {
   //call deleteMarkers to clear map on submit
   deleteMarkers();
 
+  var total_fatalities = 0
+  var total_crop_loss = 0
+  var total_prop_loss = 0
+  var strongest_tornado = 0
+
 for (var i = 0; i < data.length; i++) {
   var start_lat = data[i]["location"]["start_lat"]
   var start_long = data[i]["location"]["start_long"]
@@ -46,6 +51,12 @@ for (var i = 0; i < data.length; i++) {
   var month = data[i]["date"]["month"]
   var day = data[i]["date"]["day"]
   var year = data[i]["date"]["year"]
+  total_fatalities += data[i]["loss"]["fatalities"]
+  total_crop_loss += data[i]["loss"]["crop_loss"]
+  total_prop_loss += data[i]["loss"]["property_loss"]
+  if (strongest_tornado < data[i]["cyclone_strength"]["f_scale"]) {
+    strongest_tornado += data[i]["cyclone_strength"]["f_scale"]
+  };
 
   // add icon to map for this tornado
   var marker = L.marker(new L.latLng(start_lat, start_long), {
@@ -60,7 +71,10 @@ for (var i = 0; i < data.length; i++) {
 
 }//closes for loop
 
-
+$("#fatalities").text(total_fatalities);
+$("#proploss").text(Math.ceil(total_prop_loss));
+$("#croploss").text(Math.ceil(total_crop_loss));
+$("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
 }//closes plotData function

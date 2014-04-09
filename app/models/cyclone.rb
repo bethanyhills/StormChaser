@@ -6,7 +6,7 @@ class Cyclone < ActiveRecord::Base
   options = { :namespace => "app_v1", :compress => true }
   @dc = Dalli::Client.new('localhost:11211', options)
 
-  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id') }
+  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id', 'fatalities', 'crop_loss', 'property_loss', 'injuries') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
   scope :index_map, -> { complete_cyclone_tracks.strongest_cyclones_first.limit(500).many_cyclone_map_data }
@@ -120,7 +120,7 @@ class Cyclone < ActiveRecord::Base
   end
 
   def as_json(cyclones)
-    if self.has_attribute?(:fatalities)
+    if self.has_attribute?(:state)
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
       p self.injuries
@@ -198,6 +198,11 @@ class Cyclone < ActiveRecord::Base
           day: self.cyclone_date.day,
           month: self.cyclone_date.month,
           year: self.cyclone_date.year
+        },
+        loss: {
+          fatalities: self.fatalities,
+          property_loss: self.property_loss,
+          crop_loss: self.crop_loss
         }
       }
     end

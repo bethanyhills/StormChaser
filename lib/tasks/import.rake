@@ -130,6 +130,8 @@ namespace :import do
         hour = line[time].split(':')[0].to_i
         minute = line[time].split(':')[1].to_i
 
+        line[f_scale] = 0 if line[f_scale].to_i == -9
+
         Cyclone.create(cyclone_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
 
         average_data_obj[line[year]] = Hash.new(0) unless average_data_obj[line[year]]
