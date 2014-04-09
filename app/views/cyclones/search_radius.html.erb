@@ -1,16 +1,13 @@
-<div class="row container">
-<!-- left column -->
-<div class="small-1 columns side"></div>
-
+<div class="row">
 <!-- middle column -->
-<div class="small-10 columns middle">
+<div class="col-md-12 middle">
 	<div class="dashboard">
-		<div class="small-6 columns">
+		<div class="col-md-6">
 			<!-- display map -->
-			<div id="map" class="map-medium"></div>
+			<div id="map"></div>
 		</div>
-		<div class="small-6 columns">
-			<div class= "row" id="search-radius">
+		<div class="col-md-6">
+			<div id="search-radius">
 				<h3>Search for Tornadoes Near:</h3>
 					<%= form_for("/search", method: "get") do |f| %>
 			  <div><%= f.label :city %>
@@ -21,12 +18,10 @@
 		    <%= f.text_field :radius, autofocus: true, id: "radius" %></div>
 		    <div><%= f.submit "Search", class: "submit" %></div>
 		  		<% end -%>
-		  	</div>
-	</div> <!-- closes search -->
+		  </div> <!-- closes search -->
+		</div> <!-- closes 6 col -->
+	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->
-
-<!-- right column -->
-<div class="small-1 columns side"></div>
-</div> <!-- closes container -->
+</div> <!-- closes row -->
 
 <%= javascript_include_tag "search" %>

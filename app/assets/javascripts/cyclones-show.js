@@ -1,7 +1,7 @@
 $(document).ready(function() {  
     id = window.location.href.split("/").pop();
     var url = "../api/v1/cyclones/" + id
-    $.get(url, function(data) {window.cyclone = data, plotData(data)}, "json");
+    $.get(url, function(data) {window.cyclone = data, plotData(data), drawChart(data)}, "json");
   })
 
 //specify map bounds

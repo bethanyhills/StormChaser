@@ -14,7 +14,7 @@
 			<ul id="myTab" class="nav nav-tabs">
 				<li id="tab1"><a href="#gauges">TouchDown Data</a></li>
 				<li id="tab2"><a href="#barchart">Loss Comparison</a></li>
-				<li id="tab3"><a href="#histdata">Hourly Data</a></li>
+				<li id="tab3"><a href="#hourlydata">Hourly Data</a></li>
 			</ul>
 		<div class="tab-content">
   		<div class="tab-pane active" id="gauges">
@@ -28,13 +28,14 @@
 				<div id='chart_div4'></div>
 			</div>
 			<!-- display historical data -->
-			<div class="tab-pane" id="histdata">TAB 3 CONTENT</div>
+			<div class="tab-pane" id="hourlydata">
+         <div id='chart_div5'></div> 
+      </div>
 			</div>
 		</div>
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->
 
-<!-- right column -->
 </div> <!-- closes row -->
 
 <%= javascript_include_tag "cyclones-show" %>

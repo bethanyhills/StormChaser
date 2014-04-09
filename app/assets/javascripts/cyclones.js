@@ -1,5 +1,5 @@
 $(document).ready(function() {  
-    var url = "./api/v1/cyclones/only_map_data:true"
+    var url = "../api/v1/cyclones/only_map_data:true"
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
 
@@ -17,7 +17,7 @@ map.legendControl.addLegend(document.getElementById('legend-content').innerHTML)
 
 //create tornado icon
 var myIcon = L.icon({
-  iconUrl: 'tornado-small.png'
+  iconUrl: '../tornado-small.png'
   });
 
 //array to hold markers, resets to empty with each submit
@@ -67,26 +67,26 @@ map.addLayer(markers);
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
   console.log("Hello!")
-  var url = "./api/v1/search/only_map_data:true"
-  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
+  var url = "../api/v1/search/only_map_data:true"
+  $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Costliest Cyclones
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
-  var url = "./api/v1/search/costliest"
-  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
+  var url = "../api/v1/search/costliest"
+  $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Deadliest Cyclones
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
-  var url = "./api/v1/search/deadliest"
-  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
+  var url = "../api/v1/search/deadliest"
+  $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Past Year
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
-  var url = "./api/v1/cyclones/year:2013"
-  $.get(url, function(data) {window.x = data; console.log(data); plotData(data)}, "json");
+  var url = "../api/v1/cyclones/year:2013"
+  $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 
 
