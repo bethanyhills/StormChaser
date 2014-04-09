@@ -1,15 +1,14 @@
-<title>Bethany Nagel</title>
-  <!-- stylesheets and scripts-->
-  <link rel="stylesheet" href="index.css"/>
-</head>
+
 <body>
   <img alt="full screen background image" src="Big-Red.jpg" id="full-screen-background-image" /> 
   <div id="wrapper">
-    <p>Content could go here?</p>
+    <a class="btn btn-default" href="./cyclones" role="button">Enter Site</a>
   </div>
 </body>
 
-<script type="text/javascript" src="lightning.js" ></script>
+
+<%= javascript_include_tag "lightning" %>
+
 <script type="text/javascript">
 //get viewport dimensions
 var viewport = function(){
@@ -89,4 +88,5 @@ document.body.onmouseup = function(e){
 //lt.hide();
 </script>
 
-</html>
+
+
