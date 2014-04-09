@@ -108,9 +108,6 @@ namespace :import do
 
         elsif line[states_crossed] == 3
           puts "Three state tornado, will add later"
-        else
-          # puts "Error with the path data!"
-          # puts "#{index} has a "
         end
       end
     end
@@ -135,24 +132,16 @@ namespace :import do
 
         Cyclone.create(cyclone_date_id: date.id, path_id: path.id, f_scale: line[f_scale], hour: hour, minute: minute, time_zone: line[time_zone], state: line[state], injuries: line[injuries], fatalities: line[fatalities], property_loss: line[property_loss], crop_loss: line[crop_loss], start_lat: line[start_lat], start_long: line[start_long], stop_lat: line[stop_lat], stop_long: line[stop_long], distance: line[distance], width: line[width], county_code_one: line[county_code_one], county_code_two: line[county_code_two], county_code_three: line[county_code_three], county_code_four: line[county_code_four])
 
-        # p average_data_obj["all"]["fatalities"]
-
-        average_data_obj["all"]["fatalities"] += line[fatalities].to_f
-        average_data_obj["all"]["injuries"] += line[injuries].to_f
-        average_data_obj["all"]["property_loss"] += line[property_loss].to_f
-        average_data_obj["all"]["crop_loss"] += line[crop_loss].to_f
-        average_data_obj["all"]["f_scale"] += line[f_scale].to_f
-        average_data_obj["all"]["distance"] += line[distance].to_f
-        average_data_obj["all"]["count"] += 1
-
         average_data_obj[line[year]] = Hash.new(0) unless average_data_obj[line[year]]
-        average_data_obj[line[year]]["fatalities"] += line[fatalities].to_f
-        average_data_obj[line[year]]["injuries"] += line[injuries].to_f
-        average_data_obj[line[year]]["property_loss"] += line[property_loss].to_f
-        average_data_obj[line[year]]["crop_loss"] += line[crop_loss].to_f
-        average_data_obj[line[year]]["f_scale"] += line[f_scale].to_f
-        average_data_obj[line[year]]["distance"] += line[distance].to_f
-        average_data_obj[line[year]]["count"] += 1
+        ["all", line[year]].each do |year|
+          average_data_obj[year]["fatalities"] += line[fatalities].to_f
+          average_data_obj[year]["injuries"] += line[injuries].to_f
+          average_data_obj[year]["property_loss"] += line[property_loss].to_f
+          average_data_obj[year]["crop_loss"] += line[crop_loss].to_f
+          average_data_obj[year]["f_scale"] += line[f_scale].to_f
+          average_data_obj[year]["distance"] += line[distance].to_f
+          average_data_obj[year]["count"] += 1
+        end
       end
       count += 1
     end
@@ -174,21 +163,15 @@ namespace :import do
   task all: [:year_1950_2013] # add future tasks in here (CCRS, ELPS, etc.)
 
   task year_2011: :environment do
-
     data_model_addition('torn_2011')
-
   end
 
   task year_1950_2013: :environment do
-
     data_model_addition('torn_1950-2013')
-
   end
 
   task only_5s: :environment do
-
     data_model_addition('torn_1950-2013', 5)
-
   end
 
 end

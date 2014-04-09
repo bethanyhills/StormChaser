@@ -3,6 +3,9 @@ class Cyclone < ActiveRecord::Base
   belongs_to :path
   has_many :historical_weather
 
+  options = { :namespace => "app_v1", :compress => true }
+  @dc = Dalli::Client.new('localhost:11211', options)
+
   scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
@@ -44,12 +47,11 @@ class Cyclone < ActiveRecord::Base
 
       cyclone.add_weather(response.body)
 
-      location_data = response.body
+      response.body
     end
   end
 
   def self.radius_search(params)
-
     city = params['city'].gsub(' ', '+')
     state = params['state']
     radius = params['radius']
@@ -96,7 +98,6 @@ class Cyclone < ActiveRecord::Base
   end
 
   def add_weather(data)
-
     currently = data["currently"]
     weather = self.historical_weather.new
     weather.temperature = currently["temperature"] if currently["temperature"]
@@ -250,6 +251,22 @@ class Cyclone < ActiveRecord::Base
     cyclone = cyclone.limit(cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
   end
 
+  def self.search(params)
+    if params["selectors"]
+      @cyclone = @dc.fetch(params["search_name"]+params["selectors"]) {
+        cyclone = Cyclone.searches(params)
+        cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
+        cyclone = cyclone.to_json
+      }
+    else
+      @cyclone = @dc.fetch(params["search_name"]) {
+        cyclone = Cyclone.searches(params)
+        cyclone = cyclone.to_json
+      }
+    end
+  end
+
+private
   def self.searches(params)
     if params["search_name"]
       # If it is a search that takes params, like radius_search, split the params up
@@ -274,24 +291,6 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
-  def self.search(params)
-    options = { :namespace => "app_v1", :compress => true }
-    dc = Dalli::Client.new('localhost:11211', options)
-    if params["selectors"]
-      @cyclone = dc.fetch(params["search_name"]+params["selectors"]) {
-        cyclone = Cyclone.searches(params)
-        cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
-        cyclone = cyclone.to_json
-      }
-    else
-      @cyclone = dc.fetch(params["search_name"]) {
-        cyclone = Cyclone.searches(params)
-        cyclone = cyclone.to_json
-      }
-    end
-  end
-
-private
   def self.get_weather(weather_obj, data_arr)
     if data_arr["hour"] == -9
       current = weather_obj["currently"] = {}
@@ -309,7 +308,4 @@ private
     end
     weather_obj
   end
-
-
-
 end
