@@ -1,5 +1,5 @@
 $(document).ready(function() {  
-    var url = "../api/v1/cyclones/only_map_data:true"
+    var url = "../api/v1/search/strongest/only_map_data:true"
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
 
@@ -43,13 +43,16 @@ for (var i = 0; i < data.length; i++) {
   var start_long = data[i]["location"]["start_long"]
   var id = data[i]["id"]
   var scale = data[i]["cyclone_strength"]["f_scale"]
+  var month = data[i]["date"]["month"]
+  var day = data[i]["date"]["day"]
+  var year = data[i]["date"]["year"]
 
   // add icon to map for this tornado
   var marker = L.marker(new L.latLng(start_lat, start_long), {
       icon: myIcon}
   );
   //bind popup to show info and redirect link to individual cyclone dashboard
-  marker.bindPopup('<p>Category ' + scale + ' Tornado</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
+  marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
   //add marker to markers array
   markerArray.push(marker)
   //add marker to markers layer
@@ -67,27 +70,29 @@ map.addLayer(markers);
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
   console.log("Hello!")
-  var url = "../api/v1/search/only_map_data:true"
+  var url = "../api/v1/search/strongest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Costliest Cyclones
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
-  var url = "../api/v1/search/costliest"
+  var url = "../api/v1/search/costliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Deadliest Cyclones
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
-  var url = "../api/v1/search/deadliest"
+  var url = "../api/v1/search/deadliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 //Past Year
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
-  var url = "../api/v1/cyclones/year:2013"
+  var url = "../api/v1/search/strongest/year:2013,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
 })
 
 
-  
+
+
+

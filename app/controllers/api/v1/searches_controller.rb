@@ -7,10 +7,7 @@ class API::V1::SearchesController < ApplicationController
   end
 
   def search
-    # @cyclone = Cyclone.deadliest_cyclones_first
-    @cyclone = Cyclone.searches(params)
-    @cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
-    respond_with(@cyclone.to_json)
+    respond_with(Cyclone.search(params))
   end
 
 end

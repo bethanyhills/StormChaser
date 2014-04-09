@@ -3,6 +3,9 @@ class Cyclone < ActiveRecord::Base
   belongs_to :path
   has_many :historical_weather
 
+  options = { :namespace => "app_v1", :compress => true }
+  @dc = Dalli::Client.new('localhost:11211', options)
+
   scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
@@ -44,12 +47,11 @@ class Cyclone < ActiveRecord::Base
 
       cyclone.add_weather(response.body)
 
-      location_data = response.body
+      response.body
     end
   end
 
   def self.radius_search(params)
-
     city = params['city'].gsub(' ', '+')
     state = params['state']
     radius = params['radius']
@@ -96,7 +98,6 @@ class Cyclone < ActiveRecord::Base
   end
 
   def add_weather(data)
-
     currently = data["currently"]
     weather = self.historical_weather.new
     weather.temperature = currently["temperature"] if currently["temperature"]
@@ -118,20 +119,11 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
-  def as_json_all(cyclones)
-    {
-      start_lat: self.start_lat,
-      start_long: self.start_long,
-      stop_lat: self.stop_lat,
-      stop_long: self.stop_long,
-      f_scale: self.f_scale,
-      id: self.id,
-      cyclone_date_id: self.cyclone_date_id
-    }
-  end
-
   def as_json(cyclones)
-    if self.has_attribute?(:hour)
+    if self.has_attribute?(:fatalities)
+      all_avg = AvgCycloneData.find_by(year: "all")
+      year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
+      p self.injuries
       {
         id: self.id,
         date: {
@@ -169,6 +161,24 @@ class Cyclone < ActiveRecord::Base
           complete_track: self.path.complete_track,
           segment_num: self.path.segment_num
         },
+        average: {
+          all: {
+            fatalities: all_avg.fatalities,
+            property_loss: all_avg.property_loss,
+            crop_loss: all_avg.crop_loss,
+            injuries: all_avg.injuries,
+            f_scale: all_avg.f_scale,
+            distance: all_avg.distance
+          },
+          year: {
+            fatalities: year_avg.fatalities,
+            property_loss: year_avg.property_loss,
+            crop_loss: year_avg.crop_loss,
+            injuries: year_avg.injuries,
+            f_scale: year_avg.f_scale,
+            distance: year_avg.distance
+          }
+        },
         touchdown_weather: self.historical_weather.first, #where('hour = 0'),
         historical_weather: self.historical_weather.offset(1).limit(24)
       }
@@ -193,57 +203,85 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
+  # This method takes the cyclone records and the params hash and uses the different types of
+  # selectors on them using primarily .where, but also .joins.where for date values
+  # There is currently an error with the state value
+  # Records determines the number of records to return and does so AFTER everything else is selected
+  # only_map_data determines if the data is being pruned to only include data for plotting.
+  # This is to reduce the amount of data being sent over if it is only be shown on a map.
+
   def self.selectors(cyclone, params)
     if params["selectors"]
+      #Split the selectors by the comma into inidividual key value pairs
       selectors = params["selectors"].split(',')
-      cyclone_limit = 500
-      only_map_data = false
+      cyclone_limit = 500 #Set the default return value to 500 records
+      only_map_data = false #Set the default map_data return to be all parts of the record
       selectors.each do |selector|
-        x = selector.split(':')
-        if x[0] == 'month' || x[0] == 'day' || x[0] == 'year'
-          if x[1][-1] == '+'
-            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' >= ' + x[1][0...-1])
-          elsif x[1][-1] == '-'
-            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' <= ' + x[1][0...-1])
+        split_selector = selector.split(':')
+        selector_key = 0
+        selector_value = 1
+        # If a date selector, use the .joins.where
+        if split_selector[selector_key] == 'month' || split_selector[selector_key] == 'day' || split_selector[selector_key] == 'year'
+          if split_selector[selector_value][-1] == '+'
+            cyclone = cyclone.joins(:cyclone_date).where(split_selector[selector_key] + ' >= ' + split_selector[selector_value][0...-1])
+          elsif split_selector[selector_value][-1] == '-'
+            cyclone = cyclone.joins(:cyclone_date).where(split_selector[selector_key] + ' <= ' + split_selector[selector_value][0...-1])
           else
-            cyclone = cyclone.joins(:cyclone_date).where(x[0] + ' = ' + x[1])
+            cyclone = cyclone.joins(:cyclone_date).where(split_selector[selector_key] + ' = ' + split_selector[selector_value])
           end
-        elsif x[0] == 'records'
-          cyclone_limit = x[1]
-        elsif x[1] == 'state'
-          cyclone = cyclone.where(state: "TN")
-        elsif x[0] == "only_map_data"
-          only_map_data = x[1]
+        elsif split_selector[selector_key] == 'records'
+          cyclone_limit = split_selector[selector_value]
+        elsif split_selector[selector_value] == 'state'
+          cyclone = cyclone.where(state: "TN")  # ERROR HERE!!!!
+        elsif split_selector[selector_key] == "only_map_data"
+          only_map_data = split_selector[selector_value]
+        # If any other type of record, use the .where
         else
-          if x[1][-1] == '+'
-            cyclone = cyclone.where(x[0] + ' >= ' + x[1][0...-1])
-          elsif x[1][-1] == '-'
-            cyclone = cyclone.where(x[0] + ' <= ' + x[1][0...-1])
+          if split_selector[selector_value][-1] == '+'
+            cyclone = cyclone.where(split_selector[selector_key] + ' >= ' + split_selector[selector_value][0...-1])
+          elsif split_selector[selector_value][-1] == '-'
+            cyclone = cyclone.where(split_selector[selector_key] + ' <= ' + split_selector[selector_value][0...-1])
           else
-            cyclone = cyclone.where(x[0] + ' = ' + x[1])
+            cyclone = cyclone.where(split_selector[selector_key] + ' = ' + split_selector[selector_value])
           end
         end
       end
     end
+    #Selects the map data if needed, runs at the end to not break any other selectors
     cyclone = cyclone.many_cyclone_map_data if only_map_data
-    cyclone = cyclone.limit(cyclone_limit)
+    cyclone = cyclone.limit(cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
   end
 
+  def self.search(params)
+    if params["selectors"]
+      @cyclone = @dc.fetch(params["search_name"]+params["selectors"]) {
+        cyclone = Cyclone.searches(params)
+        cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
+        cyclone = cyclone.to_json
+      }
+    else
+      @cyclone = @dc.fetch(params["search_name"]) {
+        cyclone = Cyclone.searches(params)
+        cyclone = cyclone.to_json
+      }
+    end
+  end
+
+private
   def self.searches(params)
-    puts "hello"
-    puts params
-    puts "goodbye"
     if params["search_name"]
+      # If it is a search that takes params, like radius_search, split the params up
       if params["search_name"].include? ","
         search_arg_obj = {}
         search_params = params["search_name"].split(",")
         search = search_params.shift
-        search_params.each do |x|
-          x = x.split(":")
-          search_arg_obj[x[0]] = x[1]
+        search_params.each do |param|
+          split_param = param.split(":")
+          search_arg_obj[split_param[0]] = split_param[1]
         end
         cyclone = Cyclone.send(search, search_arg_obj)
       else
+        #If the search name ends in st, add _cyclones_first to it
         if params["search_name"][-2..-1] == "st"
           search = params["search_name"] + "_cyclones_first"
         else
@@ -252,13 +290,8 @@ class Cyclone < ActiveRecord::Base
         cyclone = Cyclone.send(search)
       end
     end
-    p cyclone
-    return cyclone
   end
 
-
-
-private
   def self.get_weather(weather_obj, data_arr)
     if data_arr["hour"] == -9
       current = weather_obj["currently"] = {}
@@ -276,7 +309,4 @@ private
     end
     weather_obj
   end
-
-
-
 end
