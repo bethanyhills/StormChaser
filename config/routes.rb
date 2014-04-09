@@ -1,6 +1,6 @@
 StormChaser::Application.routes.draw do
   devise_for :users
-  root "cyclones#index"
+  root "cyclones#landing_page"
   resources :users
   get '/cyclones/radiussearch', to: 'cyclones#search_api_call'
   get '/cyclones/:id/histweather', to: 'cyclones#hist_weather_api'

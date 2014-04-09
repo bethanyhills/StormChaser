@@ -29,4 +29,8 @@ class CyclonesController < ApplicationController
       format.json { render :json => Cyclone.radius_search(params)}
     end
   end
+
+  def landing_page
+    
+  end
 end
