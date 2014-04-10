@@ -9,19 +9,22 @@ var southWest = L.latLng(24.396308, -124.848974),
     bounds = L.latLngBounds(southWest, northEast);
 
 // Create the map
-var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
-  .setMaxBounds(bounds)
+var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
+        minZoom: 4,
+        maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
 
 map.scrollWheelZoom.disable();
 map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
 
 //create tornado icon
 var myIcon = L.icon({
-  iconUrl: '../tornado-small.png'
+  iconUrl: '../tornado-small.png',
+  "iconAnchor": [12, 24]
   });
 
 //array to hold markers, resets to empty with each submit
 var markerArray = [];
+var lineArray = [];
 
 //create array to hold cluster group data
 var markers = new L.MarkerClusterGroup();
@@ -33,6 +36,7 @@ var plotData = function(data) {
   var deleteMarkers = function() {
     for(i=0;i<markerArray.length;i++) {
     markers.removeLayer(markerArray[i]);
+    markers.removeLayer(lineArray[i])
     }
   }
   //call deleteMarkers to clear map on submit
@@ -46,6 +50,8 @@ var plotData = function(data) {
 for (var i = 0; i < data.length; i++) {
   var start_lat = data[i]["location"]["start_lat"]
   var start_long = data[i]["location"]["start_long"]
+  var stop_lat = data[i]["location"]["stop_lat"]
+  var stop_long = data[i]["location"]["stop_long"]
   var id = data[i]["id"]
   var scale = data[i]["cyclone_strength"]["f_scale"]
   var month = data[i]["date"]["month"]
@@ -62,12 +68,21 @@ for (var i = 0; i < data.length; i++) {
   var marker = L.marker(new L.latLng(start_lat, start_long), {
       icon: myIcon}
   );
+
+  var polyline_options = {
+    color: '#000'
+  };
+
+  var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
+
   //bind popup to show info and redirect link to individual cyclone dashboard
   marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
   //add marker to markers array
   markerArray.push(marker)
+  lineArray.push(line)
   //add marker to markers layer
   markers.addLayer(marker);
+  markers.addLayer(line);
 
 }//closes for loop
 
@@ -77,7 +92,34 @@ $("#croploss").text(Math.ceil(total_crop_loss));
 $("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
+
+// console.log(markers)
+
+// map.on('zoomend', function() {
+//   // here's where you decided what zoom levels the layer should and should
+//   // not be available for: use javascript comparisons like < and > if
+//   // you want something other than just one zoom level, like
+//   // (map.getZoom > 10)
+//   if (map.getZoom() >= 6) {
+//     // setFilter is available on L.mapbox.featureLayers only. Here
+//     // we're hiding and showing the default marker layer that's attached
+//     // to the map - change the reference if you want to hide or show a
+//     // different featureLayer.
+//     // If you want to hide or show a different kind of layer, you can use
+//     // similar methods like .setOpacity(0) and .setOpacity(1)
+//     // to hide or show it.
+//     console.log("Close enough")
+//     markers.addLayer(line);
+//     map.addLayer(markers);
+//   } else {
+//     map.featureLayer.setFilter(function() { return false; });
+//   }
+// });
+
+
 }//closes plotData function
+
+
 
 
 //5-Scale Cyclones

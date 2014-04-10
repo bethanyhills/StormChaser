@@ -1,4 +1,4 @@
-$(document).ready(function() {  
+$(document).ready(function() {
     id = window.location.href.split("/").pop();
     var url = "../api/v1/cyclones/" + id
     $.get(url, function(data) {window.cyclone = data, plotData(data), drawChart(data)}, "json");
@@ -15,19 +15,35 @@ var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
 
 //create tornado icon
 var myIcon = L.icon({
-  iconUrl: '../tornado-small.png'
+  iconUrl: '../tornado-small.png',
+  "iconAnchor": [12, 24]
 });
 
 var plotData = function(data) {
 // Construct the lat and long for this tornado.
   var start_lat = data["location"]["start_lat"]
   var start_long = data["location"]["start_long"]
+  var stop_lat = data["location"]["stop_lat"]
+  var stop_long = data["location"]["stop_long"]
   var id = data["id"]
   var scale = data["f_scale"]
 
+polyline = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], {color: '#000'})
+
   // add icon to map for this tornado, bind popup, and set url to redirect to specific storm dashboard.
-L.marker([start_lat, start_long], {icon: myIcon, alt: id})
-  .addTo(map)
+L.marker([start_lat, start_long], {icon: myIcon, alt: id}).addTo(map)
+polyline.addTo(map)
+
+bounds = polyline.getBounds()
+console.log(bounds)
+
+if (bounds._northEast.lat - bounds._southWest.lat < 0.1) {
+  map.setView([start_lat, start_long], 10);
+} else {
+  map.fitBounds(polyline.getBounds())
+}
+
+
 } //closes plotData function
 
 

@@ -19,17 +19,17 @@ html, body {
 }
 
 .nav-tabs>li.active>a {
-  background-color: #303335 !important; 
+  background-color: #303335 !important;
   color:white !important;
 }
 
 .nav-pills>li>a {
   color:white;
-  background-color: 
+  background-color:
 }
 
 .nav-pills>li.active>a {
-  background-color: white !important; 
+  background-color: white !important;
   border-color: #303335 !important;
   color:black !important;
 }
@@ -64,7 +64,7 @@ html, body {
 }
 
 #map {
-	height: 400px;
+	height: 500px;
   width: 100%;
   margin: auto;
   border-top: black 1px solid;
