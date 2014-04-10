@@ -4,14 +4,10 @@ $(document).ready(function() {
     $.get(url, function(data) {window.cyclone = data, plotData(data), drawChart(data)}, "json");
   })
 
-//specify map bounds
-var southWest = L.latLng(24.396308, -124.848974),
-    northEast = L.latLng(49.384358, -66.885444),
-    bounds = L.latLngBounds(southWest, northEast);
-
 // Create the map
-var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
-  .setMaxBounds(bounds)
+var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
+        minZoom: 4,
+        maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
 
 //create tornado icon
 var myIcon = L.icon({

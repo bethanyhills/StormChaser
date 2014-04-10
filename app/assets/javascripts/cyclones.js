@@ -3,11 +3,6 @@ $(document).ready(function() {
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
 
-//specify map bounds
-var southWest = L.latLng(24.396308, -124.848974),
-    northEast = L.latLng(49.384358, -66.885444),
-    bounds = L.latLngBounds(southWest, northEast);
-
 // Create the map
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
         minZoom: 4,
