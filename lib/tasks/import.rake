@@ -41,7 +41,7 @@ namespace :import do
 
 
     CSV.read("lib/assets/" + data_file + ".csv", encoding: 'windows-1251:utf-8').to_a[0..-1].each do |line|
-      if line[start_lat].to_i == 0 || line[segment_num].to_i == -9
+      if line[start_lat].to_i == 0 || line[segment_num].to_i == -9 || line[f_scale].to_i == -9
         puts "Bad data skipped!"
       else
         all_data << line.concat([false]) if line[f_scale].to_i >= strength

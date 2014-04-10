@@ -9,17 +9,18 @@ google.load("visualization", "1", {packages:["corechart"]});
 // Gauges
 // ----------
 var drawChart = function(cyclone) {
-  console.log(cyclone)
+  // console.log(cyclone)
   var touchdown = cyclone.touchdown_weather;
-  console.log(touchdown)
+  // console.log(touchdown)
   if (touchdown == null) {
-    console.log("Getting")
-    $.get("/cyclones/" + id + "/histweather", function(data) {gaugesData(data)}, "json");
+    // console.log("Getting")
+    $.get("/cyclones/" + id + "/histweather", function(data) {gaugesData(data.currently)}, "json");
   } else {
     gaugesData(touchdown);
   }
-  
+
   function gaugesData(touchdown) {
+    // console.log(touchdown)
     var pressure = google.visualization.arrayToDataTable([
       ['Label', 'Value'],
       ['Pressure', touchdown.pressure],
@@ -32,7 +33,7 @@ var drawChart = function(cyclone) {
 
     var wind_speed = google.visualization.arrayToDataTable([
       ['Label', 'Value'],
-      ['Wind Speed', touchdown.wind_speed]
+      ['Wind Speed', touchdown.windSpeed]
     ]);
 
     var pressure_options = {
@@ -99,12 +100,12 @@ var drawLineChart = function(cyclone) {
   var hourly_arr = cyclone.historical_weather
   var arr = [['Hour', 'Pressure']];
   for (var i =0; i < hourly_arr.length; i++) {
-       arr.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].pressure]); 
+       arr.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].pressure]);
     }
-  console.log(arr);
-  
+  // console.log(arr);
+
   var data = google.visualization.arrayToDataTable(arr);
-  console.log(data)
+  // console.log(data)
 
   var options = {
     title: 'Pressure'
@@ -112,7 +113,7 @@ var drawLineChart = function(cyclone) {
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
   chart.draw(data, options);
-  console.log(chart)
+  // console.log(chart)
 }
 
 // -------------
