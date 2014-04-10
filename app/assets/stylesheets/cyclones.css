@@ -9,6 +9,32 @@ html, body {
   margin: 0;
 }
 
+.nav-tabs>li>a {
+  color:black;
+  background-color: white;
+  border-color: gray !important;
+}
+.nav-tabs>li>a:hover {
+  background-color: gray !important;
+}
+
+.nav-tabs>li.active>a {
+  background-color: #303335 !important; 
+  color:white !important;
+}
+
+.nav-pills>li>a {
+  color:white;
+  background-color: 
+}
+
+.nav-pills>li.active>a {
+  background-color: white !important; 
+  border-color: #303335 !important;
+  color:black !important;
+}
+
+
 #full-screen-background-image {
   z-index: -999;
   min-height: 100%;
@@ -28,14 +54,20 @@ html, body {
   color: #333;
 }
 
+.main {
+  margin-top: 50px;
+  /*border-top: black 1px solid;*/
+}
+
 .middle {
 	width: 100%;
 }
 
 #map {
-	height: 450px;
+	height: 400px;
   width: 100%;
   margin: auto;
+  border-top: black 1px solid;
 }
 
 #index-footer h3 {

@@ -83,27 +83,30 @@ map.addLayer(markers);
 //5-Scale Cyclones
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
-  console.log("Hello!")
   var url = "../api/v1/search/strongest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
+  $(this).tab('show');
 })
 //Costliest Cyclones
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
   var url = "../api/v1/search/costliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
+  $(this).tab('show');
 })
 //Deadliest Cyclones
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
   var url = "../api/v1/search/deadliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
+  $(this).tab('show')
 })
 //Past Year
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
   var url = "../api/v1/search/strongest/year:2013,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
+  $(this).tab('show')
 })
 
 

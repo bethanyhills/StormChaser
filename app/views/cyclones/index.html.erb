@@ -1,12 +1,12 @@
-<div class="row">
+<div class="row main">
 
 <!-- middle column -->
 <div class="col-md-12">
-<ul class="nav nav-pills" id="index_tab">
+<ul class="nav nav-tabs nav-justified" id="index_tab">
   <li class="active"><a href="#5_scale">5-Scale Cyclones</a></li>
-  <li><a href="#">Costliest Cyclones</a></li>
-  <li><a href="#">Deadliest</a></li>
-  <li><a href="#">Past Year</a></li>
+  <li><a href="#costliest">Costliest Cyclones</a></li>
+  <li><a href="#deadliest">Deadliest</a></li>
+  <li><a href="#past_year">Past Year</a></li>
 </ul>
 	<div id="map"></div>
     <div id='legend-content' style='display: none;'>
@@ -22,8 +22,6 @@
     </div>
     </div>
 	</div>
-
-<%= render 'cyclones/footer_index' %>
 
 <%= javascript_include_tag "cyclones" %>
 

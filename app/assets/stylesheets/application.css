@@ -15,13 +15,20 @@
  *= require bootstrap.min
  */
 
- body {
- 	background-color: #2E2E2E !important;
- }
-
-#logo {
-  padding-top: 10px;
+.navbar {
+  background-color: #303335 !important;
 }
 
+.navbar a {
+  color: white;
+}
 
+#logo {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+body {
+  background-color: #BDDDDD !important;
+}
 
