@@ -1,92 +1,13 @@
 
 <body>
-  <img alt="full screen background image" src="Big-Red.jpg" id="full-screen-background-image" /> 
+  <img alt="full screen background image" src="westpoint2.gif" id="full-screen-background-image" /> 
   <div id="wrapper">
     <a class="btn btn-default" href="./cyclones" role="button">Enter Site</a>
   </div>
 </body>
 
 
-<%= javascript_include_tag "lightning" %>
 
-<script type="text/javascript">
-//get viewport dimensions
-var viewport = function(){
-  var viewport = new Object();
-  viewport.width = 0;
-  viewport.height = 0;
-  // the more standards compliant browsers (mozilla/netscape/opera/IE7) 
-  //use window.innerWidth and window.innerHeight
-  if (typeof window.innerWidth != 'undefined')
-  {
-    viewport.width = window.innerWidth,
-    viewport.height = window.innerHeight
-  }
-  else if (typeof document.documentElement != 'undefined'
-  && typeof document.documentElement.clientWidth !=
-  'undefined' && document.documentElement.clientWidth != 0)
-  {
-    viewport.width = document.documentElement.clientWidth,
-    viewport.height = document.documentElement.clientHeight
-  }
-  else
-  {
-    viewport.width = document.getElementsByTagName('body')[0].clientWidth,
-    viewport.height = document.getElementsByTagName('body')[0].clientHeight
-  }
-  return viewport;
-};
-
-var v = viewport();
-  
-//generate random coordinates at one of the sides
-function randomSide(){
-  var startX;
-  var startY;
-  var rand = Math.random();
-  if(rand <= 0.25){
-    startX = Math.random(0,v.width);
-    startY = 0
-  }
-  else if(rand <= 0.5){
-    startX = Math.random(0,v.width);
-    startY = v.height;
-  }
-  else if(rand <= 0.75){
-    startX = 0;
-    startY = Math.random(0,v.height);
-  }
-  else if(rand <= 1){
-    startX = v.width;
-    startY = Math.random(0,v.height);
-  }
-  var ob = {};
-  ob.startX = startX;
-  ob.startY = startY;
-  return ob;
-}
-
-var lt = new lightning({glow: false});
-var draw = false;
-document.body.onmousedown = function(e){
-  var ob = randomSide();
-  lt.show(ob.startX, ob.startY, e.clientX, e.clientY);
-  draw = true;
-}
-document.body.onmousemove = function(e){
-  if(draw)
-  {
-    lt.hide();
-    var ob = randomSide();
-    lt.show(ob.startX, ob.startY, e.clientX, e.clientY);
-  }
-}
-document.body.onmouseup = function(e){
-  draw = false;
-  lt.hide();
-}
-//lt.hide();
-</script>
 
 
 
