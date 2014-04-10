@@ -55,8 +55,11 @@ html, body {
 }
 
 .main {
-  margin-top: 50px;
-  /*border-top: black 1px solid;*/
+  margin-top: 75px;
+}
+
+.show {
+  margin-top: 75px;
 }
 
 .middle {
@@ -68,6 +71,7 @@ html, body {
   width: 100%;
   margin: auto;
   border-top: black 1px solid;
+  border-bottom: black 1px solid;
 }
 
 #index-footer h3 {
@@ -84,8 +88,8 @@ html, body {
 }
 
 .dashboard {
-	height: 450px;
-	background: black;
+	height: 400px;
+	background: #303335;
 	/*padding-top: 45px;*/
 }
 
@@ -95,7 +99,7 @@ h3 {
 }
 
 div table {
-	background: black;
+	background: #303335;
 }
 
 #city, #state, #radius {

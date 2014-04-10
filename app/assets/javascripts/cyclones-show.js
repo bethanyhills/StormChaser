@@ -13,6 +13,8 @@ var southWest = L.latLng(24.396308, -124.848974),
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
   .setMaxBounds(bounds)
 
+map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
+
 //create tornado icon
 var myIcon = L.icon({
   iconUrl: '../tornado-small.png'
@@ -23,7 +25,13 @@ var plotData = function(data) {
   var start_lat = data["location"]["start_lat"]
   var start_long = data["location"]["start_long"]
   var id = data["id"]
-  var scale = data["f_scale"]
+  var scale = data["cyclone_strength"]["f_scale"]
+  var month = data["date"]["month"]
+  var day = data["date"]["day"]
+  var year = data["date"]["year"]
+
+  $("#date").text("Date: " + month +"/"+ day + "/" + year);
+  $("#f_scale").text("F-Scale: " + scale);
 
   // add icon to map for this tornado, bind popup, and set url to redirect to specific storm dashboard.
 L.marker([start_lat, start_long], {icon: myIcon, alt: id})

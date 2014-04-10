@@ -19,6 +19,8 @@ var southWest = L.latLng(24.396308, -124.848974),
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
 .setMaxBounds(bounds)
 
+map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
+
 //array to hold markers, resets to empty with each submit
 var markerArray = [];
 //create cluster group data

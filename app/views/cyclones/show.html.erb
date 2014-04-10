@@ -1,6 +1,5 @@
 
-<%= render 'cyclones/title_show' %>
-<div class="row">
+<div class="row show">
 
 
 <!-- middle column -->
@@ -9,7 +8,18 @@
 		<div class="col-md-6">
 			<!-- display map -->
 			<div id="map"></div>
-		</div>
+			<div id='legend-content' style='display: none;'>
+		    <div class='my-legend'>
+		    <div class='legend-title'>Cyclone Data</div>
+		    <div class='legend-scale'>
+		      <ul class='legend-labels'>
+		      	<li id="date">Date</li>
+		        <li id="f_scale">F-Scale</li>
+		      </ul>
+		    </div> <!-- closes legend scale -->
+		  </div> <!-- closes my legend -->
+		  </div> <!-- closes legend-content -->
+		</div> <!-- closes first column -->
 		<div class="col-md-6">
 			<ul id="myTab" class="nav nav-pills nav-justified">
 				<li id="tab1"><a href="#gauges">TouchDown Data</a></li>
