@@ -23,4 +23,10 @@ class API::V1::CyclonesController < ApplicationController
     respond_with(cyclone.to_json)
   end
 
+  def hist_weather_api
+    respond_to do |format|
+      format.json { render :json => Cyclone.historical_data(params[:id]) }
+    end
+  end
+
 end
