@@ -2,8 +2,8 @@
 $(document).ready(function() {
 	$(".submit").on("click", function (e) {
 		e.preventDefault();
-		var city = $("#city").val();
-		var state = $("#state").val();
+		var city = $("#citysearch").val();
+		var state = $("#statesearch").val();
 		var url = "../api/v1/search/radius_search,city:"+city + ",state:" + state + ",radius:25";
 		$.get(url, function(data) {window.x = data; plotData(data)}, "json");
 	})
@@ -18,8 +18,6 @@ var southWest = L.latLng(24.396308, -124.848974),
 //create map and set bounds
 var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
 .setMaxBounds(bounds)
-
-map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
 
 //array to hold markers, resets to empty with each submit
 var markerArray = [];

@@ -1,36 +1,37 @@
-<div class="row">
+<div class="row main">
 <!-- middle column -->
 <div class="col-md-12 middle">
 	<div class="dashboard">
-		<div class="col-md-6">
+		<div class="col-md-9">
 			<!-- display map -->
 			<div id="map"></div>
-			<div id='legend-content' style='display: none;'>
-	    <div class='my-legend'>
-	    <div class='legend-title'>Aggregate Total for Current View</div>
-	    <div class='legend-scale'>
-	      <ul class='legend-labels'>
-	        <li><span id="fatalities" style='background:#F1EEF6;'>150</span>Fatalities</li>
-	        <li><span id="proploss" style='background:#BDC9E1;'>200</span>Property Loss</li>
-	        <li><span id="croploss" style='background:#74A9CF;'>40</span>Crop Loss</li>
-	        <li><span id="highestfscale" style='background:#2B8CBE;'>5</span>Highest F-Scale</li>
-	      </ul>
 	    </div>
-	  </div>
-	    </div>
-		</div>
-		<div class="col-md-6">
+		<div class="col-md-3" id="search_box">
 			<div id="search-radius">
-				<h3>Search for Tornadoes Near:</h3>
+				<h4>Search for Cyclones</h4>
+				<h5>within 25 Miles of:</h5>
 					<%= form_for("/search", method: "get") do |f| %>
-			  <div><%= f.label :city %>
-			  <%= f.text_field :city, autofocus: true, id: "city" %></div>
-			  <div><%= f.label :state %>
-			    <%= f.text_field :state, id: "state" %></div>
+			  <div><%= f.label :city, id: "city" %>
+			  <%= f.text_field :city, autofocus: true, id: "citysearch" %></div>
+			  <div><%= f.label :state, id: "state"  %>
+			    <%= f.text_field :state, id: "statesearch" %></div>
 		    <div><%= f.submit "Search", class: "submit" %></div>
 		  		<% end -%>
 		  </div> <!-- closes search -->
-		</div> <!-- closes 6 col -->
+		  <div id='show-legend-content'>
+		    <div class='my-legend'>
+		    <div class='legend-title'>Aggregate Total for Current View</div>
+		    <div class='legend-scale'>
+		      <ul class='legend-labels'>
+		        <li><span id="fatalities" style='background:#F1EEF6;'>150</span>Fatalities</li>
+		        <li><span id="proploss" style='background:#BDC9E1;'>200</span>Property Loss</li>
+		        <li><span id="croploss" style='background:#74A9CF;'>40</span>Crop Loss</li>
+		        <li><span id="highestfscale" style='background:#2B8CBE;'>5</span>Highest F-Scale</li>
+		      </ul>
+	    	</div>
+	    	</div>
+	  	</div>
+		</div> <!-- closes 3 col -->
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->
 </div> <!-- closes row -->
