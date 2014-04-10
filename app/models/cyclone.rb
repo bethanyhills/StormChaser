@@ -4,7 +4,7 @@ class Cyclone < ActiveRecord::Base
   has_many :historical_weather
 
   options = { :namespace => "app_v1", :compress => true }
-  @dc = Dalli::Client.new('localhost:11211', options)
+  @dc = Dalli::Client.new  #('localhost:11211', options)
 
   scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id', 'fatalities', 'crop_loss', 'property_loss', 'injuries') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
