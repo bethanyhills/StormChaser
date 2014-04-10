@@ -59,6 +59,7 @@ gem 'rubocop', require: false
 
 # Memcaching
 gem 'dalli'
+gem 'memcachier'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
