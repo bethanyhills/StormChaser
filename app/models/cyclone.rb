@@ -119,10 +119,14 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
+
+  # Formats the results as the JSON we want
   def as_json(cyclones)
     if self.has_attribute?(:state)
+      # Laziness variables for fewer db calls and less typing later
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
+      # Setting up empty variables for the historical weather
       hourly = []
       currently = nil
       # Set all of the historical data if it exists, otherwise return nil and an empty array
@@ -253,8 +257,8 @@ class Cyclone < ActiveRecord::Base
           end
         elsif split_selector[selector_key] == 'records'
           cyclone_limit = split_selector[selector_value]
-        elsif split_selector[selector_value] == 'state'
-          cyclone = cyclone.where(state: "TN")  # ERROR HERE!!!!
+        elsif split_selector[selector_key] == 'state'
+          cyclone = cyclone.where(state: split_selector[selector_value].downcase)
         elsif split_selector[selector_key] == "only_map_data"
           only_map_data = split_selector[selector_value]
         # If any other type of record, use the .where
@@ -296,12 +300,12 @@ private
       if params["search_name"].include? ","
         search_arg_obj = {}
         search_params = params["search_name"].split(",")
-        search = search_params.shift
-        search_params.each do |param|
+        search = search_params.shift # Pulls out the search name from the parameters
+        search_params.each do |param|  # Go through and add the parameters to the arguments object
           split_param = param.split(":")
           search_arg_obj[split_param[0]] = split_param[1]
         end
-        cyclone = Cyclone.send(search, search_arg_obj)
+        Cyclone.send(search, search_arg_obj)
       else
         #If the search name ends in st, add _cyclones_first to it
         if params["search_name"][-2..-1] == "st"
@@ -309,7 +313,7 @@ private
         else
           search = params["search_name"] + "_cyclones"
         end
-        cyclone = Cyclone.send(search)
+        Cyclone.send(search)
       end
     end
   end
