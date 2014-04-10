@@ -16,11 +16,17 @@ class API::V1::CyclonesController < ApplicationController
       cyclone = Cyclone.selectors(Cyclone.all, params)
     else
       cyclone = Cyclone.find(params[:id])
-      puts "Hello!"
+      # puts "Hello!"
       p cyclone
-      puts "goodbye"
+      # puts "goodbye"
     end
     respond_with(cyclone.to_json)
+  end
+
+  def hist_weather_api
+    respond_to do |format|
+      format.json { render :json => Cyclone.historical_data(params[:id]) }
+    end
   end
 
 end

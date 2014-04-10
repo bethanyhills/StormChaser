@@ -63,7 +63,11 @@ class Cyclone < ActiveRecord::Base
     puts "lat: #{lat}"
     puts "long: #{lng}"
 
-    self.complete_cyclone_tracks.strongest_cyclones_first.select{|cyclone| cyclone.radius_search_results(lat, lng, radius) }
+    cyclone = self.complete_cyclone_tracks.strongest_cyclones_first.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
+    puts "Hello!"
+    p cyclone
+    puts "Goodbye"
+    cyclone
   end
 
   def radius_search_results(xc, yc, radius)
@@ -119,21 +123,25 @@ class Cyclone < ActiveRecord::Base
     end
   end
 
+
+  # Formats the results as the JSON we want
   def as_json(cyclones)
     if self.has_attribute?(:state)
+      # Laziness variables for fewer db calls and less typing later
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
+      # Setting up empty variables for the historical weather
       hourly = []
       currently = nil
       # Set all of the historical data if it exists, otherwise return nil and an empty array
-      if self.historical_weather.first  #POTENTIAL ERROR HERE!!! Need to find based off of hour = -9
+      if touchdown = self.historical_weather.find_by(hour: -9)
         currently = {
-          pressure: self.historical_weather.first.pressure,
-          windSpeed: self.historical_weather.first.wind_speed,
-          windBearing: self.historical_weather.first.wind_bearing,
-          temperature: self.historical_weather.first.temperature
+          pressure: touchdown.pressure,
+          windSpeed: touchdown.wind_speed,
+          windBearing: touchdown.wind_bearing,
+          temperature: touchdown.temperature
         }
-        self.historical_weather.offset(1).limit(24).each do |hour_weather|
+        self.historical_weather.where('hour != -9').each do |hour_weather|
           hourly[hour_weather.hour] = {}
           hourly[hour_weather.hour]["windSpeed"] = hour_weather.wind_speed
           hourly[hour_weather.hour]["temperature"] = hour_weather.temperature
@@ -227,7 +235,6 @@ class Cyclone < ActiveRecord::Base
 
   # This method takes the cyclone records and the params hash and uses the different types of
   # selectors on them using primarily .where, but also .joins.where for date values
-  # There is currently an error with the state value
   # Records determines the number of records to return and does so AFTER everything else is selected
   # only_map_data determines if the data is being pruned to only include data for plotting.
   # This is to reduce the amount of data being sent over if it is only be shown on a map.
@@ -253,8 +260,8 @@ class Cyclone < ActiveRecord::Base
           end
         elsif split_selector[selector_key] == 'records'
           cyclone_limit = split_selector[selector_value]
-        elsif split_selector[selector_value] == 'state'
-          cyclone = cyclone.where(state: "TN")  # ERROR HERE!!!!
+        elsif split_selector[selector_key] == 'state'
+          cyclone = cyclone.where(state: split_selector[selector_value].downcase)
         elsif split_selector[selector_key] == "only_map_data"
           only_map_data = split_selector[selector_value]
         # If any other type of record, use the .where
@@ -277,13 +284,13 @@ class Cyclone < ActiveRecord::Base
   def self.search(params)
     if params["selectors"]
       @cyclone = @dc.fetch(params["search_name"]+params["selectors"]) {
-        cyclone = Cyclone.searches(params)
-        cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
+        cyclone = searches(params)
+        cyclone = selectors(cyclone, params) if params["selectors"]
         cyclone = cyclone.to_json
       }
     else
       @cyclone = @dc.fetch(params["search_name"]) {
-        cyclone = Cyclone.searches(params)
+        cyclone = searches(params)
         cyclone = cyclone.to_json
       }
     end
@@ -296,12 +303,12 @@ private
       if params["search_name"].include? ","
         search_arg_obj = {}
         search_params = params["search_name"].split(",")
-        search = search_params.shift
-        search_params.each do |param|
+        search = search_params.shift # Pulls out the search name from the parameters
+        search_params.each do |param|  # Go through and add the parameters to the arguments object
           split_param = param.split(":")
           search_arg_obj[split_param[0]] = split_param[1]
         end
-        cyclone = Cyclone.send(search, search_arg_obj)
+        Cyclone.send(search, search_arg_obj)
       else
         #If the search name ends in st, add _cyclones_first to it
         if params["search_name"][-2..-1] == "st"
@@ -309,7 +316,7 @@ private
         else
           search = params["search_name"] + "_cyclones"
         end
-        cyclone = Cyclone.send(search)
+        Cyclone.send(search)
       end
     end
   end

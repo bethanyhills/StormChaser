@@ -14,7 +14,7 @@ var drawChart = function(cyclone) {
   // console.log(touchdown)
   if (touchdown == null) {
     // console.log("Getting")
-    $.get("/cyclones/" + id + "/histweather", function(data) {gaugesData(data.currently)}, "json");
+    $.get("/api/v1/cyclones/" + id + "/histweather", function(data) {gaugesData(data.currently)}, "json");
   } else {
     gaugesData(touchdown);
   }
