@@ -20,7 +20,7 @@
 		  </div> <!-- closes my legend -->
 		  </div> <!-- closes legend-content -->
 		</div> <!-- closes first column -->
-		<div class="col-md-6">
+		<div class="col-md-6" id="charts">
 			<ul id="myTab" class="nav nav-pills nav-justified">
 				<li id="tab1"><a href="#gauges">TouchDown Data</a></li>
 				<li id="tab2"><a href="#barchart">Loss Comparison</a></li>
@@ -32,6 +32,7 @@
 				<div id='chart_div1'></div>
 				<div id='chart_div2'></div>
 				<div id='chart_div3'></div>
+				<div id='chart_div6'></div>
 			</div>
 			<!-- display BarCharts -->
 			<div class="tab-pane" id="barchart">
@@ -39,10 +40,29 @@
 			</div>
 			<!-- display historical data -->
 			<div class="tab-pane" id="hourlydata">
-         <div id='chart_div5'></div> 
-      </div>
-			</div>
-		</div>
+				<!-- add tabs for hourly line charts -->
+			<ul id="hourlyTab" class="nav nav-pills nav-justified">
+				<li id="tab1"><a href="#pressure">Pressure</a></li>
+				<li id="tab2"><a href="#temperature">Temperature</a></li>
+				<li id="tab3"><a href="#windspeed">Wind Speed</a></li>
+			</ul>
+			<div class="tab-content">
+					<!-- pressure line chart tab -->
+	  		<div class="tab-pane active" id="pressure">
+	         <div id='chart_div5'></div> 
+	      </div>
+	      	<!-- temp line chart tab -->
+	      <div class="tab-pane" id="temperature">
+	         <div id='chart_div7'></div>
+	      </div>
+	      	<!-- temp line chart tab -->
+	      <div class="tab-pane" id="windspeed">
+	         <div id='chart_div8'></div> 
+	      </div>
+     	</div> <!-- closes tab content -->
+      </div> <!-- closes hourly data tab pane -->
+			</div> <!-- closes gauge tab content -->
+		</div> <!-- closes sub column -->
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->
 

@@ -24,8 +24,8 @@ html, body {
 }
 
 .nav-pills>li>a {
-  color:white;
-  background-color: 
+  color: white;
+  background-color: gray; 
 }
 
 .nav-pills>li.active>a {
@@ -64,6 +64,14 @@ html, body {
 
 .middle {
 	width: 100%;
+}
+
+#barchart {
+  margin-top: 75px !important;
+}
+
+#hourlydata {
+  margin-top: 50px;
 }
 
 #map {

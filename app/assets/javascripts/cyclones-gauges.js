@@ -36,6 +36,11 @@ var drawChart = function(cyclone) {
       ['Wind Speed', touchdown.windSpeed]
     ]);
 
+    var wind_bearing = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Wind Bearing', touchdown.windBearing]
+    ]);
+
     var pressure_options = {
       width: 400, height: 120,
       max: 1050, min: 900,
@@ -60,6 +65,12 @@ var drawChart = function(cyclone) {
       minorTicks: 5
     };
 
+     var wind_bearing_options = {
+      width: 400, height: 120,
+      max: 360, min:0,
+      minorTicks: 5
+    };
+
     var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
     chart1.draw(pressure, pressure_options);
 
@@ -68,6 +79,9 @@ var drawChart = function(cyclone) {
 
     var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
     chart3.draw(wind_speed, wind_speed_options);
+
+    var chart6 = new google.visualization.Gauge(document.getElementById('chart_div6'));
+    chart6.draw(wind_bearing, wind_bearing_options);
   }
 }
 
@@ -76,16 +90,17 @@ var drawChart = function(cyclone) {
 // ----------
 var drawBarChart = function(cyclone) {
   var data = google.visualization.arrayToDataTable([
-    ['Item', 'Current Cyclone', 'Average Across All Cyclones'],
-    ['Property Loss',  cyclone.loss.property_loss, 10],
-    ['Crop Loss',  cyclone.loss.crop_loss,  50],
-    ['Fatalities',  cyclone.loss.fatalities,  100],
-    ['Injuries',  cyclone.loss.injuries,   25]
+    ['Item', 'Current', 'Year', 'All' ],
+    ['Prop Loss', cyclone.loss.property_loss, Math.ceil(cyclone.average.year.property_loss), Math.ceil(cyclone.average.all.property_loss)],
+    ['Crop Loss', cyclone.loss.crop_loss, Math.ceil(cyclone.average.year.crop_loss), Math.ceil(cyclone.average.all.crop_loss)]
   ]);
 
+
   var options = {
-    title: 'This Cyclone vs. Cyclone Average',
-    vAxis: {title: 'Cyclone Stats',  titleTextStyle: {color: 'red'}}
+    title: 'Average Loss Comparison',
+    hAxis: {title: 'Loss in Millions',  titleTextStyle: {color: 'black'}},
+    width: 550,
+    height: 200
   };
 
   var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
@@ -96,25 +111,130 @@ var drawBarChart = function(cyclone) {
 // Line Chart
 // -----------
 
-var drawLineChart = function(cyclone) {
-  var hourly_arr = cyclone.historical_weather
+// var drawLineChart = function(cyclone) {
+//   var hourly_arr = cyclone.historical_weather
+//   var temp_arr = cyclone.historical_weather
+//   var wind_arr = cyclone.historical_weather
+
+//   var arr = [['Hour', 'Pressure']];
+//   for (var i =0; i < hourly_arr.length; i++) {
+//        arr.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].pressure]);
+//     }
+
+//  var arr2 = [['Hour', 'Temperature']];
+//   for (var i =0; i < temp_arr.length; i++) {
+//        arr2.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].temperature]);
+//     }
+
+//   var arr3 = [['Hour', 'Wind Speed']];
+//   for (var i =0; i < wind_arr.length; i++) {
+//        arr3.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].windSpeed]);
+//     }
+
+//   var data1 = google.visualization.arrayToDataTable(arr);
+//   var data2 = google.visualization.arrayToDataTable(arr2);
+//   var data3 = google.visualization.arrayToDataTable(arr3);
+//   // console.log(data)
+
+//   var options_pressure = {
+//     title: 'Pressure over 24 Hours',
+//     hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+//     width: 550,
+//     height: 200
+//   };
+
+//   var options_temp = {
+//     title: 'Temperature over 24 Hours',
+//     hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+//     width: 550,
+//     height: 200
+//   };
+
+//   var options_wind = {
+//     title: 'Wind Speed over 24 Hours in MPH',
+//     hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+//     width: 550,
+//     height: 200
+//   };
+
+//   var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
+//   chart.draw(data1, options_pressure);
+  
+//   var chart2 = new google.visualization.LineChart(document.getElementById('chart_div8'));
+//   chart.draw(data2, options_temp);
+
+//   var chart3 = new google.visualization.LineChart(document.getElementById('chart_div7'));
+//   chart.draw(data3, options_wind);
+// }
+
+var drawPressureChart = function(cyclone) {
+  var hourly_arr = cyclone.historical_weather;
+
   var arr = [['Hour', 'Pressure']];
   for (var i =0; i < hourly_arr.length; i++) {
        arr.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].pressure]);
     }
-  // console.log(arr);
 
-  var data = google.visualization.arrayToDataTable(arr);
+  var data1 = google.visualization.arrayToDataTable(arr);
   // console.log(data)
 
-  var options = {
-    title: 'Pressure'
+  var options_pressure = {
+    title: 'Pressure over 24 Hours',
+    hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+    width: 550,
+    height: 200
   };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
-  chart.draw(data, options);
-  // console.log(chart)
+  chart.draw(data1, options_pressure);
 }
+
+
+var drawTempChart = function(cyclone) {
+  var temp_arr = cyclone.historical_weather;
+
+  var arr2 = [['Hour', 'Temperature']];
+  for (var i =0; i < temp_arr.length; i++) {
+       arr2.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].temperature]);
+    }
+
+  var data2 = google.visualization.arrayToDataTable(arr2);
+  // console.log(data)
+
+  var options_temp = {
+    title: 'Temperature over 24 Hours',
+    hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+    width: 550,
+    height: 200
+  };
+  
+  var chart = new google.visualization.LineChart(document.getElementById('chart_div7'));
+  chart.draw(data2, options_temp);
+}
+
+
+var drawWindChart = function(cyclone) {
+  var wind_arr = cyclone.historical_weather;
+
+  var arr3 = [['Hour', 'Wind Speed']];
+  for (var i =0; i < wind_arr.length; i++) {
+       arr3.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].windSpeed]);
+    }
+
+  var data3 = google.visualization.arrayToDataTable(arr3);
+  // console.log(data)
+
+  var options_wind = {
+    title: 'Wind Speed over 24 Hours in MPH',
+    hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+    width: 550,
+    height: 200
+  };
+
+  var chart = new google.visualization.LineChart(document.getElementById('chart_div8'));
+  chart.draw(data3, options_wind);
+}
+
 
 // -------------
 // Click Handler
@@ -134,6 +254,28 @@ $("#myTab li:eq(1) a").on("click", function (e) {
 
 $("#myTab a:last").on("click", function (e) {
   e.preventDefault();
-  drawLineChart(cyclone);
+  drawPressureChart(cyclone);
+  $(this).tab('show');
+})
+
+// --------------------
+// Hourly Click Handler
+// --------------------
+
+$("#hourlyTab a:first").on("click", function (e) {
+  e.preventDefault();
+  drawPressureChart(cyclone);
+  $(this).tab('show');
+})
+
+$("#hourlyTab li:eq(1) a").on("click", function (e) {
+  e.preventDefault();
+  drawTempChart(cyclone);
+  $(this).tab('show');
+})
+
+$("#hourlyTab a:last").on("click", function (e) {
+  e.preventDefault();
+  drawWindChart(cyclone);
   $(this).tab('show');
 })
