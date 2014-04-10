@@ -123,7 +123,24 @@ class Cyclone < ActiveRecord::Base
     if self.has_attribute?(:state)
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
-      p self.injuries
+      hourly = []
+      currently = nil
+      # Set all of the historical data if it exists, otherwise return nil and an empty array
+      if self.historical_weather.first  #POTENTIAL ERROR HERE!!! Need to find based off of hour = -9
+        currently = {
+          pressure: self.historical_weather.first.pressure,
+          windSpeed: self.historical_weather.first.wind_speed,
+          windBearing: self.historical_weather.first.wind_bearing,
+          temperature: self.historical_weather.first.temperature
+        }
+        self.historical_weather.offset(1).limit(24).each do |hour_weather|
+          hourly[hour_weather.hour] = {}
+          hourly[hour_weather.hour]["windSpeed"] = hour_weather.wind_speed
+          hourly[hour_weather.hour]["temperature"] = hour_weather.temperature
+          hourly[hour_weather.hour]["pressure"] = hour_weather.pressure
+          hourly[hour_weather.hour]["windBearing"] = hour_weather.wind_bearing
+        end
+      end
       {
         id: self.id,
         date: {
@@ -179,8 +196,8 @@ class Cyclone < ActiveRecord::Base
             distance: year_avg.distance
           }
         },
-        touchdown_weather: self.historical_weather.first, #where('hour = 0'),
-        historical_weather: self.historical_weather.offset(1).limit(24)
+        touchdown_weather: currently,
+        historical_weather: hourly
       }
     else
       {

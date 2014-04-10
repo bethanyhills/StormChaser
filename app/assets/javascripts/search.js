@@ -4,8 +4,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var city = $("#city").val();
 		var state = $("#state").val();
-		var radius = $("#radius").val();
-		var url = "../api/v1/search/radius_search,city:"+city + ",state:" + state + ",radius:" + radius;
+		var url = "../api/v1/search/radius_search,city:"+city + ",state:" + state + ",radius:25";
 		$.get(url, function(data) {window.x = data; plotData(data)}, "json");
 	})
 })
