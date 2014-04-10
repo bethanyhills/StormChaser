@@ -16,9 +16,9 @@ class API::V1::CyclonesController < ApplicationController
       cyclone = Cyclone.selectors(Cyclone.all, params)
     else
       cyclone = Cyclone.find(params[:id])
-      puts "Hello!"
+      # puts "Hello!"
       p cyclone
-      puts "goodbye"
+      # puts "goodbye"
     end
     respond_with(cyclone.to_json)
   end

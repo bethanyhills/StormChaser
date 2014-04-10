@@ -231,7 +231,6 @@ class Cyclone < ActiveRecord::Base
 
   # This method takes the cyclone records and the params hash and uses the different types of
   # selectors on them using primarily .where, but also .joins.where for date values
-  # There is currently an error with the state value
   # Records determines the number of records to return and does so AFTER everything else is selected
   # only_map_data determines if the data is being pruned to only include data for plotting.
   # This is to reduce the amount of data being sent over if it is only be shown on a map.
@@ -281,13 +280,13 @@ class Cyclone < ActiveRecord::Base
   def self.search(params)
     if params["selectors"]
       @cyclone = @dc.fetch(params["search_name"]+params["selectors"]) {
-        cyclone = Cyclone.searches(params)
-        cyclone = Cyclone.selectors(cyclone, params) if params["selectors"]
+        cyclone = searches(params)
+        cyclone = selectors(cyclone, params) if params["selectors"]
         cyclone = cyclone.to_json
       }
     else
       @cyclone = @dc.fetch(params["search_name"]) {
-        cyclone = Cyclone.searches(params)
+        cyclone = searches(params)
         cyclone = cyclone.to_json
       }
     end
