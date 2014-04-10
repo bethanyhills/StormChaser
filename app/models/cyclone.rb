@@ -63,7 +63,11 @@ class Cyclone < ActiveRecord::Base
     puts "lat: #{lat}"
     puts "long: #{lng}"
 
-    self.complete_cyclone_tracks.strongest_cyclones_first.select{|cyclone| cyclone.radius_search_results(lat, lng, radius) }
+    cyclone = self.complete_cyclone_tracks.strongest_cyclones_first.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
+    puts "Hello!"
+    p cyclone
+    puts "Goodbye"
+    cyclone
   end
 
   def radius_search_results(xc, yc, radius)
@@ -130,14 +134,14 @@ class Cyclone < ActiveRecord::Base
       hourly = []
       currently = nil
       # Set all of the historical data if it exists, otherwise return nil and an empty array
-      if self.historical_weather.first  #POTENTIAL ERROR HERE!!! Need to find based off of hour = -9
+      if touchdown = self.historical_weather.find_by(hour: -9)
         currently = {
-          pressure: self.historical_weather.first.pressure,
-          windSpeed: self.historical_weather.first.wind_speed,
-          windBearing: self.historical_weather.first.wind_bearing,
-          temperature: self.historical_weather.first.temperature
+          pressure: touchdown.pressure,
+          windSpeed: touchdown.wind_speed,
+          windBearing: touchdown.wind_bearing,
+          temperature: touchdown.temperature
         }
-        self.historical_weather.offset(1).limit(24).each do |hour_weather|
+        self.historical_weather.where('hour != -9').each do |hour_weather|
           hourly[hour_weather.hour] = {}
           hourly[hour_weather.hour]["windSpeed"] = hour_weather.wind_speed
           hourly[hour_weather.hour]["temperature"] = hour_weather.temperature
