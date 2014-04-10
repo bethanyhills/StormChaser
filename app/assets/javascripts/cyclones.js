@@ -46,7 +46,13 @@ for (var i = 0; i < data.length; i++) {
   var start_lat = data[i]["location"]["start_lat"]
   var start_long = data[i]["location"]["start_long"]
   var stop_lat = data[i]["location"]["stop_lat"]
+  if (stop_lat == 0) {
+    stop_lat = start_lat;
+  }
   var stop_long = data[i]["location"]["stop_long"]
+  if (stop_long == 0) {
+    stop_long = start_long;
+  }
   var id = data[i]["id"]
   var scale = data[i]["cyclone_strength"]["f_scale"]
   var month = data[i]["date"]["month"]
