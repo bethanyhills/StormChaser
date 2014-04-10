@@ -105,6 +105,14 @@ html, body {
   border-radius: 15px;
 }
 
+#show-legend-content .legend-title {
+  text-align: center;
+}
+
+#show-legend-content .legend-scale ul.legend-labels li:first{
+  margin-left: 15px;
+}
+
 div table {
 	background: #303335;
 }
