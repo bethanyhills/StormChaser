@@ -26,27 +26,34 @@
 				<li id="tab2"><a href="#barchart">Loss Comparison</a></li>
 				<li id="tab3"><a href="#hourlydata">Hourly Data</a></li>
 			</ul>
-		<div class="tab-content">
+		<div class="tab-content" id="large_pane">
   		<div class="tab-pane active" id="gauges">
 				<!-- display gauges -->
-				<div id='chart_div1'></div>
-				<div id='chart_div2'></div>
-				<div id='chart_div3'></div>
-				<div id='chart_div6'></div>
+				<div class="row gauge">
+					<div id='chart_div1' class='smallgauge'></div>
+					<div id='chart_div2' class='smallgauge'></div>
+				</div>
+				<div class="row gauge">
+					<div id='chart_div3' class='smallgauge'></div>
+					<div id='chart_div6' class='smallgauge'></div>
+				</div>
 			</div>
 			<!-- display BarCharts -->
 			<div class="tab-pane" id="barchart">
-				<div id='chart_div4'></div>
+				<div class="row barchart">
+					<div id='chart_div4'></div>
+				</div>
 			</div>
 			<!-- display historical data -->
 			<div class="tab-pane" id="hourlydata">
 				<!-- add tabs for hourly line charts -->
-			<ul id="hourlyTab" class="nav nav-pills nav-justified">
+				<div class="row hourly">
+			<ul id="hourlyTab" class="nav nav-pills">
 				<li id="tab1"><a href="#pressure">Pressure</a></li>
 				<li id="tab2"><a href="#temperature">Temperature</a></li>
 				<li id="tab3"><a href="#windspeed">Wind Speed</a></li>
 			</ul>
-			<div class="tab-content">
+			<div class="tab-content" id="small_pane">
 					<!-- pressure line chart tab -->
 	  		<div class="tab-pane active" id="pressure">
 	         <div id='chart_div5'></div> 
@@ -59,6 +66,7 @@
 	      <div class="tab-pane" id="windspeed">
 	         <div id='chart_div8'></div> 
 	      </div>
+	    </div> <!-- closes hourly row -->
      	</div> <!-- closes tab content -->
       </div> <!-- closes hourly data tab pane -->
 			</div> <!-- closes gauge tab content -->
