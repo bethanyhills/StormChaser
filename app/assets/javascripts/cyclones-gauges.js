@@ -90,7 +90,6 @@ var drawChart = function(cyclone) {
 // ----------
 var drawBarChart = function(cyclone) {
   var data = google.visualization.arrayToDataTable([
-    ['Item', 'Current', 'Year', 'All' ],
     ['Prop Loss', cyclone.loss.property_loss, Math.ceil(cyclone.average.year.property_loss), Math.ceil(cyclone.average.all.property_loss)],
     ['Crop Loss', cyclone.loss.crop_loss, Math.ceil(cyclone.average.year.crop_loss), Math.ceil(cyclone.average.all.crop_loss)]
   ]);
@@ -118,13 +117,13 @@ var drawPressureChart = function(cyclone) {
     }
 
   var data1 = google.visualization.arrayToDataTable(arr);
-  // console.log(data)
 
   var options_pressure = {
     title: 'Pressure over 24 Hours',
     hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
     width: 'auto',
-    height: 300
+    height: 300,
+    legend: { position: 'none' }
   };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div5'));
@@ -147,7 +146,8 @@ var drawTempChart = function(cyclone) {
     title: 'Temperature over 24 Hours',
     hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
     width: 'auto',
-    height: 300
+    height: 300,
+    legend: { position: 'none' }
   };
   
   var chart = new google.visualization.LineChart(document.getElementById('chart_div7'));
@@ -168,9 +168,10 @@ var drawWindChart = function(cyclone) {
 
   var options_wind = {
     title: 'Wind Speed over 24 Hours in MPH',
-    hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}},
+    hAxis: {title: 'Hour',  titleTextStyle: {color: 'black'}, maxValue:24},
     width: 'auto',
-    height: 300
+    height: 300,
+    legend: { position: 'none' }
   };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div8'));

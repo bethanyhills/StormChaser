@@ -184,16 +184,33 @@ div.row.gauge {
 }
 
 #show-legend-content {
-  height: 100px;
   color: #303335;
   background-color: #BDDDDD;
-  border-radius: 15px;
+
 }
 
-#show-legend-content .legend-title {
+/*div.map-legend.wax-legend {
+  background-color: #bddddd;
+  border: 1px solid #303335;
+}*/
+
+.show-legend {
+  height: 100px;
+  color: #303335;
+}
+
+.show-legend .show-legend-title {
   text-align: center;
 }
 
-#show-legend-content .legend-scale ul.legend-labels li:first{
-  margin-left: 15px;
+.show-legend .show-legend-scale ul.show-legend-labels {
+  list-style: none !important;
+  text-align: center;
+}
+
+.show-legend ul.show-legend-labels li{
+ /* display: block;*/
+  list-style: none;
+  height: 15px;
+  width: 50px;
 }

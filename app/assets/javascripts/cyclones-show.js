@@ -9,7 +9,7 @@ var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
         minZoom: 4,
         maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
 
-map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
+map.legendControl.addLegend(document.getElementById('show-legend-content').innerHTML);
 
 //create tornado icon
 var myIcon = L.icon({
@@ -28,9 +28,14 @@ var plotData = function(data) {
   var month = data["date"]["month"]
   var day = data["date"]["day"]
   var year = data["date"]["year"]
+  var hour = data["date"]["hour"]
+  var minute = data["date"]["minute"]
+  var width = data["cyclone_strength"]["width"]
 
   $("#date").text("Date: " + month +"/"+ day + "/" + year);
   $("#f_scale").text("F-Scale: " + scale);
+  $("#start_time").text(hour + ":" + minute);
+  $("#width").text(width + " meters");
 
 polyline = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], {color: '#000'})
 
