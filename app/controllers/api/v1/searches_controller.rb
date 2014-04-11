@@ -15,7 +15,7 @@ class API::V1::SearchesController < ApplicationController
   end
 
   def search
-    cyclone = Cyclone.search(params)
+    cyclone = Cyclone.selectors(params)
     if cyclone.is_a?(Hash)
       render :json => cyclone[:error], :status => cyclone[:status]
     else

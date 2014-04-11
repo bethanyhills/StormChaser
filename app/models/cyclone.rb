@@ -220,42 +220,42 @@ class Cyclone < ActiveRecord::Base
   # only_map_data determines if the data is being pruned to only include data for plotting.
   # This is to reduce the amount of data being sent over if it is only be shown on a map.
 
-  def self.selectors(cyclone, params)
-    if params["selectors"]
-      symbol = illegal_chars(params["selectors"])
-      return {error: "#{symbol} in selectors is not allowed.", status: 400} if symbol
-      #Split the selectors by the comma into inidividual key value pairs
-      selectors = params["selectors"].split(',')
-      @cyclone_limit = 500 #Set the default return value to 500 records
-      @only_map_data = false #Set the default map_data return to be all parts of the record
-      selectors.each do |selector|
-        cyclone = selector_splitter(cyclone, selector)
+  def self.selectors(params)
+    @dc.fetch(params) {
+      cyclone = Cyclone.all
+      if params["selectors"]
+        @cyclone_limit = 500 #Set the default return value to 500 records
+        @only_map_data = false #Set the default map_data return to be all parts of the record
+        @dc.fetch(params["selectors"]) {
+          symbol = illegal_chars(params["selectors"])
+          return {error: "#{symbol} in selectors is not allowed.", status: 400} if symbol
+          #Split the selectors by the comma into inidividual key value pairs
+          selectors = params["selectors"].split(',')
+          selectors.each do |selector|
+            cyclone = selector_splitter(cyclone, selector)
+            return cyclone if cyclone.is_a?(Hash)
+          end
+        }
+      end
+      if params["search_name"]
+        cyclone = search(cyclone, params)
         return cyclone if cyclone.is_a?(Hash)
       end
-    end
-    #Selects the map data if needed, runs at the end to not break any other selectors
-    cyclone = cyclone.many_cyclone_map_data if @only_map_data
-    cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
+      #Selects the map data if needed, runs at the end to not break any other selectors
+      if cyclone.class == "Array"
+        puts "Hi!" # Put stuff here to make this work for the radius search
+      else
+        cyclone = cyclone.many_cyclone_map_data if @only_map_data
+        cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
+      end
+      cyclone = cyclone.to_json
+    }
   end
 
-  def self.search(params)
+  def self.search(cyclone, params)
     symbol = illegal_chars(params["search_name"])
     return {error: "#{symbol} in the search is not allowed.", status: 400} if symbol
-    if params["selectors"]
-      @cyclone = @dc.fetch(params["search_name"]+params["selectors"]) {
-        cyclone = searches(params)
-        return cyclone if cyclone.is_a?(Hash)
-        cyclone = selectors(cyclone, params) if params["selectors"]
-        return cyclone if cyclone.is_a?(Hash)
-        cyclone = cyclone.to_json
-      }
-    else
-      @cyclone = @dc.fetch(params["search_name"]) {
-        cyclone = searches(params)
-        return cyclone if cyclone.is_a?(Hash)
-        cyclone = cyclone.to_json
-      }
-    end
+    cyclone = searches(cyclone, params)
   end
 
 private
@@ -267,7 +267,7 @@ private
   end
 
 
-  def self.searches(params)
+  def self.searches(cyclone, params)
     begin
       if params["search_name"]
         # If it is a search that takes params, like radius_search, split the params up
@@ -279,7 +279,7 @@ private
             split_param = param.split(":")
             search_arg_obj[split_param[0]] = split_param[1]
           end
-          cyclone = send(search, search_arg_obj)
+          cyclone = cyclone.send(search, search_arg_obj)
         else
           #If the search name ends in st, add _cyclones_first to it
           if params["search_name"][-2..-1] == "st"
@@ -287,7 +287,7 @@ private
           else
             search = params["search_name"] + "_cyclones"
           end
-          cyclone = send(search)
+          cyclone = cyclone.send(search)
         end
       end
       p cyclone.first
@@ -331,9 +331,9 @@ private
       end
 
       if split_selector[key] == 'month' || split_selector[key] == 'day' || split_selector[key] == 'year'
-        cyclone.joins(:cyclone_date).where(split_selector[key] + relational_op + split_selector[value])
+        cyclone = cyclone.joins(:cyclone_date).where(split_selector[key] + relational_op + split_selector[value])
       elsif split_selector[key] =='complete_track' || split_selector == 'states_crossed'
-        cyclone.joins(:path).where(split_selector[key] + relational_op + split_selector[value].to_f)
+        cyclone = cyclone.joins(:path).where(split_selector[key] + relational_op + split_selector[value].to_f)
       else
         cyclone = cyclone.where(split_selector[key] + relational_op + split_selector[value])
       end
