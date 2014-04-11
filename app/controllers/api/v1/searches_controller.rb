@@ -3,11 +3,24 @@ class API::V1::SearchesController < ApplicationController
   respond_to :html, :xml, :json
 
   def index
-    respond_with(Cyclone.selectors(Cyclone.all, params))
+    cyclone = Cyclone.selectors(Cyclone.all, params)
+    if cyclone.is_a?(Hash)
+      puts "Error below"
+      puts cyclone[:error]
+      render :json => cyclone[:error], :status => cyclone[:status]
+    else
+      respond_with(cyclone)
+    end
+    respond_with(cyclone)
   end
 
   def search
-    respond_with(Cyclone.search(params))
+    cyclone = Cyclone.search(params)
+    if cyclone.is_a?(Hash)
+      render :json => cyclone[:error], :status => cyclone[:status]
+    else
+      respond_with(cyclone)
+    end
   end
 
 end
