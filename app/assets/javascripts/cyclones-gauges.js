@@ -90,6 +90,7 @@ var drawChart = function(cyclone) {
 // ----------
 var drawBarChart = function(cyclone) {
   var data = google.visualization.arrayToDataTable([
+    ['Type', 'Cyclone', 'Year', 'All'],
     ['Prop Loss', cyclone.loss.property_loss, Math.ceil(cyclone.average.year.property_loss), Math.ceil(cyclone.average.all.property_loss)],
     ['Crop Loss', cyclone.loss.crop_loss, Math.ceil(cyclone.average.year.crop_loss), Math.ceil(cyclone.average.all.crop_loss)]
   ]);

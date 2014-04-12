@@ -5,20 +5,7 @@
 		<div class="col-md-9">
 			<!-- display map -->
 			<div id="map"></div>
-	    </div>
-		<div class="col-md-3" id="search_box">
-			<div id="search-radius">
-				<h4>Search for Cyclones</h4>
-				<h5>within 25 Miles of:</h5>
-					<%= form_for("/search", method: "get") do |f| %>
-			  <div><%= f.label :city, id: "city" %>
-			  <%= f.text_field :city, autofocus: true, id: "citysearch" %></div>
-			  <div><%= f.label :state, id: "state"  %>
-			    <%= f.text_field :state, id: "statesearch" %></div>
-		    <div><%= f.submit "Search", class: "submit" %></div>
-		  		<% end -%>
-		  </div> <!-- closes search -->
-		  <div id='show-legend-content'>
+			<div id='legend-content2' style='display: none;'>
 		    <div class='my-legend'>
 		    <div class='legend-title'>Aggregate Total for Current View</div>
 		    <div class='legend-scale'>
@@ -31,6 +18,19 @@
 	    	</div>
 	    	</div>
 	  	</div>
+	   </div> <!-- closes 9 cols -->
+		<div class="col-md-3" id="search_box">
+			<div id="search-radius">
+				<h4>Search for Cyclones</h4>
+				<h5>within 25 Miles of:</h5>
+					<%= form_for("/search", method: "get") do |f| %>
+			  <div><%= f.label :city, id: "city" %>
+			  <%= f.text_field :city, autofocus: true, id: "citysearch" %></div>
+			  <div><%= f.label :state, id: "state"  %>
+			    <%= f.text_field :state, id: "statesearch" %></div>
+		    <div><%= f.submit "Search", class: "submit" %></div>
+		  		<% end -%>
+		  </div> <!-- closes search -->
 		</div> <!-- closes 3 col -->
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->

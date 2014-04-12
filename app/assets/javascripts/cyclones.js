@@ -40,7 +40,7 @@ var plotPaths = function(data) {
   }
   //specify path properties
   var polyline_options = {
-    color: '#000',
+    color: '#0B610B',
     weight: 1
   };
   //create a path for each cyclone
@@ -125,7 +125,6 @@ map.addLayer(markers);
 
 //get zoom level on each click
 map.on('zoomend', function(e) {
-  console.log(map.getZoom());
   //if map is zoomed in past 6, show cyclone paths
   if (map.getZoom() > 6) {
     plotPaths();

@@ -129,8 +129,7 @@ div.row.gauge {
 
 #search-radius {
   background-color: #BDDDDD;
-  margin-top: 15%;
-  margin-bottom: 25%;
+  margin-top: 50%;
   padding: 5px;
   border-radius: 15px;
 }
@@ -163,6 +162,7 @@ div.row.gauge {
   float: left;
   list-style: none;
 }
+
 .my-legend .legend-scale ul li {
   display: block;
   float: left;
@@ -177,40 +177,15 @@ div.row.gauge {
   float: left;
   height: 15px;
   width: 50px;
+  list-style: none;
 }
 
 .my-legend a {
   color: #777;
 }
 
-#show-legend-content {
-  color: #303335;
-  background-color: #BDDDDD;
-
+.legendsearch {
+  background-color: white;
 }
 
-/*div.map-legend.wax-legend {
-  background-color: #bddddd;
-  border: 1px solid #303335;
-}*/
 
-.show-legend {
-  height: 100px;
-  color: #303335;
-}
-
-.show-legend .show-legend-title {
-  text-align: center;
-}
-
-.show-legend .show-legend-scale ul.show-legend-labels {
-  list-style: none !important;
-  text-align: center;
-}
-
-.show-legend ul.show-legend-labels li{
- /* display: block;*/
-  list-style: none;
-  height: 15px;
-  width: 50px;
-}

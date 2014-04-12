@@ -10,14 +10,18 @@ $(document).ready(function() {
 })
 
 
-//specify map bounds
-var southWest = L.latLng(24.396308, -124.848974),
-    northEast = L.latLng(49.384358, -66.885444),
-    bounds = L.latLngBounds(southWest, northEast);
+// //specify map bounds
+// var southWest = L.latLng(24.396308, -124.848974),
+//     northEast = L.latLng(49.384358, -66.885444),
+    // bounds = L.latLngBounds(southWest, northEast);
 
 //create map and set bounds
-var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
-.setMaxBounds(bounds)
+var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
+  minZoom: 4,
+  maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
+
+map.scrollWheelZoom.disable();
+map.legendControl.addLegend(document.getElementById('legend-content2').innerHTML);
 
 //array to hold markers, resets to empty with each submit
 var markerArray = [];
