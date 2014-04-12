@@ -23,7 +23,41 @@ var lineArray = [];
 
 //create array to hold cluster group data
 var markers = new L.MarkerClusterGroup();
+var lines = new L.MarkerClusterGroup();
 
+//function to draw cyclone paths on map
+var plotPaths = function(data) {
+  //iterate through data for path info
+  for (var i = 0; i < window.x.length; i++) {
+  var start_lat = window.x[i]["location"]["start_lat"]
+  var start_long = window.x[i]["location"]["start_long"]
+  var stop_lat = window.x[i]["location"]["stop_lat"]
+  if (stop_lat == 0) {
+    stop_lat = start_lat;
+  }
+  var stop_long = window.x[i]["location"]["stop_long"]
+  if (stop_long == 0) {
+    stop_long = start_long;
+  }
+  //specify path properties
+  var polyline_options = {
+    color: '#000'
+  };
+  //create a path for each cyclone
+  var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
+  lineArray.push(line);
+  markers.addLayer(line);
+  }
+  // add paths to map
+  map.addLayer(markers);
+}
+
+//delete cyclone paths
+var deleteLines = function() {
+    for(i=0;i<lineArray.length;i++) {
+    markers.removeLayer(lineArray[i])
+  }
+}
 
 //Function for 5-Scale Cyclones
 var plotData = function(data) {
@@ -70,20 +104,13 @@ for (var i = 0; i < data.length; i++) {
       icon: myIcon}
   );
 
-  var polyline_options = {
-    color: '#000'
-  };
-
-  var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
 
   //bind popup to show info and redirect link to individual cyclone dashboard
   marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
   //add marker to markers array
   markerArray.push(marker)
-  lineArray.push(line)
   //add marker to markers layer
   markers.addLayer(marker);
-  markers.addLayer(line);
 
 }//closes for loop
 
@@ -94,33 +121,21 @@ $("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
 
-// console.log(markers)
-
-// map.on('zoomend', function() {
-//   // here's where you decided what zoom levels the layer should and should
-//   // not be available for: use javascript comparisons like < and > if
-//   // you want something other than just one zoom level, like
-//   // (map.getZoom > 10)
-//   if (map.getZoom() >= 6) {
-//     // setFilter is available on L.mapbox.featureLayers only. Here
-//     // we're hiding and showing the default marker layer that's attached
-//     // to the map - change the reference if you want to hide or show a
-//     // different featureLayer.
-//     // If you want to hide or show a different kind of layer, you can use
-//     // similar methods like .setOpacity(0) and .setOpacity(1)
-//     // to hide or show it.
-//     console.log("Close enough")
-//     markers.addLayer(line);
-//     map.addLayer(markers);
-//   } else {
-//     map.featureLayer.setFilter(function() { return false; });
-//   }
-// });
-
-
 }//closes plotData function
 
 
+//get zoom level on each click
+map.on('zoomend', function(e) {
+  console.log(map.getZoom());
+  //if map is zoomed in past 6, show cyclone paths
+  if (map.getZoom() > 6) {
+    plotPaths();
+  }
+  //if map is zoomed out past 6, remove cyclone paths
+  if (map.getZoom() <= 6) {
+    deleteLines();
+  }
+});
 
 
 //5-Scale Cyclones
