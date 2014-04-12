@@ -38,17 +38,6 @@ class Cyclone < ActiveRecord::Base
 
     # .select won't return an active record model. Rewrite it?
     Cyclone.complete_cyclone_tracks.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
-
-
-    # unless selectors
-    #   cyclone = Cyclone.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
-    # else
-    #   if selectors has fscale
-    #     cyclone = Cyclone.find_by_sql("Select * FROM cyclone WHERE cyclone.fscale = %i", degree)
-    #   elsif selectors has fatalities
-    #     cyclone = Cyclone.find_by_sql("Select * FROM cyclone WHERE cyclone.fatalities > 0")
-    #   end
-    # end
   end
 
   def radius_search_results(xc, yc, radius)
@@ -75,11 +64,9 @@ class Cyclone < ActiveRecord::Base
     return false if yi > y1 && yi > y2
     return false if yi < y1 && yi < y2
     # Distance in degrees of the line from the Circle Center to the X,Y Intercept
-    dist = Math.sqrt((xi - xc)**2 + (yi - yc)**2)
-    # Distance in Miles
-    dist_in_miles = dist * 25.0 / 0.3617
+    dist = Math.sqrt((xi - xc)**2 + (yi - yc)**2) * 25.0 / 0.3617
     # Return true if in the circle, false if out of the circle
-    dist_in_miles <= radius.to_f
+    dist <= radius.to_f
   end
 
   def add_weather(data)
@@ -223,9 +210,9 @@ class Cyclone < ActiveRecord::Base
   def self.selectors(params)
     @dc.fetch(params) {
       cyclone = Cyclone.all
+      @cyclone_limit = 500 #Set the default return value to 500 records
+      @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
-        @cyclone_limit = 500 #Set the default return value to 500 records
-        @only_map_data = false #Set the default map_data return to be all parts of the record
         @dc.fetch(params["selectors"]) {
           symbol = illegal_chars(params["selectors"])
           return {error: "#{symbol} in selectors is not allowed.", status: 400} if symbol
@@ -242,8 +229,8 @@ class Cyclone < ActiveRecord::Base
         return cyclone if cyclone.is_a?(Hash)
       end
       #Selects the map data if needed, runs at the end to not break any other selectors
-      if cyclone.class == "Array"
-        puts "Hi!" # Put stuff here to make this work for the radius search
+      if cyclone.class == Array
+        cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
         cyclone = cyclone.many_cyclone_map_data if @only_map_data
         cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
@@ -290,7 +277,7 @@ private
           cyclone = cyclone.send(search)
         end
       end
-      p cyclone.first
+      p cyclone.first # Forces the NoMethodError to occur by causing the SQL query to run
     rescue NoMethodError
       return cyclone = {error: "#{search} is not a valid selector.", status: 400} if search
       return cyclone = {error: "#{search_name} is not a valid selector.", status: 400}
