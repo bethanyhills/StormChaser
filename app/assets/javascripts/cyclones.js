@@ -22,7 +22,7 @@ var markerArray = [];
 var lineArray = [];
 
 //create array to hold cluster group data
-var markers = new L.MarkerClusterGroup();
+var markers = new L.MarkerClusterGroup({disableClusteringAtZoom: 7});
 var lines = new L.MarkerClusterGroup();
 
 //function to draw cyclone paths on map
@@ -41,7 +41,8 @@ var plotPaths = function(data) {
   }
   //specify path properties
   var polyline_options = {
-    color: '#000'
+    color: '#000',
+    weight: 1
   };
   //create a path for each cyclone
   var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
