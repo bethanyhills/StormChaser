@@ -55,6 +55,36 @@ html, body {
   color: #333;
 }
 
+#wrapper2 {
+  position: relative;
+  width: 800px;
+  min-height: 400px;
+  margin: 50px auto;
+  color: black;
+}
+
+#wrapper2 p, li {
+  font-family: Gill Sans;
+  font-size: 16px;
+}
+
+#wrapper2 h3 {
+  font-family: Futura;
+}
+
+#wrapper2 ul {
+  list-style: none;
+}
+
+#wrapper2 a:link {
+  color: #0B173B;
+}
+
+#wrapp2 a:hover {
+  color: red;
+}
+
+
 /*application styling*/
 
 #map {

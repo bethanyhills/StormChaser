@@ -5,6 +5,7 @@ StormChaser::Application.routes.draw do
   get '/cyclones/radiussearch', to: 'cyclones#search_api_call'
   resources :cyclones
   get '/search', to: 'cyclones#search_radius'
+  get '/about', to: 'cyclones#about'
   namespace :api do
     namespace :v1 do
       get 'cyclones/:id/histweather', to: 'cyclones#hist_weather_api'
