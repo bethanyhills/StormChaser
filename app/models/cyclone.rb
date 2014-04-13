@@ -210,7 +210,7 @@ class Cyclone < ActiveRecord::Base
 
   def self.selectors(params)
     @dc.fetch(params) {
-      cyclone = Cyclone.includes(:cyclone_date, :path, :historical_weather)
+      cyclone = Cyclone.all #.includes(:cyclone_date, :path, :historical_weather)
       @cyclone_limit = 500 #Set the default return value to 500 records
       @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
