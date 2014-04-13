@@ -4,12 +4,16 @@ $(document).ready(function() {
     $.get(url, function(data) {window.cyclone = data, plotData(data), drawChart(data)}, "json");
   })
 
-// Create the map
-var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
-        minZoom: 4,
-        maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
+//specify map bounds
+var southWest = L.latLng(24.396308, -124.848974),
+    northEast = L.latLng(49.384358, -66.885444),
+    bounds = L.latLngBounds(southWest, northEast);
 
-map.legendControl.addLegend(document.getElementById('legend-content2').innerHTML);
+// Create the map
+var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l')
+  .setMaxBounds(bounds)
+
+map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
 
 //create tornado icon
 var myIcon = L.icon({
@@ -40,7 +44,7 @@ var plotData = function(data) {
 
   $("#date").text("Date: " + month +"/"+ day + "/" + year);
   $("#f_scale").text("F-Scale: " + scale);
-  $("#start_time").text("Start Time: " + hour + ":" + minute);
+  $("#start_time").text("Start Time:" + hour + ":" + minute);
   $("#width").text("Width: " + width + " meters");
 
 polyline = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], {color: '#000'})
