@@ -55,7 +55,14 @@ var plotData = function(data) {
     var year = data[i]["date"]["year"]
 
     // add icon to map for this tornado
-    var marker = L.marker(new L.latLng(start_lat, start_long), {icon: myIcon});
+    var marker = L.marker(new L.latLng(start_lat, start_long), {
+      icon: myIcon, 
+      cyconeid: window.x[i]["id"],
+      fatalities: window.x[i]["loss"]["fatalities"],
+      crop_loss: window.x[i]["loss"]["crop_loss"],
+      f_scale: window.x[i]["cyclone_strength"]["f_scale"],
+      prop_loss: window.x[i]["loss"]["property_loss"]
+    });
 
     //bind popup to show info and redirect link to individual cyclone dashboard
     marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
@@ -76,6 +83,7 @@ map.on('move', function() {
   var inBounds = [],
   // get the map bounds - the top-left and bottom-right locations
     bounds = map.getBounds();
+    console.log(bounds);
   //set counters
   var total_fatalities = 0
   var total_crop_loss = 0
@@ -83,6 +91,7 @@ map.on('move', function() {
   var strongest_tornado = 0
 
   // for each marker, check if lat/long is currently visible within bounds of map
+  console.log(markerArray);
   if (markerArray.length>0) {
    for (var i = 0; i < markerArray.length; i++) {
     //if marker is visible, push to inBounds array
