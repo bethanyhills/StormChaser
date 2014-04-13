@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var url = "../api/v1/cyclones/f_scale:5,only_map_data:true"
+    var url = "/api/v1/cyclones/f_scale:5,only_map_data:true"
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
 
@@ -13,7 +13,7 @@ map.legendControl.addLegend(document.getElementById('legend-content').innerHTML)
 
 //create tornado icon
 var myIcon = L.icon({
-  iconUrl: '../tornado-small.png',
+  iconUrl: '/tornado-small.png',
   "iconAnchor": [12, 24]
   });
 
@@ -140,7 +140,7 @@ map.on('zoomend', function(e) {
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
   map.setZoom(4);
-  var url = "../api/v1/cyclones/f_scale:5,only_map_data:true"
+  var url = "/api/v1/cyclones/f_scale:5,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show');
 })
@@ -148,7 +148,7 @@ $("#index_tab a:first").on("click", function (e) {
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
   map.setZoom(4);
-  var url = "../api/v1/search/costliest/only_map_data:true"
+  var url = "/api/v1/search/costliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show');
 })
@@ -156,7 +156,7 @@ $("#index_tab li:eq(1) a").on("click", function (e) {
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
   map.setZoom(4);
-  var url = "../api/v1/search/deadliest/only_map_data:true"
+  var url = "/api/v1/search/deadliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show')
 })
@@ -164,7 +164,7 @@ $("#index_tab li:eq(2) a").on("click", function (e) {
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
   map.setZoom(4);
-  var url = "../api/v1/search/strongest/year:2013,only_map_data:true"
+  var url = "/api/v1/search/strongest/year:2013,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show')
 })

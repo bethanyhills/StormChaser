@@ -6,7 +6,7 @@ class Cyclone < ActiveRecord::Base
   options = { :namespace => "app_v1", :compress => true }
   @dc = Dalli::Client.new  #('localhost:11211', options)
 
-  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id', 'fatalities', 'crop_loss', 'property_loss', 'injuries') }
+  scope :many_cyclone_map_data, -> { select('start_lat', 'start_long', 'stop_lat', 'stop_long', 'cyclones.id', 'f_scale', 'cyclones.cyclone_date_id', 'fatalities', 'crop_loss', 'property_loss', 'injuries', 'cyclones.path_id') }
   scope :complete_cyclone_tracks, -> { joins(:path).where('paths.complete_track') }
   scope :strongest_cyclones_first, -> { order(f_scale: :desc) }
   scope :index_map, -> { complete_cyclone_tracks.strongest_cyclones_first.limit(500).many_cyclone_map_data }
@@ -32,7 +32,6 @@ class Cyclone < ActiveRecord::Base
     state = params['state']
     radius = params['radius']
     response = Unirest.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',+' + state + '&sensor=false&key=' + ENV["GOOGLE_GEO_KEY"])
-
     lat = response.body['results'][0]['geometry']['location']['lat']
     lng = response.body['results'][0]['geometry']['location']['lng']
 
@@ -45,11 +44,15 @@ class Cyclone < ActiveRecord::Base
     x1 = self.start_lat
     y1 = self.start_long
     # Check if the start point is in the circle
+    # start_dist = Math.sqrt((x1-xc)**2+(y1-yc)**2)*25/0.3617
+    # return false if start_dist > 100
     return true if radius.to_f >= Math.sqrt((x1-xc)**2+(y1-yc)**2)*25/0.3617
     # Stop Point
     self.stop_lat == 0 ? x2 = x1 : x2 = self.stop_lat
     self.stop_long == 0 ? y2 = y1 : y2 = self.stop_long
     #Check if the stop point is in the circle
+    # stop_dist = Math.sqrt((x2-xc)**2+(y2-yc)**2)*25/0.3617
+    # return false if stop_dist > 100
     return true if radius.to_f >= Math.sqrt((x2-xc)**2+(y2-yc)**2)*25/0.3617
     # Slope of Tornado Path
     y2 == y1 ? m1 = 0 : m1 = (y2 - y1) / (x2 - x1)
@@ -206,7 +209,7 @@ class Cyclone < ActiveRecord::Base
 
   def self.selectors(params)
     @dc.fetch(params) {
-      cyclone = Cyclone.includes(:cyclone_date, :historical_weather) #.includes(:cyclone_date, :path, :historical_weather)
+      cyclone = Cyclone.includes(:cyclone_date, :historical_weather, :path) #.includes(:cyclone_date, :path, :historical_weather)
       @cyclone_limit = 500 #Set the default return value to 500 records
       @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
@@ -229,7 +232,7 @@ class Cyclone < ActiveRecord::Base
       # binding.pry
       #Selects the map data if needed, runs at the end to not break any other selectors
       if cyclone.class == Array
-        raise "It's an array!"
+        # raise "It's an array!"
         cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
         # binding.pry
@@ -280,8 +283,8 @@ private
       end
       p cyclone.first # Forces the NoMethodError to occur by causing the SQL query to run
     rescue NoMethodError
-      return cyclone = {error: "#{search} is not a valid selector.", status: 400} if search
-      return cyclone = {error: "#{search_name} is not a valid selector.", status: 400}
+      return cyclone = {error: "#{search} is not a valid search term.", status: 400} if search
+      return cyclone = {error: "#{search_name} is not a valid search term.", status: 400}
     end
     cyclone
   end
