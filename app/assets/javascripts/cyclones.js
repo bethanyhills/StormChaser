@@ -91,6 +91,7 @@ for (var i = 0; i < window.x.length; i++) {
   var month = window.x[i]["date"]["month"]
   var day = window.x[i]["date"]["day"]
   var year = window.x[i]["date"]["year"]
+
   total_fatalities += window.x[i]["loss"]["fatalities"]
   total_crop_loss += window.x[i]["loss"]["crop_loss"]
   total_prop_loss += window.x[i]["loss"]["property_loss"]
@@ -100,7 +101,13 @@ for (var i = 0; i < window.x.length; i++) {
 
   // add icon to map for this tornado
   var marker = L.marker(new L.latLng(start_lat, start_long), {
-      icon: myIcon}
+      icon: myIcon,
+      cyconeid: id,
+      fatalities: window.x[i]["loss"]["fatalities"],
+      crop_loss: window.x[i]["loss"]["crop_loss"],
+      f_scale: window.x[i]["cyclone_strength"]["f_scale"],
+      prop_loss: window.x[i]["loss"]["property_loss"]
+    }
   );
 
 
@@ -120,7 +127,7 @@ $("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
 
-}//closes plotwindow.x function
+}//closes plotDatafunction
 
 
 //get zoom level on each click
@@ -134,6 +141,42 @@ map.on('zoomend', function(e) {
     deleteLines();
   }
 });
+
+map.on('move', function() {
+  // construct an empty list to fill with onscreen markers
+  var inBounds = [],
+  // get the map bounds - the top-left and bottom-right locations
+    bounds = map.getBounds();
+  //set counters
+  var total_fatalities = 0
+  var total_crop_loss = 0
+  var total_prop_loss = 0
+  var strongest_tornado = 0
+
+  // for each marker, check if lat/long is currently visible within bounds of map
+  if (markerArray.length>0) {
+   for (var i = 0; i < markerArray.length; i++) {
+    //if marker is visible, push to inBounds array
+      if (bounds.contains(markerArray[i].getLatLng())) {
+        inBounds.push(markerArray[i]);
+      }
+    }
+  }
+  //iterate through inBounds to pull and aggregate data for markers in view
+  for (var i = 0; i < inBounds.length; i++) {
+    total_fatalities += inBounds[i]["options"]["fatalities"]
+    total_crop_loss += inBounds[i]["options"]["crop_loss"]
+    total_prop_loss += inBounds[i]["options"]["prop_loss"]
+    if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
+      strongest_tornado += inBounds[i]["options"]["f_scale"]
+    }
+  };
+  //on each zoom, update legend based on data for cyclones in current view
+  $("#fatalities").text(total_fatalities);
+  $("#proploss").text(Math.ceil(total_prop_loss));
+  $("#croploss").text(Math.ceil(total_crop_loss));
+  $("#highestfscale").text(strongest_tornado);
+}); //close map function
 
 
 //5-Scale Cyclones
