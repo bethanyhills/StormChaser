@@ -60,6 +60,8 @@ gem 'rubocop', require: false
 # Memcaching
 gem 'dalli'
 
+gem 'rack-mini-profiler', :group => "development"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

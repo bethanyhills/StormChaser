@@ -95,6 +95,7 @@ class Cyclone < ActiveRecord::Base
   # Formats the results as the JSON we want
   def as_json(cyclones)
     if self.has_attribute?(:state)
+      puts self["state"]
       # Laziness variables for fewer db calls and less typing later
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
@@ -209,7 +210,7 @@ class Cyclone < ActiveRecord::Base
 
   def self.selectors(params)
     @dc.fetch(params) {
-      cyclone = Cyclone.all
+      cyclone = Cyclone.includes(:cyclone_date, :path, :historical_weather)
       @cyclone_limit = 500 #Set the default return value to 500 records
       @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
