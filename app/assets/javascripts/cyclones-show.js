@@ -54,12 +54,10 @@ L.marker([start_lat, start_long], {icon: myIcon, alt: id}).addTo(map)
 polyline.addTo(map)
 
 bounds = polyline.getBounds()
-console.log(bounds)
-
 if (bounds._northEast.lat - bounds._southWest.lat < 0.1) {
   map.setView([start_lat, start_long], 10);
 } else {
-  map.fitBounds(polyline.getBounds())
+  map.fitBounds(bounds)
 }
 
 

@@ -39,6 +39,7 @@ var plotData = function(data) {
     for(i=0;i<markerArray.length;i++) {
     markers.removeLayer(markerArray[i]);
     }
+    markers.clearLayers();
   }
   //call deleteMarkers to clear map on submit
   deleteMarkers();
@@ -67,6 +68,7 @@ var plotData = function(data) {
 
   //add markers to map for clustering effect
   map.addLayer(markers);
+  map.fitBounds(markers.getBounds())
 }; //close plotData function
 
 map.on('move', function() {
