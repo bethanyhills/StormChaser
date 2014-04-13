@@ -9,6 +9,7 @@ html, body {
   margin: 0;
 }
 
+/*navigation*/
 .nav-tabs>li>a {
   color:black;
   background-color: white;
@@ -34,7 +35,7 @@ html, body {
   color:black !important;
 }
 
-
+/*landing page*/
 #full-screen-background-image {
   z-index: -999;
   min-height: 100%;
@@ -54,6 +55,20 @@ html, body {
   color: #333;
 }
 
+/*application styling*/
+
+#map {
+  height: 500px;
+  width: 100%;
+  margin: auto;
+  border-top: black 1px solid;
+  border-bottom: black 1px solid;
+}
+
+.dashboard {
+  height: 500px;
+  background-color: #303335
+}
 .main {
   margin-top: 75px;
 }
@@ -62,59 +77,67 @@ html, body {
 	width: 100%;
 }
 
-#barchart {
-  margin-top: 75px !important;
+
+/*Charts*/
+div table {
+	background: #303335;
 }
 
 #hourlydata {
   margin-top: 50px;
 }
 
-#map {
-	height: 500px;
-  width: 100%;
-  margin: auto;
-  border-top: black 1px solid;
-  border-bottom: black 1px solid;
+#small_pane {
+  background-color: white;
+  width: 350px;
 }
 
-.dashboard {
-	height: 500px;
-	background: #303335;
-	/*padding-top: 45px;*/
+#barchart {
+  margin-top: 75px !important;
 }
+
+div.row.barchart {
+  text-align: center;
+}
+
+div.row.hourly {
+  text-align: center;
+}
+#hourlyTab {
+  display: inline-block;
+}
+
+#small_pane {
+  position: relative;
+  display: inline-table;
+}
+
+div.row.gauge {
+  margin-top: 30px;
+  text-align: center;
+}
+.smallgauge {
+  width: 200px;
+  display: inline-block;
+}
+
+#chart_div4 {
+  display: inline-block;
+}
+
+/*Search Page*/
 
 #search-radius {
   background-color: #BDDDDD;
-  margin-top: 15%;
-  margin-bottom: 25%;
+  margin-top: 50%;
   padding: 5px;
   border-radius: 15px;
 }
 
 #search-radius h4, h5 {
-	color: #303335;
-	font-family: Futura;
-  text-align: center;
-}
-
-#show-legend-content {
-  height: 100px;
   color: #303335;
-  background-color: #BDDDDD;
-  border-radius: 15px;
-}
-
-#show-legend-content .legend-title {
+  font-family: Futura;
   text-align: center;
-}
-
-#show-legend-content .legend-scale ul.legend-labels li:first{
-  margin-left: 15px;
-}
-
-div table {
-	background: #303335;
 }
 
 #city, #state {
@@ -124,6 +147,8 @@ div table {
 #citysearch, #statesearch {
   width: 150px;
 }
+
+/*Legends*/
 
 .my-legend .legend-title {
   text-align: left;
@@ -137,6 +162,7 @@ div table {
   float: left;
   list-style: none;
 }
+
 .my-legend .legend-scale ul li {
   display: block;
   float: left;
@@ -151,8 +177,15 @@ div table {
   float: left;
   height: 15px;
   width: 50px;
+  list-style: none;
 }
 
 .my-legend a {
   color: #777;
 }
+
+.legendsearch {
+  background-color: white;
+}
+
+

@@ -21,9 +21,43 @@ var myIcon = L.icon({
 var markerArray = [];
 var lineArray = [];
 
-//create array to hold cluster group data
-var markers = new L.MarkerClusterGroup();
+//create array to hold cluster group window.x
+var markers = new L.MarkerClusterGroup({disableClusteringAtZoom: 7});
 
+//function to draw cyclone paths on map
+var plotPaths = function(data) {
+  //iterate through window.x for path info
+  for (var i = 0; i < window.x.length; i++) {
+  var start_lat = window.x[i]["location"]["start_lat"]
+  var start_long = window.x[i]["location"]["start_long"]
+  var stop_lat = window.x[i]["location"]["stop_lat"]
+  if (stop_lat == 0) {
+    stop_lat = start_lat;
+  }
+  var stop_long = window.x[i]["location"]["stop_long"]
+  if (stop_long == 0) {
+    stop_long = start_long;
+  }
+  //specify path properties
+  var polyline_options = {
+    color: '#0B610B',
+    weight: 1
+  };
+  //create a path for each cyclone
+  var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
+  lineArray.push(line);
+  markers.addLayer(line);
+  }
+  // add paths to map
+  map.addLayer(markers);
+}
+
+//delete cyclone paths
+var deleteLines = function() {
+    for(i=0;i<lineArray.length;i++) {
+    markers.removeLayer(lineArray[i])
+  }
+}
 
 //Function for 5-Scale Cyclones
 var plotData = function(data) {
@@ -31,7 +65,6 @@ var plotData = function(data) {
   var deleteMarkers = function() {
     for(i=0;i<markerArray.length;i++) {
     markers.removeLayer(markerArray[i]);
-    markers.removeLayer(lineArray[i])
     }
   }
   //call deleteMarkers to clear map on submit
@@ -42,27 +75,27 @@ var plotData = function(data) {
   var total_prop_loss = 0
   var strongest_tornado = 0
 
-for (var i = 0; i < data.length; i++) {
-  var start_lat = data[i]["location"]["start_lat"]
-  var start_long = data[i]["location"]["start_long"]
-  var stop_lat = data[i]["location"]["stop_lat"]
+for (var i = 0; i < window.x.length; i++) {
+  var start_lat = window.x[i]["location"]["start_lat"]
+  var start_long = window.x[i]["location"]["start_long"]
+  var stop_lat = window.x[i]["location"]["stop_lat"]
   if (stop_lat == 0) {
     stop_lat = start_lat;
   }
-  var stop_long = data[i]["location"]["stop_long"]
+  var stop_long = window.x[i]["location"]["stop_long"]
   if (stop_long == 0) {
     stop_long = start_long;
   }
-  var id = data[i]["id"]
-  var scale = data[i]["cyclone_strength"]["f_scale"]
-  var month = data[i]["date"]["month"]
-  var day = data[i]["date"]["day"]
-  var year = data[i]["date"]["year"]
-  total_fatalities += data[i]["loss"]["fatalities"]
-  total_crop_loss += data[i]["loss"]["crop_loss"]
-  total_prop_loss += data[i]["loss"]["property_loss"]
-  if (strongest_tornado < data[i]["cyclone_strength"]["f_scale"]) {
-    strongest_tornado += data[i]["cyclone_strength"]["f_scale"]
+  var id = window.x[i]["id"]
+  var scale = window.x[i]["cyclone_strength"]["f_scale"]
+  var month = window.x[i]["date"]["month"]
+  var day = window.x[i]["date"]["day"]
+  var year = window.x[i]["date"]["year"]
+  total_fatalities += window.x[i]["loss"]["fatalities"]
+  total_crop_loss += window.x[i]["loss"]["crop_loss"]
+  total_prop_loss += window.x[i]["loss"]["property_loss"]
+  if (strongest_tornado < window.x[i]["cyclone_strength"]["f_scale"]) {
+    strongest_tornado += window.x[i]["cyclone_strength"]["f_scale"]
   };
 
   // add icon to map for this tornado
@@ -70,20 +103,13 @@ for (var i = 0; i < data.length; i++) {
       icon: myIcon}
   );
 
-  var polyline_options = {
-    color: '#000'
-  };
-
-  var line = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], polyline_options)
 
   //bind popup to show info and redirect link to individual cyclone dashboard
   marker.bindPopup('<p>Category ' + scale + ' Tornado </br>on ' + month + '/' + day + '/' + year + '</p><a href="/cyclones/'+id+'">Chase this Storm!</a>');
   //add marker to markers array
   markerArray.push(marker)
-  lineArray.push(line)
   //add marker to markers layer
   markers.addLayer(marker);
-  markers.addLayer(line);
 
 }//closes for loop
 
@@ -94,33 +120,20 @@ $("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
 
-// console.log(markers)
-
-// map.on('zoomend', function() {
-//   // here's where you decided what zoom levels the layer should and should
-//   // not be available for: use javascript comparisons like < and > if
-//   // you want something other than just one zoom level, like
-//   // (map.getZoom > 10)
-//   if (map.getZoom() >= 6) {
-//     // setFilter is available on L.mapbox.featureLayers only. Here
-//     // we're hiding and showing the default marker layer that's attached
-//     // to the map - change the reference if you want to hide or show a
-//     // different featureLayer.
-//     // If you want to hide or show a different kind of layer, you can use
-//     // similar methods like .setOpacity(0) and .setOpacity(1)
-//     // to hide or show it.
-//     console.log("Close enough")
-//     markers.addLayer(line);
-//     map.addLayer(markers);
-//   } else {
-//     map.featureLayer.setFilter(function() { return false; });
-//   }
-// });
+}//closes plotwindow.x function
 
 
-}//closes plotData function
-
-
+//get zoom level on each click
+map.on('zoomend', function(e) {
+  //if map is zoomed in past 6, show cyclone paths
+  if (map.getZoom() > 6) {
+    plotPaths();
+  }
+  //if map is zoomed out past 6, remove cyclone paths
+  if (map.getZoom() <= 6) {
+    deleteLines();
+  }
+});
 
 
 //5-Scale Cyclones

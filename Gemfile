@@ -59,6 +59,7 @@ gem 'rubocop', require: false
 
 # Memcaching
 gem 'dalli'
+gem 'memcachier'
 
 gem 'rack-mini-profiler', :group => "development"
 
