@@ -121,9 +121,9 @@ for (var i = 0; i < window.x.length; i++) {
 }//closes for loop
 
 $("#fatalities").text(total_fatalities);
-$("#proploss").text(Math.ceil(total_prop_loss));
-$("#croploss").text(Math.ceil(total_crop_loss));
-$("#highestfscale").text(strongest_tornado);
+$("#proploss").text("~" + Math.ceil(total_prop_loss))
+$("#croploss").text("~" + Math.ceil(total_crop_loss))
+$("#highestfscale").text("Category " + strongest_tornado + ": ");
 //add markers to map for clustering effect
 map.addLayer(markers);
 

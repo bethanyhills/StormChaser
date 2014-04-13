@@ -152,8 +152,8 @@ map.on('move', function() {
   };
   //on each zoom, update legend based on data for cyclones in current view
   $("#fatalities").text(total_fatalities);
-  $("#proploss").text(Math.ceil(total_prop_loss));
-  $("#croploss").text(Math.ceil(total_crop_loss));
+  $("#proploss").text("~" + Math.ceil(total_prop_loss));
+  $("#croploss").text("~" + Math.ceil(total_crop_loss));
   $("#highestfscale").text(strongest_tornado);
 }); //close map function
 

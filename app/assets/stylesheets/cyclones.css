@@ -83,6 +83,7 @@ a.btn {
   font-family: Futura;
 }
 
+/*About page*/
 #wrapper2 {
   position: relative;
   width: 800px;
@@ -208,34 +209,34 @@ div.row.gauge {
 
 /*Legends*/
 
-.my-legend .legend-title {
+.legend .legend-title {
   text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
-  font-size: 90%;
+  font-family: Futura;
+  font-size: 16px;
 }
-.my-legend .legend-scale ul {
+.legend .legend-scale ul {
   margin: 0;
   padding: 0;
-  float: left;
   list-style: none;
+  font-family: Futura;
 }
 
-.my-legend .legend-scale ul li {
-  display: block;
-  float: left;
-  width: 50px;
+.legend .legend-scale ul li {
+ /* width: 50px;
   margin-bottom: 6px;
   text-align: center;
   font-size: 80%;
-  list-style: none;
+  list-style: none;*/
+  font-family: Futura;
 }
 .my-legend ul.legend-labels li span {
-  display: block;
-  float: left;
   height: 15px;
   width: 50px;
   list-style: none;
+  font-family: Futura;
+  font-size: 30px;
 }
 
 .my-legend a {
