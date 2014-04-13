@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var url = "../api/v1/search/strongest/only_map_data:true"
+    var url = "../api/v1/cyclones/f_scale:5,only_map_data:true"
     $.get(url, function(data) {window.x = data, plotData(data)}, "json");
   })
 
@@ -140,7 +140,7 @@ map.on('zoomend', function(e) {
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
   map.setZoom(4);
-  var url = "../api/v1/search/strongest/only_map_data:true"
+  var url = "../api/v1/cyclones/f_scale:5,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show');
 })

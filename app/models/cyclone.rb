@@ -70,31 +70,26 @@ class Cyclone < ActiveRecord::Base
   end
 
   def add_weather(data)
-    currently = data["currently"]
-    weather = self.historical_weather.new
-    weather.temperature = currently["temperature"] if currently["temperature"]
-    weather.pressure = currently["pressure"] if currently["pressure"]
-    weather.wind_speed = currently["windSpeed"] if currently["windSpeed"]
-    weather.wind_bearing = currently["windBearing"] if currently["windBearing"]
-    weather.hour = -9
-    weather.save
+    add_weather_save(data["currently"], -9)
 
-    hourly = data["hourly"]["data"]
-    hourly.each_with_index do |hour, index|
-      weather = self.historical_weather.new
-      weather.temperature = hour["temperature"] if hour["temperature"]
-      weather.pressure = hour["pressure"] if hour["pressure"]
-      weather.wind_speed = hour["windSpeed"] if hour["windSpeed"]
-      weather.wind_bearing = hour["windBearing"] if hour["windBearing"]
-      weather.hour = index
-      weather.save
+    data["hourly"]["data"].each_with_index do |hourly_weather, index|
+      add_weather_save(hourly_weather, index)
     end
   end
 
+  def add_weather_save(hourly_weather, hour)
+    weather = self.historical_weather.new
+    weather.temperature = hourly_weather["temperature"] if hourly_weather["temperature"]
+    weather.pressure = hourly_weather["pressure"] if hourly_weather["pressure"]
+    weather.wind_speed = hourly_weather["windSpeed"] if hourly_weather["windSpeed"]
+    weather.wind_bearing = hourly_weather["windBearing"] if hourly_weather["windBearing"]
+    weather.hour = hour
+    weather.save
+  end
 
   # Formats the results as the JSON we want
   def as_json(cyclones)
-    if self.has_attribute?(:state)
+    if self.has_attribute?(:width)
       puts self["state"]
       # Laziness variables for fewer db calls and less typing later
       all_avg = AvgCycloneData.find_by(year: "all")
@@ -102,6 +97,7 @@ class Cyclone < ActiveRecord::Base
       # Setting up empty variables for the historical weather
       hourly = []
       currently = nil
+      # binding.pry
       # Set all of the historical data if it exists, otherwise return nil and an empty array
       if touchdown = self.historical_weather.find_by(hour: -9)
         currently = {
@@ -210,7 +206,7 @@ class Cyclone < ActiveRecord::Base
 
   def self.selectors(params)
     @dc.fetch(params) {
-      cyclone = Cyclone.all #.includes(:cyclone_date, :path, :historical_weather)
+      cyclone = Cyclone.includes(:cyclone_date, :historical_weather) #.includes(:cyclone_date, :path, :historical_weather)
       @cyclone_limit = 500 #Set the default return value to 500 records
       @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
@@ -228,12 +224,16 @@ class Cyclone < ActiveRecord::Base
       if params["search_name"]
         cyclone = search(cyclone, params)
         return cyclone if cyclone.is_a?(Hash)
+        # binding.pry
       end
+      # binding.pry
       #Selects the map data if needed, runs at the end to not break any other selectors
       if cyclone.class == Array
+        raise "It's an array!"
         cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
-        cyclone = cyclone.many_cyclone_map_data if @only_map_data
+        # binding.pry
+        cyclone = cyclone.many_cyclone_map_data #if @only_map_data
         cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
       end
       cyclone = cyclone.to_json
@@ -296,7 +296,7 @@ private
     elsif split_selector[key] == 'state'
       cyclone = cyclone.where(state: split_selector[value].downcase)
     elsif split_selector[key] == "only_map_data"
-      @only_map_data = split_selector[value]
+      @only_map_data = true
     # If any other type of record, use the .where
     else
       cyclone = where_selector(cyclone, split_selector)
@@ -348,6 +348,8 @@ private
 
     response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+cyclone.start_lat.to_s+','+cyclone.start_long.to_s + ',' + time,
       headers: { "Accept" => "application/json" })
+
+    p response
 
     cyclone.add_weather(response.body)
 
