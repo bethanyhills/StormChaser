@@ -139,6 +139,7 @@ map.on('zoomend', function(e) {
 //5-Scale Cyclones
 $("#index_tab a:first").on("click", function (e) {
   e.preventDefault()
+  map.setZoom(4);
   var url = "../api/v1/search/strongest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show');
@@ -146,6 +147,7 @@ $("#index_tab a:first").on("click", function (e) {
 //Costliest Cyclones
 $("#index_tab li:eq(1) a").on("click", function (e) {
   e.preventDefault()
+  map.setZoom(4);
   var url = "../api/v1/search/costliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show');
@@ -153,6 +155,7 @@ $("#index_tab li:eq(1) a").on("click", function (e) {
 //Deadliest Cyclones
 $("#index_tab li:eq(2) a").on("click", function (e) {
   e.preventDefault()
+  map.setZoom(4);
   var url = "../api/v1/search/deadliest/only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show')
@@ -160,6 +163,7 @@ $("#index_tab li:eq(2) a").on("click", function (e) {
 //Past Year
 $("#index_tab a:last").on("click", function (e) {
   e.preventDefault()
+  map.setZoom(4);
   var url = "../api/v1/search/strongest/year:2013,only_map_data:true"
   $.get(url, function(data) {window.x = data; plotData(data)}, "json");
   $(this).tab('show')
