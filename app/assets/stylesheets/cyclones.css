@@ -188,7 +188,7 @@ div.row.gauge {
 
 #search-radius {
   background-color: #BDDDDD;
-  margin-top: 50%;
+  margin-top: 25%;
   padding: 5px;
   border-radius: 15px;
 }
@@ -208,6 +208,13 @@ div.row.gauge {
 }
 
 /*Legends*/
+
+.legend-search {
+  background-color: #BDDDDD;
+  border-radius: 15px;
+  padding-left: 15px;
+  margin-top: 25%;
+}
 
 .legend .legend-title {
   text-align: left;
@@ -230,21 +237,6 @@ div.row.gauge {
   font-size: 80%;
   list-style: none;*/
   font-family: Futura;
-}
-.my-legend ul.legend-labels li span {
-  height: 15px;
-  width: 50px;
-  list-style: none;
-  font-family: Futura;
-  font-size: 30px;
-}
-
-.my-legend a {
-  color: #777;
-}
-
-.legendsearch {
-  background-color: white;
 }
 
 

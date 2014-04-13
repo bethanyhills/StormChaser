@@ -5,19 +5,6 @@
 		<div class="col-md-9">
 			<!-- display map -->
 			<div id="map"></div>
-			<div id='legend-content2' style='display: none;'>
-		    <div class='legend'>
-		    <div class='legend-title'>Aggregate Total for Current View</div>
-		    <div class='legend-scale'>
-		      <ul class='legend-labels'>
-		      	<li><span id="highestfscale" style='background:#BDC9E1;'></span> Highest F-Scale</li>
-		        <li><span id="proploss" style='background:#BDC9E1;'></span> Millions Property Loss</li>
-		        <li><span id="croploss" style='background:#BDC9E1;'></span> Millions in Crop Loss</li>
-		        <li><span id="fatalities" style='background:#BDC9E1;'></span> Fatalities</li>
-		      </ul>
-	    	</div>
-	    	</div>
-	  	</div>
 	   </div> <!-- closes 9 cols -->
 		<div class="col-md-3" id="search_box">
 			<div id="search-radius">
@@ -31,6 +18,19 @@
 		    <div><%= f.submit "Search", class: "submit" %></div>
 		  		<% end -%>
 		  </div> <!-- closes search -->
+		  	<div id='legend-content2'>
+		    <div class='legend legend-search'>
+		    <div class='legend-title'>Aggregate Total for Current View</div>
+		    <div class='legend-scale'>
+		      <ul class='legend-labels'>
+		      	<li><span id="highestfscale" style='background:#BDC9E1;'></span> Highest F-Scale</li>
+		        <li><span id="proploss" style='background:#BDC9E1;'></span> Million Property Loss</li>
+		        <li><span id="croploss" style='background:#BDC9E1;'></span> Million in Crop Loss</li>
+		        <li><span id="fatalities" style='background:#BDC9E1;'></span> Fatalities</li>
+		      </ul>
+	    	</div>
+	    	</div>
+	  	</div>
 		</div> <!-- closes 3 col -->
 	</div> <!-- closes dashboard -->
 </div> <!-- closes middle column -->

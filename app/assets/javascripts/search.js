@@ -15,7 +15,7 @@ var map = L.mapbox.map('map', 'bethanynagel.hmm5bk2l', {
   maxBounds: [[24.396308,-124.848974],[49.384358, -66.885444]]})
 
 map.scrollWheelZoom.disable();
-map.legendControl.addLegend(document.getElementById('legend-content2').innerHTML);
+// map.legendControl.addLegend(document.getElementById('legend-content2').innerHTML);
 
 //array to hold markers, resets to empty with each submit
 var markerArray = [];
