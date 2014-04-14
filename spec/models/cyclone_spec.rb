@@ -61,6 +61,7 @@ describe Cyclone do
       cyclone = Cyclone.historical_data(1)
       expect(cyclone["timezone"]).to be_nil
       expect(cyclone["currently"]["temperature"]).to_not be_nil
+      expect(Cyclone.find(1).historical_weather.length).to be(25)
       expect(HistoricalWeather.first).to_not be_nil
     end
   end
@@ -68,8 +69,8 @@ describe Cyclone do
   describe "radius_search" do
     it "returns the number of tornadoes within the selected radius of Loudon, TN" do
       expect(Cyclone.radius_search({"city" => "Loudon", "state" => "TN", "radius" => 5}).count).to eq(0)
-      expect(Cyclone.radius_search({"city" => "Loudon", "state" => "TN", "radius" => 10}).count).to eq(1)
-      expect(Cyclone.radius_search({"city" => "Loudon", "state" => "TN", "radius" => 15}).count).to eq(2)
+      expect(Cyclone.radius_search({"city" => "Loudon", "state" => "TN", "radius" => 10}).count).to eq(2)
+      expect(Cyclone.radius_search({"city" => "Loudon", "state" => "TN", "radius" => 15}).count).to eq(7)
     end
   end
 
@@ -108,15 +109,27 @@ describe Cyclone do
     end
   end
 
+  describe "Illegal Char Search" do
+    it "Checks for illegal chars in parameters" do
+      expect(Cyclone.illegal_chars("this should work")).to be(false)
+      expect(Cyclone.illegal_chars("!")).to eq("!")
+      expect(Cyclone.illegal_chars("f_scale:<=4")).to eq("<")
+      expect(Cyclone.illegal_chars("this is [wrong]")).to eq("[")
+      expect(Cyclone.illegal_chars("f_scale:4+&state:tn")).to eq("&")
+      expect(Cyclone.illegal_chars("f_scale:4@")).to eq("@")
+    end
+  end
+
   describe "same day cyclones" do
     it "Given a cyclone id, returns all storms that occurred on the same day" do
-      cyclones = Cyclone.same_day_cyclones(586)
+      obj = {}
+      cyclones = Cyclone.same_day_cyclones({"id" => 586})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
 
-      cyclones = Cyclone.same_day_cyclones(275)
+      cyclones = Cyclone.same_day_cyclones({"id" => 275})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
 
-      cyclones = Cyclone.same_day_cyclones(1380)
+      cyclones = Cyclone.same_day_cyclones({"id" => 1380})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
     end
   end

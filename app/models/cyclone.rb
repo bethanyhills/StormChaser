@@ -93,7 +93,6 @@ class Cyclone < ActiveRecord::Base
   # Formats the results as the JSON we want
   def as_json(cyclones)
     if self.has_attribute?(:width)
-      puts self["state"]
       # Laziness variables for fewer db calls and less typing later
       all_avg = AvgCycloneData.find_by(year: "all")
       year_avg = AvgCycloneData.find_by(year: self.cyclone_date.year.to_s)
@@ -236,7 +235,7 @@ class Cyclone < ActiveRecord::Base
         cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
         # binding.pry
-        cyclone = cyclone.many_cyclone_map_data #if @only_map_data
+        cyclone = cyclone.many_cyclone_map_data if @only_map_data
         cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
       end
       cyclone = cyclone.to_json
@@ -251,7 +250,7 @@ class Cyclone < ActiveRecord::Base
 
 private
   def self.illegal_chars(selectors)
-    ["{","}","[","]","<",">","=","%","?","|","*","&","^","$","#","@"].each do |symbol|
+    ["{","}","[","]","<",">","=","%","?","|","*","&","^","$","#","@","!"].each do |symbol|
       return symbol if selectors.include?(symbol)
     end
     return false
@@ -299,7 +298,7 @@ private
     elsif split_selector[key] == 'state'
       cyclone = cyclone.where(state: split_selector[value].downcase)
     elsif split_selector[key] == "only_map_data"
-      @only_map_data = true
+      @only_map_data = split_selector[value]
     # If any other type of record, use the .where
     else
       cyclone = where_selector(cyclone, split_selector)
@@ -351,8 +350,6 @@ private
 
     response = Unirest.get('https://api.forecast.io/forecast/'+ENV['FORECAST_IO_KEY'].to_s+'/'+cyclone.start_lat.to_s+','+cyclone.start_long.to_s + ',' + time,
       headers: { "Accept" => "application/json" })
-
-    p response
 
     cyclone.add_weather(response.body)
 

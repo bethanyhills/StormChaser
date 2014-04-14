@@ -4,7 +4,7 @@
 # end
 
 def api_get action, params={}, version="1"
-  get "/#{action}", params
+  get "/ap1/v#{version}/#{action}", params
   JSON.parse(response.body) rescue {}
 end
 
