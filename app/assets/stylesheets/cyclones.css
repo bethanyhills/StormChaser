@@ -201,13 +201,13 @@ div.row.gauge {
   border-radius: 15px;
 }
 
-#search-radius h5, #search-radius p {
+#search-radius h4, #search-radius p {
   color: #303335;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
 }
 
-#search-radius h5 {
+#search-radius h4 {
   padding-top: 15px;
 }
 
@@ -238,11 +238,11 @@ margin-bottom: 10px;
 
 .legend .legend-title {
   padding-top: 15px;
-  text-align: left;
+  text-align: center;
   margin-bottom: 8px;
   font-weight: bold;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .legend .legend-title #legend-subtitle {
