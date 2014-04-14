@@ -29,14 +29,16 @@ class Cyclone < ActiveRecord::Base
 
   def self.radius_search(params)
     city = params['city'].gsub(' ', '+')
-    state = params['state']
+    state = params['state'].downcase
     radius = params['radius']
     response = Unirest.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',+' + state + '&sensor=false&key=' + ENV["GOOGLE_GEO_KEY"])
     lat = response.body['results'][0]['geometry']['location']['lat']
     lng = response.body['results'][0]['geometry']['location']['lng']
 
     # .select won't return an active record model. Rewrite it?
-    Cyclone.complete_cyclone_tracks.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
+    cyclone = Cyclone.complete_cyclone_tracks.where(state: state)
+
+    cyclone.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
   end
 
   def radius_search_results(xc, yc, radius)
@@ -240,6 +242,10 @@ class Cyclone < ActiveRecord::Base
       end
 
       cyclone = cyclone.to_json
+      p "Hello"
+      p cyclone
+      p "Goodbye"
+      cyclone
     }
   end
 

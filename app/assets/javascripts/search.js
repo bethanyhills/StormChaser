@@ -24,7 +24,8 @@ var lineArray = [];
 var markers = new L.MarkerClusterGroup({disableClusteringAtZoom: 10});
 //create tornado icon
 var myIcon = L.icon({
-  iconUrl: 'tornado-small.png'
+  iconUrl: 'tornado-small.png',
+  "iconAnchor": [12, 24]
 });
 
 //function to draw cyclone paths on map
@@ -87,7 +88,7 @@ var plotData = function(data) {
 
     // add icon to map for this tornado
     var marker = L.marker(new L.latLng(start_lat, start_long), {
-      icon: myIcon, 
+      icon: myIcon,
       cyconeid: window.x[i]["id"],
       fatalities: window.x[i]["loss"]["fatalities"],
       crop_loss: window.x[i]["loss"]["crop_loss"],
