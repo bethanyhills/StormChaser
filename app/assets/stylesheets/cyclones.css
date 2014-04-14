@@ -201,13 +201,13 @@ div.row.gauge {
   border-radius: 15px;
 }
 
-#search-radius h4, #search-radius p {
+#search-radius h5, #search-radius p {
   color: #303335;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
 }
 
-#search-radius h4 {
+#search-radius h5 {
   padding-top: 15px;
 }
 
