@@ -147,13 +147,13 @@ map.on('move', function() {
     total_crop_loss += inBounds[i]["options"]["crop_loss"]
     total_prop_loss += inBounds[i]["options"]["prop_loss"]
     if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
-      strongest_tornado += inBounds[i]["options"]["f_scale"]
+      strongest_tornado = inBounds[i]["options"]["f_scale"]
     }
   };
   //on each zoom, update legend based on data for cyclones in current view
   $("#fatalities").text(total_fatalities);
-  $("#proploss").text("~" + Math.ceil(total_prop_loss));
-  $("#croploss").text("~" + Math.ceil(total_crop_loss));
+  $("#proploss").text(Math.ceil(total_prop_loss));
+  $("#croploss").text(Math.ceil(total_crop_loss));
   $("#highestfscale").text(strongest_tornado);
 }); //close map function
 

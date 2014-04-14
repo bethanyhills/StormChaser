@@ -121,9 +121,9 @@ for (var i = 0; i < window.x.length; i++) {
 }//closes for loop
 
 $("#fatalities").text(total_fatalities);
-$("#proploss").text("~" + Math.ceil(total_prop_loss))
-$("#croploss").text("~" + Math.ceil(total_crop_loss))
-$("#highestfscale").text("Category " + strongest_tornado + ": ");
+$("#proploss").text(Math.ceil(total_prop_loss));
+$("#croploss").text(Math.ceil(total_crop_loss));
+$("#highestfscale").text(strongest_tornado);
 //add markers to map for clustering effect
 map.addLayer(markers);
 
@@ -168,7 +168,7 @@ map.on('move', function() {
     total_crop_loss += inBounds[i]["options"]["crop_loss"]
     total_prop_loss += inBounds[i]["options"]["prop_loss"]
     if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
-      strongest_tornado += inBounds[i]["options"]["f_scale"]
+      strongest_tornado = inBounds[i]["options"]["f_scale"]
     }
   };
   //on each zoom, update legend based on data for cyclones in current view

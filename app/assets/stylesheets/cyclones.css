@@ -240,6 +240,12 @@ div.row.gauge {
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   font-size: 16px;
 }
+
+.legend .legend-title #legend-subtitle {
+  font-size: 12px;
+  text-align: center;
+}
+
 .legend .legend-scale ul {
   margin: 0;
   padding: 0;
@@ -254,6 +260,10 @@ div.row.gauge {
   font-size: 80%;
   list-style: none;*/
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+.around {
+  font-family: Calibri;
 }
 
 
