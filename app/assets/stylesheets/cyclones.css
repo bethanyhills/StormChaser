@@ -66,7 +66,7 @@ html, body {
 }
 
 #entersite h3 {
- font-family: Futura;
+ font-family: Futura, "Trebuchet MS", Arial, sans-serif;
  text-align: center;
  margin-top: 25px;
  color: white;
@@ -80,7 +80,8 @@ a.btn {
   margin-right: auto;
   width: 200px;
   height: 50px;
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  font-size: 16px;
 }
 
 /*About page*/
@@ -89,16 +90,20 @@ a.btn {
   width: 800px;
   min-height: 400px;
   margin: 50px auto;
-  color: black;
+  color: white;
 }
 
 #wrapper2 p, li {
-  font-family: Gill Sans;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
   font-size: 16px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 #wrapper2 h3 {
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  margin-left: 25px;
+  margin-left: 25px;
 }
 
 #wrapper2 ul {
@@ -106,13 +111,25 @@ a.btn {
 }
 
 #wrapper2 a:link {
-  color: #0B173B;
-}
-
-#wrapper2 a:hover {
   color: white;
 }
 
+#wrapper2 a:hover {
+  color: #0B173B;
+}
+
+.about {
+  background: rgba(0, 0, 0, .5);
+  border-radius: 15px;
+}
+
+#about-header {
+  padding-top: 25px;
+}
+
+#about-footer {
+  padding-bottom: 25px;
+}
 
 /*application styling*/
 
@@ -195,7 +212,7 @@ div.row.gauge {
 
 #search-radius h4, h5 {
   color: #303335;
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
 }
 
@@ -220,14 +237,14 @@ div.row.gauge {
   text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   font-size: 16px;
 }
 .legend .legend-scale ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
 .legend .legend-scale ul li {
@@ -236,7 +253,7 @@ div.row.gauge {
   text-align: center;
   font-size: 80%;
   list-style: none;*/
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
 
