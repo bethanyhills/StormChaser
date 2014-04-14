@@ -212,7 +212,7 @@ class Cyclone < ActiveRecord::Base
       @cyclone_limit = 500 #Set the default return value to 500 records
       @only_map_data = false #Set the default map_data return to be all parts of the record
       if params["selectors"]
-        @dc.fetch(params["selectors"]) {
+        # @dc.fetch(params["selectors"]) {
           symbol = illegal_chars(params["selectors"])
           return {error: "#{symbol} in selectors is not allowed.", status: 400} if symbol
           #Split the selectors by the comma into inidividual key value pairs
@@ -221,23 +221,24 @@ class Cyclone < ActiveRecord::Base
             cyclone = selector_splitter(cyclone, selector)
             return cyclone if cyclone.is_a?(Hash)
           end
-        }
+          cyclone = cyclone.many_cyclone_map_data if @only_map_data
+        # }
       end
       if params["search_name"]
         cyclone = search(cyclone, params)
         return cyclone if cyclone.is_a?(Hash)
         # binding.pry
       end
-      # binding.pry
       #Selects the map data if needed, runs at the end to not break any other selectors
       if cyclone.class == Array
         # raise "It's an array!"
         cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
-        # binding.pry
-        cyclone = cyclone.many_cyclone_map_data if @only_map_data
-        cyclone = cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
+        # cyclone = cyclone.limit(@cyclone_limit)
+        p cyclone.to_sql
+        cyclone = Cyclone.includes(:cyclone_date, :historical_weather, :path).find_by_sql(cyclone.limit(@cyclone_limit).to_sql) #cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
       end
+
       cyclone = cyclone.to_json
     }
   end
@@ -280,7 +281,7 @@ private
           cyclone = cyclone.send(search)
         end
       end
-      p cyclone.first # Forces the NoMethodError to occur by causing the SQL query to run
+      # p cyclone.first # Forces the NoMethodError to occur by causing the SQL query to run
     rescue NoMethodError
       return cyclone = {error: "#{search} is not a valid search term.", status: 400} if search
       return cyclone = {error: "#{search_name} is not a valid search term.", status: 400}
@@ -322,8 +323,8 @@ private
 
       if split_selector[key] == 'month' || split_selector[key] == 'day' || split_selector[key] == 'year'
         cyclone = cyclone.joins(:cyclone_date).where(split_selector[key] + relational_op + split_selector[value])
-      elsif split_selector[key] =='complete_track' || split_selector == 'states_crossed'
-        cyclone = cyclone.joins(:path).where(split_selector[key] + relational_op + split_selector[value].to_f)
+      elsif split_selector[key] == 'complete_track' || split_selector == 'states_crossed'
+        cyclone = cyclone.joins(:path).where(split_selector[key] + relational_op + split_selector[value])
       else
         cyclone = cyclone.where(split_selector[key] + relational_op + split_selector[value])
       end
