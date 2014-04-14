@@ -83,7 +83,7 @@ a.btn {
   color: white;
 }
 
-#wrapper2 p, li {
+#wrapper2 p, #wrapper2 li {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
   font-size: 16px;
   margin-left: 25px;
@@ -106,7 +106,7 @@ a.btn {
 }
 
 #wrapper2 a:hover {
-  color: blue;
+  color: black;
 }
 
 .about {
@@ -201,7 +201,7 @@ div.row.gauge {
   border-radius: 15px;
 }
 
-#search-radius h4, p {
+#search-radius h4, #search-radius p {
   color: #303335;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
