@@ -10,6 +10,8 @@ class CyclonesController < ApplicationController
   end
 
   def landing_page
+  end
 
+  def about
   end
 end

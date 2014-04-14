@@ -36,23 +36,90 @@ html, body {
 }
 
 /*landing page*/
-#full-screen-background-image {
-  z-index: -999;
-  min-height: 100%;
-  min-width: 1024px;
-  width: 100%;
-  height: auto;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
 
 #wrapper {
   position: relative;
   width: 800px;
   min-height: 400px;
-  margin: 100px auto;
+  margin: 150px auto;
   color: #333;
+}
+
+#entersite {
+  height: 350px;
+  width: 400px;
+  border-radius: 15px;
+  border: 1px gray solid;
+  background: rgba(0, 0, 0, .25);
+  margin: auto;
+  
+}
+
+#entersite h3 {
+ font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+ text-align: center;
+ margin-top: 25px;
+ color: white;
+}
+
+a.btn {
+  margin-top: 30px;
+  padding-top: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 50px;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  font-size: 16px;
+}
+
+/*About page*/
+#wrapper2 {
+  position: relative;
+  width: 800px;
+  min-height: 400px;
+  margin: 50px auto;
+  color: white;
+}
+
+#wrapper2 p, #wrapper2 li {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-size: 16px;
+  margin-left: 25px;
+  margin-right: 25px;
+  color: white;
+}
+
+#wrapper2 h3 {
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  margin-left: 25px;
+  margin-left: 25px;
+}
+
+#wrapper2 ul {
+  list-style: none;
+}
+
+#wrapper2 a:link {
+  color: white;
+}
+
+#wrapper2 a:hover {
+  color: black;
+}
+
+.about {
+  background: rgba(0, 0, 0, .5);
+  border-radius: 15px;
+}
+
+#about-header {
+  padding-top: 25px;
+}
+
+#about-footer {
+  padding-bottom: 25px;
 }
 
 /*application styling*/
@@ -129,15 +196,19 @@ div.row.gauge {
 
 #search-radius {
   background-color: #BDDDDD;
-  margin-top: 50%;
-  padding: 5px;
+  margin-top: 50px;
+  padding: 0 15px 15px 15px;
   border-radius: 15px;
 }
 
-#search-radius h4, h5 {
+#search-radius h4, #search-radius p {
   color: #303335;
-  font-family: Futura;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
+}
+
+#search-radius h4 {
+  padding-top: 15px;
 }
 
 #city, #state {
@@ -147,45 +218,62 @@ div.row.gauge {
 #citysearch, #statesearch {
   width: 150px;
 }
+#citysearch {
+margin-left: 10px;
+margin-bottom: 10px;
+}
+
+#statesearch {
+  margin-bottom: 10px;
+}
 
 /*Legends*/
 
-.my-legend .legend-title {
+.legend-search {
+  background-color: #BDDDDD;
+  border-radius: 15px;
+  padding-left: 15px;
+  margin-top: 50px;
+}
+
+.legend .legend-title {
+  padding-top: 15px;
   text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
-  font-size: 90%;
-}
-.my-legend .legend-scale ul {
-  margin: 0;
-  padding: 0;
-  float: left;
-  list-style: none;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  font-size: 16px;
 }
 
-.my-legend .legend-scale ul li {
-  display: block;
-  float: left;
-  width: 50px;
+.legend .legend-title #legend-subtitle {
+  font-size: 12px;
+  text-align: center;
+}
+
+.legend .legend-scale ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  color: #303335;
+}
+
+.legend .legend-scale ul li {
+ /* width: 50px;
   margin-bottom: 6px;
   text-align: center;
   font-size: 80%;
-  list-style: none;
-}
-.my-legend ul.legend-labels li span {
-  display: block;
-  float: left;
-  height: 15px;
-  width: 50px;
-  list-style: none;
+  list-style: none;*/
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  color: #303335;
 }
 
-.my-legend a {
-  color: #777;
+.around {
+  font-family: Calibri;
 }
 
-.legendsearch {
-  background-color: white;
+.legend .legend-scale .legend-labels {
+  padding-bottom: 15px;
 }
 
 

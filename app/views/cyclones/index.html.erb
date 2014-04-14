@@ -10,14 +10,16 @@
 </ul>
 	<div id="map"></div>
     <div id='legend-content' style='display: none;'>
-    <div class='my-legend'>
-    <div class='legend-title'>Aggregate Total for Current View</div>
+    <div class='legend'>
+    <div class='legend-title'>Aggregate Total for Current View
+      <p id="legend-subtitle">(zoom to update data)</p>
+    </div>
     <div class='legend-scale'>
       <ul class='legend-labels'>
-        <li><span id="fatalities" style='background:#F1EEF6;'>150</span>Fatalities</li>
-        <li><span id="proploss" style='background:#BDC9E1;'>200</span>Property Loss</li>
-        <li><span id="croploss" style='background:#74A9CF;'>40</span>Crop Loss</li>
-        <li><span id="highestfscale" style='background:#2B8CBE;'>5</span>Highest F-Scale</li>
+        <li>Highest F-Scale in View: <span id="highestfscale"></span></li>
+        <li><span class="around">~</span><span id="proploss"></span> Million in Property Loss</li>
+        <li><span class="around">~</span><span id="croploss"></span> Million in Crop Loss</li>
+        <li><span id="fatalities"></span> Fatalities</li>
       </ul>
     </div>
     </div>
