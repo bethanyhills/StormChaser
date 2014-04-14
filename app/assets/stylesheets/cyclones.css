@@ -36,16 +36,6 @@ html, body {
 }
 
 /*landing page*/
-#full-screen-background-image {
-  z-index: -999;
-  min-height: 100%;
-  min-width: 1024px;
-  width: 100%;
-  height: auto;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
 
 #wrapper {
   position: relative;
@@ -98,6 +88,7 @@ a.btn {
   font-size: 16px;
   margin-left: 25px;
   margin-right: 25px;
+  color: white;
 }
 
 #wrapper2 h3 {
@@ -205,15 +196,19 @@ div.row.gauge {
 
 #search-radius {
   background-color: #BDDDDD;
-  margin-top: 25%;
-  padding: 5px;
+  margin-top: 50px;
+  padding: 0 15px 15px 15px;
   border-radius: 15px;
 }
 
-#search-radius h4, h5 {
+#search-radius h4, p {
   color: #303335;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   text-align: center;
+}
+
+#search-radius h4 {
+  padding-top: 15px;
 }
 
 #city, #state {
@@ -223,6 +218,14 @@ div.row.gauge {
 #citysearch, #statesearch {
   width: 150px;
 }
+#citysearch {
+margin-left: 10px;
+margin-bottom: 10px;
+}
+
+#statesearch {
+  margin-bottom: 10px;
+}
 
 /*Legends*/
 
@@ -230,10 +233,11 @@ div.row.gauge {
   background-color: #BDDDDD;
   border-radius: 15px;
   padding-left: 15px;
-  margin-top: 25%;
+  margin-top: 50px;
 }
 
 .legend .legend-title {
+  padding-top: 15px;
   text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
@@ -251,6 +255,7 @@ div.row.gauge {
   padding: 0;
   list-style: none;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  color: #303335;
 }
 
 .legend .legend-scale ul li {
@@ -260,10 +265,15 @@ div.row.gauge {
   font-size: 80%;
   list-style: none;*/
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  color: #303335;
 }
 
 .around {
   font-family: Calibri;
+}
+
+.legend .legend-scale .legend-labels {
+  padding-bottom: 15px;
 }
 
 
