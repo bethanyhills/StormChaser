@@ -91,8 +91,8 @@ var drawChart = function(cyclone) {
 var drawBarChart = function(cyclone) {
   var data = google.visualization.arrayToDataTable([
     ['Type', 'Cyclone', 'Year', 'All'],
-    ['Prop Loss', cyclone.loss.property_loss, Math.ceil(cyclone.average.year.property_loss), Math.ceil(cyclone.average.all.property_loss)],
-    ['Crop Loss', cyclone.loss.crop_loss, Math.ceil(cyclone.average.year.crop_loss), Math.ceil(cyclone.average.all.crop_loss)]
+    ['Prop Loss', cyclone.loss.propertyLoss, Math.ceil(cyclone.average.year.propertyLoss), Math.ceil(cyclone.average.all.propertyLoss)],
+    ['Crop Loss', cyclone.loss.cropLoss, Math.ceil(cyclone.average.year.cropLoss), Math.ceil(cyclone.average.all.cropLoss)]
   ]);
 
 
@@ -110,11 +110,11 @@ var drawBarChart = function(cyclone) {
 
 
 var drawPressureChart = function(cyclone) {
-  var hourly_arr = cyclone.historical_weather;
+  var hourly_arr = cyclone.historicalWeather;
 
   var arr = [['Hour', 'Pressure']];
   for (var i =0; i < hourly_arr.length; i++) {
-       arr.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].pressure]);
+       arr.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].pressure]);
     }
 
   var data1 = google.visualization.arrayToDataTable(arr);
@@ -133,11 +133,11 @@ var drawPressureChart = function(cyclone) {
 
 
 var drawTempChart = function(cyclone) {
-  var temp_arr = cyclone.historical_weather;
+  var temp_arr = cyclone.historicalWeather;
 
   var arr2 = [['Hour', 'Temperature']];
   for (var i =0; i < temp_arr.length; i++) {
-       arr2.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].temperature]);
+       arr2.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].temperature]);
     }
 
   var data2 = google.visualization.arrayToDataTable(arr2);
@@ -157,11 +157,11 @@ var drawTempChart = function(cyclone) {
 
 
 var drawWindChart = function(cyclone) {
-  var wind_arr = cyclone.historical_weather;
+  var wind_arr = cyclone.historicalWeather;
 
   var arr3 = [['Hour', 'Wind Speed']];
   for (var i =0; i < wind_arr.length; i++) {
-       arr3.push([cyclone.historical_weather[i].hour, cyclone.historical_weather[i].windSpeed]);
+       arr3.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].windSpeed]);
     }
 
   var data3 = google.visualization.arrayToDataTable(arr3);

@@ -23,24 +23,24 @@ var myIcon = L.icon({
 
 var plotData = function(data) {
 // Construct the lat and long for this tornado.
-  var start_lat = data["location"]["start_lat"]
-  var start_long = data["location"]["start_long"]
-  var stop_lat = data["location"]["stop_lat"]
+  var start_lat = data["location"]["startLat"]
+  var start_long = data["location"]["startLong"]
+  var stop_lat = data["location"]["stopLat"]
   if (stop_lat == 0) {
     stop_lat = start_lat;
   }
-  var stop_long = data["location"]["stop_long"]
+  var stop_long = data["location"]["stopLong"]
   if (stop_long == 0) {
     stop_long = start_long;
   }
   var id = data["id"]
-  var scale = data["cyclone_strength"]["f_scale"]
+  var scale = data["cycloneStrength"]["fScale"]
   var month = data["date"]["month"]
   var day = data["date"]["day"]
   var year = data["date"]["year"]
   var hour = data["date"]["hour"]
   var minute = data["date"]["minute"]
-  var width = data["cyclone_strength"]["width"]
+  var width = data["cycloneStrength"]["width"]
 
   $("#date").text("Date: " + month +"/"+ day + "/" + year);
   $("#f_scale").text("F-Scale: " + scale);

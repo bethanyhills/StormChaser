@@ -28,13 +28,13 @@ var markers = new L.MarkerClusterGroup({disableClusteringAtZoom: 7});
 var plotPaths = function(data) {
   //iterate through window.x for path info
   for (var i = 0; i < window.x.length; i++) {
-  var start_lat = window.x[i]["location"]["start_lat"]
-  var start_long = window.x[i]["location"]["start_long"]
-  var stop_lat = window.x[i]["location"]["stop_lat"]
+  var start_lat = window.x[i]["location"]["startLat"]
+  var start_long = window.x[i]["location"]["startLong"]
+  var stop_lat = window.x[i]["location"]["stopLat"]
   if (stop_lat == 0) {
     stop_lat = start_lat;
   }
-  var stop_long = window.x[i]["location"]["stop_long"]
+  var stop_long = window.x[i]["location"]["stopLong"]
   if (stop_long == 0) {
     stop_long = start_long;
   }
@@ -76,27 +76,27 @@ var plotData = function(data) {
   var strongest_tornado = 0
 
 for (var i = 0; i < window.x.length; i++) {
-  var start_lat = window.x[i]["location"]["start_lat"]
-  var start_long = window.x[i]["location"]["start_long"]
-  var stop_lat = window.x[i]["location"]["stop_lat"]
+  var start_lat = window.x[i]["location"]["startLat"]
+  var start_long = window.x[i]["location"]["startLong"]
+  var stop_lat = window.x[i]["location"]["stopLat"]
   if (stop_lat == 0) {
     stop_lat = start_lat;
   }
-  var stop_long = window.x[i]["location"]["stop_long"]
+  var stop_long = window.x[i]["location"]["stopLong"]
   if (stop_long == 0) {
     stop_long = start_long;
   }
   var id = window.x[i]["id"]
-  var scale = window.x[i]["cyclone_strength"]["f_scale"]
+  var scale = window.x[i]["cycloneStrength"]["fScale"]
   var month = window.x[i]["date"]["month"]
   var day = window.x[i]["date"]["day"]
   var year = window.x[i]["date"]["year"]
 
   total_fatalities += window.x[i]["loss"]["fatalities"]
-  total_crop_loss += window.x[i]["loss"]["crop_loss"]
-  total_prop_loss += window.x[i]["loss"]["property_loss"]
-  if (strongest_tornado < window.x[i]["cyclone_strength"]["f_scale"]) {
-    strongest_tornado += window.x[i]["cyclone_strength"]["f_scale"]
+  total_crop_loss += window.x[i]["loss"]["cropLoss"]
+  total_prop_loss += window.x[i]["loss"]["propertyLoss"]
+  if (strongest_tornado < window.x[i]["cyclone_strength"]["fScale"]) {
+    strongest_tornado += window.x[i]["cyclone_strength"]["fScale"]
   };
 
   // add icon to map for this tornado
@@ -104,9 +104,9 @@ for (var i = 0; i < window.x.length; i++) {
       icon: myIcon,
       cyconeid: id,
       fatalities: window.x[i]["loss"]["fatalities"],
-      crop_loss: window.x[i]["loss"]["crop_loss"],
-      f_scale: window.x[i]["cyclone_strength"]["f_scale"],
-      prop_loss: window.x[i]["loss"]["property_loss"]
+      crop_loss: window.x[i]["loss"]["cropLoss"],
+      f_scale: window.x[i]["cycloneStrength"]["fScale"],
+      prop_loss: window.x[i]["loss"]["propertyLoss"]
     }
   );
 
@@ -165,10 +165,10 @@ map.on('move', function() {
   //iterate through inBounds to pull and aggregate data for markers in view
   for (var i = 0; i < inBounds.length; i++) {
     total_fatalities += inBounds[i]["options"]["fatalities"]
-    total_crop_loss += inBounds[i]["options"]["crop_loss"]
-    total_prop_loss += inBounds[i]["options"]["prop_loss"]
-    if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
-      strongest_tornado = inBounds[i]["options"]["f_scale"]
+    total_crop_loss += inBounds[i]["options"]["cropLoss"]
+    total_prop_loss += inBounds[i]["options"]["propLoss"]
+    if (strongest_tornado < inBounds[i]["options"]["fScale"]) {
+      strongest_tornado = inBounds[i]["options"]["fScale"]
     }
   };
   //on each zoom, update legend based on data for cyclones in current view
