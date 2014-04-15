@@ -15,7 +15,7 @@ This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visual
 ## StormChaser API:
 
 
-The StormChaser API gives access to 63 years of cyclone data in the United States, from 1950 to 2013. The data is from a .csv file provided by [NOAA's NWS Storm Prediction Center](http://www.spc.noaa.gov/wcm/data/1950-2013Torn.csv). Data on the weather at the cyclone touchdown location is also provided by using historical data from the Forecast.io API. Various searches and selectors in the API get requests allow for a narrowed and more selective search. The API replies to requests are replied to strictly in JSON.
+The StormChaser API gives access to 63 years of cyclone data in the United States, from 1950 to 2013. The data is from a .csv file provided by [NOAA's NWS Storm Prediction Center](http://www.spc.noaa.gov/wcm/#data). Data on the weather at the cyclone touchdown location is also provided by using historical data from the Forecast.io API. Various searches and selectors in the API get requests allow for a narrowed and more selective search. The API replies to requests are replied to strictly in JSON.
 
 Here is the available data:
 
