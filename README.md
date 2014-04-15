@@ -15,7 +15,7 @@ This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visual
 ## StormChaser API:
 
 
-The StormChaser API gives access to 63 years of cyclone data in the United States, from 1950 to 2013. The data is from a .csv file provided by NOAA's NWS Storm Prediction Center and can be found at http://www.spc.noaa.gov/wcm/data/1950-2013Torn.csv. Data on the weather at the cyclone touchdown location is also provided by using historical data from the Forecast.io API. Various searches and selectors in the API get requests allow for a narrowed and more selective search. The API replies to requests are replied to strictly in JSON.
+The StormChaser API gives access to 63 years of cyclone data in the United States, from 1950 to 2013. The data is from a .csv file provided by [NOAA's NWS Storm Prediction Center](http://www.spc.noaa.gov/wcm/data/1950-2013Torn.csv). Data on the weather at the cyclone touchdown location is also provided by using historical data from the Forecast.io API. Various searches and selectors in the API get requests allow for a narrowed and more selective search. The API replies to requests are replied to strictly in JSON.
 
 Here is the available data:
 
@@ -46,18 +46,20 @@ Here is the available data:
 | # States Crossed | Number of states the cyclone passed through | Integer | cyclone.location.statesCrossed |
 | Complete Track | Is the path a complete track (true) or part of a partial track for multi-state cyclones (false) | Boolean | cyclone.path.completeTrack |
 | Segment # | Current segment of the cyclone, 1 for all complete paths | Integer | cyclone.path.segmentNum |
-| Avg Fatalities for All Records | Average fatalities for all cyclone records available | Float | cyclone.average.all.fatalities |
-| Avg Injuries for All Records | Average injuries for all cyclone records available | Float | cyclone.average.all.injuries |
-| Avg Crop Loss for All Records | Average crop loss for all cyclone records available (millions $) | Float | cyclone.average.all.cropLoss |
-| Avg Property Loss for All Records | Average property loss for all cyclone records available (millions $) | Float | cyclone.average.all.propertyLoss |
-| Avg Fujita Scale for All Records | Average F-Scale for all cyclone records available | Float | cyclone.average.all.fScale |
-| Avg Distance for All Records | Average distance for all cyclone records available (miles) | Float | cyclone.average.all.distance |
-| Avg Fatalities for Touchdown Year Records | Average number of fatalities for all cyclone records available for the touchdown year | Float | cyclone.average.year.fatalities |
-| Avg Injuries for Touchdown Year Records | Average number of injuries for all cyclone records available for the touchdown year | Float | cyclone.average.year.injuries |
-| Avg Crop Loss for Touchdown Year Records | Average number of crop loss for all cyclone records available for the touchdown year (millions $) | Float | cyclone.average.year.cropLoss |
-| Avg Property Loss for Touchdown Year Records | Average number of property loss for all cyclone records available for the touchdown year (millions $) | Float | cyclone.average.year.propertyLoss |
-| Avg Fujita Scale for Touchdown Year Records | Average number of F-scale for all cyclone records available for the touchdown year | Float | cyclone.average.year.fScale |
-| Avg Distance for Touchdown Year Records | Average number of distance for all cyclone records available for the touchdown year (miles) | Float | cyclone.average.year.distance |
+| **Average for All Records** | | | |
+| Fatalities | Average fatalities for all cyclone records available | Float | cyclone.average.all.fatalities |
+| Injuries | Average injuries for all cyclone records available | Float | cyclone.average.all.injuries |
+| Crop Loss | Average crop loss for all cyclone records available (millions $) | Float | cyclone.average.all.cropLoss |
+| Property Loss | Average property loss for all cyclone records available (millions $) | Float | cyclone.average.all.propertyLoss |
+| Fujita Scale| Average F-Scale for all cyclone records available | Float | cyclone.average.all.fScale |
+| Distance | Average distance for all cyclone records available (miles) | Float | cyclone.average.all.distance |
+| **Average for Touchdown Year Records** | | | |
+| Fatalities | Average number of fatalities for all cyclone records available for the touchdown year | Float | cyclone.average.year.fatalities |
+| Injuries | Average number of injuries for all cyclone records available for the touchdown year | Float | cyclone.average.year.injuries |
+| Crop Loss | Average number of crop loss for all cyclone records available for the touchdown year (millions $) | Float | cyclone.average.year.cropLoss |
+| Property Loss | Average number of property loss for all cyclone records available for the touchdown year (millions $) | Float | cyclone.average.year.propertyLoss |
+| Fujita Scale | Average number of F-scale for all cyclone records available for the touchdown year | Float | cyclone.average.year.fScale |
+| Distance | Average number of distance for all cyclone records available for the touchdown year (miles) | Float | cyclone.average.year.distance |
 | Touchdown Temperature | Temperature at time of cyclone touchdown (F) | Float | touchdownWeather.temperature |
 | Touchdown Pressure | Pressure at time of cyclone touchdown (??) | Float | touchdownWeather.pressure |
 | Touchdown Wind Speed | Wind speed at time of cyclone touchdown (mph) | Float | touchdownWeather.windSpeed |
@@ -101,3 +103,15 @@ Selectors are ways to describe what types of data to return. This is done by sel
 | Hour* | Select the hour the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/hour:3-.json |
 | Distance* | Select the distance the cyclone travelled | http://stormchaser.herokuapp.com/api/v1/cyclones/distance:200+.json |
 | Complete Track | Return only cyclones with a complete track | http://stormchaser.herokuapp.com/api/v1/cyclones/complete_track:true.json |
+
+### Examples
+
+| Example | URL for Example |
+| ------------- | ------------- |
+| All Cyclones | http://stormchaser.herokuapp.com/api/v1/cyclones.json |
+| Cyclone with id 5 | http://stormchaser.herokuapp.com/api/v1/cyclones/5.json |
+| All cyclones in 2011 with scale >= 4 | http://stormchaser.herokuapp.com/api/v1/cyclones/year:2011,f_scale:4+.json |
+| All cyclones in 2011 with scale >= 4, ranked strongest to weakest | http://stormchaser.herokuapp.com/api/v1/search/strongest/year:2011,f_scale:4+.json |
+| 20 deadly cyclones that have crop damage | http://stormchaser.herokuapp.com/api/v1/search/deadly/crop_loss:1+,records:20.json |
+| Find all cyclones that have occurred within 25 miles of Austin, TX | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:Texas,radius:25.json |
+| Find all cyclones that have occurred within 25 miles of Austin, TX in 2010-now | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:Texas,radius:25/year:2010+.json |
