@@ -68,6 +68,8 @@ Here is the available data:
 | Hourly Wind Bearing | Wind bearing at the location of the cyclone touchdown at a given hour during the day of the touchdown (degrees) | Float | historicalWeather[“hour”].windBearing |
 | Cyclone ID | ID given to the cyclone by the database | Integer | historicalWeather[“hour”].id |
 
+### Searches
+
 All Cyclone data can be accessed through selectors and searches. Searches are ways to order the data or to provide complex searches given a set of parameters. All searches are as follows:
 
 | Search Name | Description | URL |
@@ -79,6 +81,8 @@ All Cyclone data can be accessed through selectors and searches. Searches are wa
 | Scale 5 | Only return 5 scale cyclones | http://stormchaser.herokuapp.com/api/v1/search/scale_5.json |
 | Same Day Cyclones | Return cyclones that occurred on the same day as a given cyclone’s id | http://stormchaser.herokuapp.com/api/v1/search/same_day,id:300.json |
 | Radius Search | Given a location and a radius, find all tornadoes that have travelled through the resulting circle. | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:austin,state:tx,radius:25.json |
+
+### Selectors
 
 Selectors are ways to describe what types of data to return. This is done by selecting an exact answer (state:tx for all cyclones that have occured in the state of Texas), or using our + (>=) and - (<=) modifiers at the end of the selector (f_scale:3+ for all cyclones with an f_scale of 3 or greater). The available selectors can be found below:
 
