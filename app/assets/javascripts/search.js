@@ -145,10 +145,10 @@ map.on('move', function() {
   //iterate through inBounds to pull and aggregate data for markers in view
   for (var i = 0; i < inBounds.length; i++) {
     total_fatalities += inBounds[i]["options"]["fatalities"]
-    total_crop_loss += inBounds[i]["options"]["cropLoss"]
-    total_prop_loss += inBounds[i]["options"]["propLoss"]
-    if (strongest_tornado < inBounds[i]["options"]["fScale"]) {
-      strongest_tornado = inBounds[i]["options"]["fScale"]
+    total_crop_loss += inBounds[i]["options"]["crop_loss"]
+    total_prop_loss += inBounds[i]["options"]["prop_loss"]
+    if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
+      strongest_tornado = inBounds[i]["options"]["f_scale"]
     }
   };
   //on each zoom, update legend based on data for cyclones in current view
