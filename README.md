@@ -84,16 +84,16 @@ Selectors are ways to describe what types of data to return. This is done by sel
 
 | Selector Name | Description | URL |
 | ------------- | ------------- | ------------- |
-| Records | The number of records to return (standard is 500) | http://stormchaser.herokuapp.com/api/v1/cyclones/records:100 |
-| Year* | Select the year the cyclone touched down  | http://stormchaser.herokuapp.com/api/v1/cyclones/year:2011 |
-| Month* | Select the month the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/month:3 |
-| Day* | Select the day the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/day:5 |
-| Fatalities* | Select the number of fatalities caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/fatalities:1 |
-| Injuries* | Select the number of injuries caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/injuries:1 |
-| State | Select the state the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/state:tn |
-| Property Damage* | Select how much property damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/property_loss:10 |
-| Crop Damage* | Select how much crop damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/crop_loss:1.2 |
-| F-Scale* | Select the Fujita Scale of the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/f_scale:4+ |
-| Hour* | Select the hour the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/hour:3- |
-| Distance* | Select the distance the cyclone travelled | http://stormchaser.herokuapp.com/api/v1/cyclones/distance:200+ |
-| Complete Track | Return only cyclones with a complete track | http://stormchaser.herokuapp.com/api/v1/cyclones/complete_track:true |
+| Records | The number of records to return (standard is 500) | http://stormchaser.herokuapp.com/api/v1/cyclones/records:100.json |
+| Year* | Select the year the cyclone touched down  | http://stormchaser.herokuapp.com/api/v1/cyclones/year:2011.json |
+| Month* | Select the month the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/month:3.json |
+| Day* | Select the day the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/day:5.json |
+| Fatalities* | Select the number of fatalities caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/fatalities:1.json |
+| Injuries* | Select the number of injuries caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/injuries:1.json |
+| State | Select the state the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/state:tn.json |
+| Property Damage* | Select how much property damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/property_loss:10.json |
+| Crop Damage* | Select how much crop damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/crop_loss:1.2.json |
+| F-Scale* | Select the Fujita Scale of the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/f_scale:4+.json |
+| Hour* | Select the hour the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/hour:3-.json |
+| Distance* | Select the distance the cyclone travelled | http://stormchaser.herokuapp.com/api/v1/cyclones/distance:200+.json |
+| Complete Track | Return only cyclones with a complete track | http://stormchaser.herokuapp.com/api/v1/cyclones/complete_track:true.json |
