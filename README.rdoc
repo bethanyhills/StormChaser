@@ -1,28 +1,16 @@
-== README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+== StormChaser
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Summary: StormChaser is a data-visualization app for the recorded history of tornadoes in the United States.  Our app utilizes data from our StormChaser API, an open API that has freed the past 63 years of tornado data from the clutches of a mammoth CSV file and integrated it with data from Forecast.io and Google Maps API to provide a comprehensive data-set for each cyclone.
+
+Live Site: http://stormchaser.herokuapp.com
+
+Contact: 
+Patrick Brennan | patrick@patrickbrennan.co
+Bethany Nagel | bethanylnagel@gmail.com
+
+Tech Stack:
+This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visualization API. 
+
+== StormChaser API:
+
