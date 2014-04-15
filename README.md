@@ -6,8 +6,8 @@ Description: StormChaser is a data-visualization app for the recorded history of
 Live Site: http://stormchaser.herokuapp.com
 
 Authors:
-Patrick Brennan  |  patrick@patrickbrennan.co
 Bethany Nagel  |  bethanylnagel@gmail.com
+Patrick Brennan  |  patrick@patrickbrennan.co
 
 Tech Stack:
 This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visualization API, Forecast.io API
@@ -98,7 +98,7 @@ Selectors are ways to describe what types of data to return. This is done by sel
 | Injuries* | Select the number of injuries caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/injuries:1.json |
 | State | Select the state the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/state:tn.json |
 | Property Damage* | Select how much property damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/property_loss:10.json |
-| Crop Damage* | Select how much crop damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/crop_loss:1.2.json |
+| Crop Damage* | Select how much crop damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/crop_loss:1.json |
 | F-Scale* | Select the Fujita Scale of the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/f_scale:4+.json |
 | Hour* | Select the hour the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/hour:3-.json |
 | Distance* | Select the distance the cyclone travelled | http://stormchaser.herokuapp.com/api/v1/cyclones/distance:200+.json |
@@ -113,5 +113,5 @@ Selectors are ways to describe what types of data to return. This is done by sel
 | All cyclones in 2011 with scale >= 4 | http://stormchaser.herokuapp.com/api/v1/cyclones/year:2011,f_scale:4+.json |
 | All cyclones in 2011 with scale >= 4, ranked strongest to weakest | http://stormchaser.herokuapp.com/api/v1/search/strongest/year:2011,f_scale:4+.json |
 | 20 deadly cyclones that have crop damage | http://stormchaser.herokuapp.com/api/v1/search/deadly/crop_loss:1+,records:20.json |
-| Find all cyclones that have occurred within 25 miles of Austin, TX | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:Texas,radius:25.json |
-| Find all cyclones that have occurred within 25 miles of Austin, TX in 2010-now | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:Texas,radius:25/year:2010+.json |
+| Find all cyclones that have occurred within 25 miles of Austin, TX | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:TX,radius:25.json |
+| Find all cyclones that have occurred within 25 miles of Austin, TX in 2010-now | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:Austin,state:TX,radius:25/year:2010+.json |
