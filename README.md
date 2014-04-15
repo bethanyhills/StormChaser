@@ -79,3 +79,21 @@ All Cyclone data can be accessed through selectors and searches. Searches are wa
 | Scale 5 | Only return 5 scale cyclones | http://stormchaser.herokuapp.com/api/v1/search/scale_5.json |
 | Same Day Cyclones | Return cyclones that occurred on the same day as a given cyclone’s id | http://stormchaser.herokuapp.com/api/v1/search/same_day,id:300.json |
 | Radius Search | Given a location and a radius, find all tornadoes that have travelled through the resulting circle. | http://stormchaser.herokuapp.com/api/v1/search/radius_search,city:austin,state:tx,radius:25.json |
+
+Selectors are ways to describe what types of data to return. This is done by selecting an exact answer (state:tx for all cyclones that have occured in the state of Texas), or using our + (>=) and - (<=) modifiers at the end of the selector (f_scale:3+ for all cyclones with an f_scale of 3 or greater). The available selectors can be found below:
+
+| Selector Name | Description | URL |
+| ------------- | ------------- | ------------- |
+| Records | The number of records to return (standard is 500) | http://stormchaser.herokuapp.com/api/v1/cyclones/records:100 |
+| Year* | Select the year the cyclone touched down  | http://stormchaser.herokuapp.com/api/v1/cyclones/year:2011 |
+| Month* | Select the month the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/month:3 |
+| Day* | Select the day the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/day:5 |
+| Fatalities* | Select the number of fatalities caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/fatalities:1 |
+| Injuries* | Select the number of injuries caused by the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/injuries:1 |
+| State | Select the state the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/state:tn |
+| Property Damage* | Select how much property damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/property_loss:10 |
+| Crop Damage* | Select how much crop damage is caused | http://stormchaser.herokuapp.com/api/v1/cyclones/crop_loss:1.2 |
+| F-Scale* | Select the Fujita Scale of the cyclone | http://stormchaser.herokuapp.com/api/v1/cyclones/f_scale:4+ |
+| Hour* | Select the hour the cyclone touched down | http://stormchaser.herokuapp.com/api/v1/cyclones/hour:3- |
+| Distance* | Select the distance the cyclone travelled | http://stormchaser.herokuapp.com/api/v1/cyclones/distance:200+ |
+| Complete Track | Return only cyclones with a complete track | http://stormchaser.herokuapp.com/api/v1/cyclones/complete_track:true |
