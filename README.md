@@ -69,8 +69,9 @@ Here is the available data:
 | Cyclone ID | ID given to the cyclone by the database | Integer | historicalWeather[“hour”].id |
 
 All Cyclone data can be accessed through selectors and searches. Searches are ways to order the data or to provide complex searches given a set of parameters. All searches are as follows:
+
 | Search Name | Description | URL |
-| -- | -- |
+| -- | -- | -- |
 | Strongest | Rank tornadoes by F-scale, strongest first | http://stormchaser.herokuapp.com/api/v1/search/strongest.json |
 | Deadliest | Rank tornadoes by fatalities, most fatalities first | http://stormchaser.herokuapp.com/api/v1/search/deadliest.json |
 | Costliest | Rank cyclones by property damage, most damage first | http://stormchaser.herokuapp.com/api/v1/search/costliest.json |
