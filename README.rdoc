@@ -1,16 +1,16 @@
 == StormChaser
 
 
-<h4>Description:</h4> StormChaser is a data-visualization app for the recorded history of tornadoes in the United States.  Our app utilizes data from our StormChaser API, an open API that has freed the past 63 years of tornado data from the clutches of a mammoth CSV file and integrated it with data from Forecast.io and Google Maps API to provide a comprehensive data-set for each cyclone.
+Description: StormChaser is a data-visualization app for the recorded history of tornadoes in the United States.  Our app utilizes data from our StormChaser API, an open API that has freed the past 63 years of tornado data from the clutches of a mammoth CSV file and integrated it with data from Forecast.io and Google Maps API to provide a comprehensive data-set for each cyclone.
 
-<h4>Live Site:</h4> http://stormchaser.herokuapp.com
+Live Site: http://stormchaser.herokuapp.com
 
-<h4>Authors:</h4>
-Patrick Brennan | patrick@patrickbrennan.co</br>
+Authors:
+Patrick Brennan | patrick@patrickbrennan.co
 Bethany Nagel | bethanylnagel@gmail.com
 
-<h4>Tech Stack:</h4>
-This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visualization API. 
+Tech Stack:
+This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visualization API, Forecast.io API
 
 == StormChaser API:
 
