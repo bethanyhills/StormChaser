@@ -95,8 +95,8 @@ for (var i = 0; i < window.x.length; i++) {
   total_fatalities += window.x[i]["loss"]["fatalities"]
   total_crop_loss += window.x[i]["loss"]["cropLoss"]
   total_prop_loss += window.x[i]["loss"]["propertyLoss"]
-  if (strongest_tornado < window.x[i]["cyclone_strength"]["fScale"]) {
-    strongest_tornado += window.x[i]["cyclone_strength"]["fScale"]
+  if (strongest_tornado < window.x[i]["cycloneStrength"]["fScale"]) {
+    strongest_tornado += window.x[i]["cycloneStrength"]["fScale"]
   };
 
   // add icon to map for this tornado

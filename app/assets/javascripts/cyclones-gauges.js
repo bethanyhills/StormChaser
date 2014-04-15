@@ -14,7 +14,7 @@ var drawChart = function(cyclone) {
   // console.log(touchdown)
   if (touchdown == null) {
     // console.log("Getting")
-    $.get("/api/v1/cyclones/" + id + "/histweather", function(data) {gaugesData(data.currently)}, "json");
+    $.get("/api/v1/cyclones/" + id + "/histweather", function(data) {hist_data = data; gaugesData(data.currently)}, "json");
   } else {
     gaugesData(touchdown);
   }
@@ -109,13 +109,13 @@ var drawBarChart = function(cyclone) {
 }
 
 
-var drawPressureChart = function(cyclone) {
-  var hourly_arr = cyclone.historicalWeather;
+var drawPressureChart = function(hourly_arr) {
+  // var hourly_arr = historicalWeather;
 
   var arr = [['Hour', 'Pressure']];
   for (var i =0; i < hourly_arr.length; i++) {
-       arr.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].pressure]);
-    }
+    arr.push([hourly_arr[i].hour, hourly_arr[i].pressure]);
+  }
 
   var data1 = google.visualization.arrayToDataTable(arr);
 
@@ -132,12 +132,12 @@ var drawPressureChart = function(cyclone) {
 }
 
 
-var drawTempChart = function(cyclone) {
-  var temp_arr = cyclone.historicalWeather;
+var drawTempChart = function(hourly_arr) {
+  // var temp_arr = cyclone.historicalWeather;
 
   var arr2 = [['Hour', 'Temperature']];
-  for (var i =0; i < temp_arr.length; i++) {
-       arr2.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].temperature]);
+  for (var i =0; i < hourly_arr.length; i++) {
+       arr2.push([hourly_arr[i].hour, hourly_arr[i].temperature]);
     }
 
   var data2 = google.visualization.arrayToDataTable(arr2);
@@ -150,18 +150,18 @@ var drawTempChart = function(cyclone) {
     height: 300,
     legend: { position: 'none' }
   };
-  
+
   var chart = new google.visualization.LineChart(document.getElementById('chart_div7'));
   chart.draw(data2, options_temp);
 }
 
 
-var drawWindChart = function(cyclone) {
-  var wind_arr = cyclone.historicalWeather;
+var drawWindChart = function(hourly_arr) {
+  // var wind_arr = cyclone.historicalWeather;
 
   var arr3 = [['Hour', 'Wind Speed']];
-  for (var i =0; i < wind_arr.length; i++) {
-       arr3.push([cyclone.historicalWeather[i].hour, cyclone.historicalWeather[i].windSpeed]);
+  for (var i =0; i < hourly_arr.length; i++) {
+       arr3.push([hourly_arr[i].hour, hourly_arr[i].windSpeed]);
     }
 
   var data3 = google.visualization.arrayToDataTable(arr3);
@@ -198,7 +198,11 @@ $("#myTab li:eq(1) a").on("click", function (e) {
 
 $("#myTab a:last").on("click", function (e) {
   e.preventDefault();
-  drawPressureChart(cyclone);
+  if (cyclone.historicalWeather.length > 0) {
+    drawPressureChart(cyclone.historicalWeather);
+  } else {
+    drawPressureChart(hist_data.hourly.data);
+  }
   $(this).tab('show');
 })
 
@@ -208,18 +212,27 @@ $("#myTab a:last").on("click", function (e) {
 
 $("#hourlyTab a:first").on("click", function (e) {
   e.preventDefault();
-  drawPressureChart(cyclone);
-  $(this).tab('show');
+  if (cyclone.historicalWeather.length > 0) {
+    drawPressureChart(cyclone.historicalWeather);
+  } else {
+    drawPressureChart(hist_data.hourly.data);
+  }  $(this).tab('show');
 })
 
 $("#hourlyTab li:eq(1) a").on("click", function (e) {
   e.preventDefault();
-  drawTempChart(cyclone);
-  $(this).tab('show');
+  if (cyclone.historicalWeather.length > 0) {
+    drawTempChart(cyclone.historicalWeather);
+  } else {
+    drawTempChart(hist_data.hourly.data);
+  }  $(this).tab('show');
 })
 
 $("#hourlyTab a:last").on("click", function (e) {
   e.preventDefault();
-  drawWindChart(cyclone);
-  $(this).tab('show');
+  if (cyclone.historicalWeather.length > 0) {
+    drawWindChart(cyclone.historicalWeather);
+  } else {
+    drawWindChart(hist_data.hourly.data);
+  }  $(this).tab('show');
 })

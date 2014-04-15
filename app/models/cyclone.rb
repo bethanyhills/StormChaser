@@ -126,66 +126,66 @@ class Cyclone < ActiveRecord::Base
           year: self.cyclone_date.year,
           hour: self.hour,
           minute: self.minute,
-          time_zone: self.time_zone
+          timeZone: self.time_zone
         },
-        cyclone_strength: {
-          f_scale: self.f_scale,
+        cycloneStrength: {
+          fScale: self.f_scale,
           width: self.width
         },
         loss: {
           injuries: self.injuries,
           fatalities: self.fatalities,
-          property_loss: self.property_loss,
-          crop_loss: self.crop_loss
+          propertyLoss: self.property_loss,
+          cropLoss: self.crop_loss
         },
         location: {
-          start_lat: self.start_lat,
-          start_long: self.start_long,
-          stop_lat: self.stop_lat,
-          stop_long: self.stop_long,
+          startLat: self.start_lat,
+          startLong: self.start_long,
+          stopLat: self.stop_lat,
+          stopLong: self.stop_long,
           distance: self.distance,
           state: self.state,
-          county_code_one: self.county_code_one,
-          county_code_two: self.county_code_two,
-          county_code_three: self.county_code_three,
-          county_code_four: self.county_code_four,
-          states_crossed: self.path.states_crossed
+          countyCodeOne: self.county_code_one,
+          countyCodeTwo: self.county_code_two,
+          countyCodeThree: self.county_code_three,
+          countyCodeFour: self.county_code_four,
+          statesCrossed: self.path.states_crossed
         },
         path: {
-          complete_track: self.path.complete_track,
-          segment_num: self.path.segment_num
+          completeTrack: self.path.complete_track,
+          segmentNum: self.path.segment_num
         },
         average: {
           all: {
             fatalities: all_avg.fatalities,
-            property_loss: all_avg.property_loss,
-            crop_loss: all_avg.crop_loss,
+            propertyLoss: all_avg.property_loss,
+            cropLoss: all_avg.crop_loss,
             injuries: all_avg.injuries,
-            f_scale: all_avg.f_scale,
+            fScale: all_avg.f_scale,
             distance: all_avg.distance
           },
           year: {
             fatalities: year_avg.fatalities,
-            property_loss: year_avg.property_loss,
-            crop_loss: year_avg.crop_loss,
+            propertyLoss: year_avg.property_loss,
+            cropLoss: year_avg.crop_loss,
             injuries: year_avg.injuries,
-            f_scale: year_avg.f_scale,
+            fScale: year_avg.f_scale,
             distance: year_avg.distance
           }
         },
-        touchdown_weather: currently,
-        historical_weather: hourly
+        touchdownWeather: currently,
+        historicalWeather: hourly
       }
     else
       {
         location: {
-          start_lat: self.start_lat,
-          start_long: self.start_long,
-          stop_lat: self.stop_lat,
-          stop_long: self.stop_long
+          startLat: self.start_lat,
+          startLong: self.start_long,
+          stopLat: self.stop_lat,
+          stopLong: self.stop_long
         },
-        cyclone_strength: {
-          f_scale: self.f_scale
+        cycloneStrength: {
+          fScale: self.f_scale
         },
         id: self.id,
         date: {
@@ -195,8 +195,8 @@ class Cyclone < ActiveRecord::Base
         },
         loss: {
           fatalities: self.fatalities,
-          property_loss: self.property_loss,
-          crop_loss: self.crop_loss
+          propertyLoss: self.property_loss,
+          cropLoss: self.crop_loss
         }
       }
     end

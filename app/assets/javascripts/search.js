@@ -32,13 +32,13 @@ var myIcon = L.icon({
 var plotPaths = function(data) {
   //iterate through window.x for path info
   for (var i = 0; i < window.x.length; i++) {
-  var start_lat = window.x[i]["location"]["start_lat"]
-  var start_long = window.x[i]["location"]["start_long"]
-  var stop_lat = window.x[i]["location"]["stop_lat"]
+  var start_lat = window.x[i]["location"]["startLat"]
+  var start_long = window.x[i]["location"]["startLong"]
+  var stop_lat = window.x[i]["location"]["stopLat"]
   if (stop_lat == 0) {
     stop_lat = start_lat;
   }
-  var stop_long = window.x[i]["location"]["stop_long"]
+  var stop_long = window.x[i]["location"]["stopLong"]
   if (stop_long == 0) {
     stop_long = start_long;
   }
@@ -78,10 +78,10 @@ var plotData = function(data) {
 
   // Construct the lat and long for each tornado.
   for (var i = 0; i < data.length; i++) {
-    var start_lat = data[i]["location"]["start_lat"]
-    var start_long = data[i]["location"]["start_long"]
+    var start_lat = data[i]["location"]["startLat"]
+    var start_long = data[i]["location"]["startLong"]
     var id = data[i]["id"]
-    var scale = data[i]["cyclone_strength"]["f_scale"]
+    var scale = data[i]["cycloneStrength"]["fScale"]
     var month = data[i]["date"]["month"]
     var day = data[i]["date"]["day"]
     var year = data[i]["date"]["year"]
@@ -91,9 +91,9 @@ var plotData = function(data) {
       icon: myIcon,
       cyconeid: window.x[i]["id"],
       fatalities: window.x[i]["loss"]["fatalities"],
-      crop_loss: window.x[i]["loss"]["crop_loss"],
-      f_scale: window.x[i]["cyclone_strength"]["f_scale"],
-      prop_loss: window.x[i]["loss"]["property_loss"]
+      crop_loss: window.x[i]["loss"]["cropLoss"],
+      f_scale: window.x[i]["cycloneStrength"]["fScale"],
+      prop_loss: window.x[i]["loss"]["propertyLoss"]
     });
 
     //bind popup to show info and redirect link to individual cyclone dashboard
@@ -145,10 +145,10 @@ map.on('move', function() {
   //iterate through inBounds to pull and aggregate data for markers in view
   for (var i = 0; i < inBounds.length; i++) {
     total_fatalities += inBounds[i]["options"]["fatalities"]
-    total_crop_loss += inBounds[i]["options"]["crop_loss"]
-    total_prop_loss += inBounds[i]["options"]["prop_loss"]
-    if (strongest_tornado < inBounds[i]["options"]["f_scale"]) {
-      strongest_tornado = inBounds[i]["options"]["f_scale"]
+    total_crop_loss += inBounds[i]["options"]["cropLoss"]
+    total_prop_loss += inBounds[i]["options"]["propLoss"]
+    if (strongest_tornado < inBounds[i]["options"]["fScale"]) {
+      strongest_tornado = inBounds[i]["options"]["fScale"]
     }
   };
   //on each zoom, update legend based on data for cyclones in current view
