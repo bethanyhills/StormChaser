@@ -40,12 +40,17 @@ var plotData = function(data) {
   var year = data["date"]["year"]
   var hour = data["date"]["hour"]
   var minute = data["date"]["minute"]
+    if (minute < 10) {
+      minute = "0" + data["date"]["minute"]
+    }
   var width = data["cycloneStrength"]["width"]
+  var fatalities = data["loss"]["fatalities"]
 
   $("#date").text("Date: " + month +"/"+ day + "/" + year);
   $("#f_scale").text("F-Scale: " + scale);
-  $("#start_time").text("Start Time:" + hour + ":" + minute);
+  $("#start_time").text("Start Time: " + hour + ":" + minute);
   $("#width").text("Width: " + width + " meters");
+  $("#fatalities").text("Fatalities: " + fatalities);
 
 polyline = L.polyline([[start_lat,start_long],[stop_lat, stop_long]], {color: '#000'})
 

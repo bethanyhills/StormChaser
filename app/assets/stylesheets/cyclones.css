@@ -14,6 +14,7 @@ html, body {
   color:black;
   background-color: white;
   border-color: gray !important;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 .nav-tabs>li>a:hover {
   background-color: gray !important;
@@ -26,7 +27,8 @@ html, body {
 
 .nav-pills>li>a {
   color: white;
-  background-color: gray; 
+  background-color: gray;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
 }
 
 .nav-pills>li.active>a {
