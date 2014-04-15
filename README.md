@@ -18,43 +18,44 @@ This application utilizes Rails, Ruby, Javascript, MapBox/Leaflet, Google Visual
 The StormChaser API gives access to 63 years of cyclone data in the United States, from 1950 to 2013. The data is from a .csv file provided by NOAA's NWS Storm Prediction Center and can be found at http://www.spc.noaa.gov/wcm/data/1950-2013_torn.csv. Data on the weather at the cyclone touchdown location is also provided by using historical data from the Forecast.io API. Various searches and selectors in the API get requests allow for a narrowed and more selective search. The API replies to requests are replied to strictly in JSON.
 
 Here is the available data:
+
 | Data Name | Description | Type | Location in the JSON |
-| -- | -- | -- | -- |
+| ------------- | ------------- | ------------- | ------------- |
 | Day | Day of the month the tornado touched down | Integer | tornado.date.day |
 | Month | Month of the year the tornado touched down | Integer | tornado.date.month |
 | Year | Year the tornado touched down | Integer | tornado.date.year |
 | Hour | Hour the tornado touched down (24 hr format) | Integer | tornado.date.hour |
 | Minute | Minute the tornado touched down | Integer | tornado.date.minute |
 | Time Zone |  | Integer | tornado.date.time_zone |
-| Fujita Scale | Strength of the tornado, click here for more information | Integer | tornado.strength.f_scale |
+| Fujita Scale | Strength of the tornado, click here for more information | Integer | tornado.strength.fScale |
 | Width | Width of tornado in yards | Integer | tornado.strength.width |
 | Injuries | Number of injuries caused by the tornado | Integer | tornado.loss.injuries |
 | Fatalities | Number of fatalities caused by the tornado | Integer | tornado.loss.fatalities |
-| Property Loss | Property loss caused by the tornado, in millions of $ | Float | tornado.loss.property_loss |
-| Crop Loss | Crop loss caused by the tornado, in millions of $ | Float | tornado.loss.crop_loss |
-| Starting Latitude | Starting Latitude of the tornado path | Float | tornado.location.start_lat |
-| Starting Longitude | Starting Longitude of the tornado path | Float | tornado.location.start_long |
-| Stopping Latitude | Stopping Latitude of the tornado path | Float | tornado.location.stop_lat |
-| Stopping Longitude | Stopping Longitude of the tornado path | Float | tornado.location.stop_long |
+| Property Loss | Property loss caused by the tornado, in millions of $ | Float | tornado.loss.propertyLoss |
+| Crop Loss | Crop loss caused by the tornado, in millions of $ | Float | tornado.loss.cropLoss |
+| Starting Latitude | Starting Latitude of the tornado path | Float | tornado.location.startLat |
+| Starting Longitude | Starting Longitude of the tornado path | Float | tornado.location.startLong |
+| Stopping Latitude | Stopping Latitude of the tornado path | Float | tornado.location.stopLat |
+| Stopping Longitude | Stopping Longitude of the tornado path | Float | tornado.location.stopLong |
 | Distance Travelled | Distance the tornado travelled, in miles | Float | tornado.location.distance |
 | State | State the tornado path starts in (Based off of Starting Lat and Starting Long) | String | tornado.location.state |
-| County Code 1 | Code of county tornado passed through or 0 if no county | Integer | tornado.location.county_code_one |
-| County Code 2 | Code of county tornado passed through or 0 if the tornado passed through 1 or fewer counties | Integer | tornado.location.county_code_two |
-| County Code 3 | Code of county tornado passed through or 0 if the tornado passed through 2 or fewer counties | Integer | tornado.location.county_code_three |
-| County Code 4 | Code of county tornado passed through or 0 if the tornado passed through 3 or fewer counties | Integer | tornado.location.county_code_four |
+| County Code 1 | Code of county tornado passed through or 0 if no county | Integer | tornado.location.countyCodeOne |
+| County Code 2 | Code of county tornado passed through or 0 if the tornado passed through 1 or fewer counties | Integer | tornado.location.countyCodeTwo |
+| County Code 3 | Code of county tornado passed through or 0 if the tornado passed through 2 or fewer counties | Integer | tornado.location.countyCodeThree |
+| County Code 4 | Code of county tornado passed through or 0 if the tornado passed through 3 or fewer counties | Integer | tornado.location.countyCodeFour |
 | # States Crossed | Number of states the tornado passed through | Integer | tornado.location.states_crossed |
 | Complete Track | Is the path a complete track (true) or part of a partial track for multi-state tornadoes (false) | Boolean | tornado.path.complete_track |
 | Segment # | Current segment of the tornado, 1 for all complete paths | Integer | tornado.path.segment_num |
 | Avg Fatalities for All Records | Average fatalities for all tornado records available | Float | tornado.average.all.fatalities |
 | Avg Injuries for All Records | Average injuries for all tornado records available | Float | tornado.average.all.injuries |
-| Avg Crop Loss for All Records | Average crop loss for all tornado records available (millions $) | Float | tornado.average.all.crop_loss |
-| Avg Property Loss for All Records | Average property loss for all tornado records available (millions $) | Float | tornado.average.all.property_loss |
+| Avg Crop Loss for All Records | Average crop loss for all tornado records available (millions $) | Float | tornado.average.all.cropLoss |
+| Avg Property Loss for All Records | Average property loss for all tornado records available (millions $) | Float | tornado.average.all.propertyLoss |
 | Avg Fujita Scale for All Records | Average F-Scale for all tornado records available | Float | tornado.average.all.f_scale |
 | Avg Distance for All Records | Average distance for all tornado records available (miles) | Float | tornado.average.all.distance |
 | Avg Fatalities for Touchdown Year Records | Average number of fatalities for all tornado records available for the touchdown year | Float | tornado.average.year.fatalities |
 | Avg Injuries for Touchdown Year Records | Average number of injuries for all tornado records available for the touchdown year | Float | tornado.average.year.injuries |
-| Avg Crop Loss for Touchdown Year Records | Average number of crop loss for all tornado records available for the touchdown year (millions $) | Float | tornado.average.year.crop_loss |
-| Avg Property Loss for Touchdown Year Records | Average number of property loss for all tornado records available for the touchdown year (millions $) | Float | tornado.average.year.property_loss |
+| Avg Crop Loss for Touchdown Year Records | Average number of crop loss for all tornado records available for the touchdown year (millions $) | Float | tornado.average.year.cropLoss |
+| Avg Property Loss for Touchdown Year Records | Average number of property loss for all tornado records available for the touchdown year (millions $) | Float | tornado.average.year.propertyLoss |
 | Avg Fujita Scale for Touchdown Year Records | Average number of F-scale for all tornado records available for the touchdown year | Float | tornado.average.year.f_scale |
 | Avg Distance for Touchdown Year Records | Average number of distance for all tornado records available for the touchdown year (miles) | Float | tornado.average.year.distance |
 | Touchdown Temperature | Temperature at time of tornado touchdown (F) | Float | touchdown_weather.temperature |
