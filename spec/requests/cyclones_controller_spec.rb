@@ -10,11 +10,11 @@ describe "Cyclones API" do
       body = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(body["cyclone_strength"]["f_scale"]).to eq(3)
+      expect(body["cycloneStrength"]["fScale"]).to eq(3)
       expect(body["date"]["day"]).to eq(1)
       expect(body["date"]["year"]).to eq(2011)
       expect(body["loss"]["fatalities"]).to eq(0)
-      expect(body["path"]["segment_num"]).to eq(1)
+      expect(body["path"]["segmentNum"]).to eq(1)
     end
   end
 
@@ -25,7 +25,7 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(500)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(5)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
       expect(body[0]["date"]["day"]).to eq(27)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(72)
@@ -41,11 +41,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(103)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(2)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(2)
       expect(body[0]["date"]["day"]).to eq(24)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(28)
     end
   end
@@ -57,11 +57,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(9)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(5)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
       expect(body[0]["date"]["day"]).to eq(27)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(3)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(781)
 
     end
@@ -72,18 +72,18 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(34)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(4)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(4)
       expect(body[0]["date"]["day"]).to eq(9)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(230)
 
-      expect(body[27]["cyclone_strength"]["f_scale"]).to eq(5)
+      expect(body[27]["cycloneStrength"]["fScale"]).to eq(5)
       expect(body[27]["date"]["day"]).to eq(22)
       expect(body[27]["date"]["year"]).to eq(2011)
       expect(body[27]["loss"]["fatalities"]).to eq(158)
-      expect(body[27]["path"]["segment_num"]).to eq(1)
+      expect(body[27]["path"]["segmentNum"]).to eq(1)
       expect(body[27]["id"]).to eq(1066)
     end
   end
@@ -95,11 +95,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(1)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(5)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
       expect(body[0]["date"]["day"]).to eq(22)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(158)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(1066)
     end
 
@@ -109,11 +109,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(73)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(2)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(2)
       expect(body[0]["date"]["day"]).to eq(28)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(1)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(72)
     end
   end
@@ -125,11 +125,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(66)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(0)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(19)
     end
 
@@ -139,11 +139,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(89)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(0)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
       expect(body[0]["date"]["day"]).to eq(5)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(1676)
     end
   end
@@ -155,11 +155,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(16)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(0)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
       expect(body[0]["date"]["day"]).to eq(13)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(997)
     end
 
@@ -169,12 +169,12 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(48)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(1)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
-      expect(body[0]["id"]).to eq(7)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(1)
     end
   end
 
@@ -185,11 +185,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(278)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(0)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
       expect(body[0]["date"]["day"]).to eq(25)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(16)
     end
 
@@ -199,11 +199,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(147)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(3)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["id"]).to eq(1)
     end
   end
@@ -215,12 +215,12 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(11)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(3)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
-      expect(body[0]["loss"]["crop_loss"]).to eq(2)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["loss"]["cropLoss"]).to eq(2)
       expect(body[0]["id"]).to eq(1)
     end
 
@@ -230,12 +230,12 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(1)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(1)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(1)
       expect(body[0]["date"]["day"]).to eq(15)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
-      expect(body[0]["loss"]["crop_loss"]).to eq(3)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["loss"]["cropLoss"]).to eq(3)
       expect(body[0]["id"]).to eq(325)
     end
   end
@@ -247,11 +247,11 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(185)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(3)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["loss"]["injuries"]).to eq(2)
       expect(body[0]["id"]).to eq(1)
     end
@@ -262,15 +262,171 @@ describe "Cyclones API" do
 
       expect(response).to be_success
       expect(body.length).to eq(42)
-      expect(body[0]["cyclone_strength"]["f_scale"]).to eq(3)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
       expect(body[0]["date"]["day"]).to eq(1)
       expect(body[0]["date"]["year"]).to eq(2011)
       expect(body[0]["loss"]["fatalities"]).to eq(0)
-      expect(body[0]["path"]["segment_num"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
       expect(body[0]["loss"]["injuries"]).to eq(1)
       expect(body[0]["id"]).to eq(6)
     end
   end
 
+  describe 'Cyclones by year' do
+    it 'Grabs all cyclones from 2011 (All in database)' do
+      get '/api/v1/cyclones/year:2011', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
 
+      expect(response).to be_success
+      expect(body.length).to eq(500)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(3)
+      expect(body[0]["date"]["day"]).to eq(1)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(0)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["loss"]["injuries"]).to eq(2)
+      expect(body[0]["id"]).to eq(1)
+    end
+
+    it 'Grabs all cyclones from 2010 (None in database)' do
+      expect(body).to be_nil
+    end
+  end
+end
+
+describe 'Search API' do
+
+  describe 'Search Strongest Cyclones' do
+    it 'Grabs the 500 strongest cyclones and puts them in order from strongest to weakest' do
+      get '/api/v1/search/strongest', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(500)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
+      expect(body[0]["date"]["day"]).to eq(27)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(72)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(790)
+    end
+  end
+
+  describe 'Search Costliest Cyclones' do
+    it 'Grabs the 500 costliest cyclones and puts them in order from costliest to least costly' do
+      get '/api/v1/search/costliest', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(500)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
+      expect(body[0]["date"]["day"]).to eq(22)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(158)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(1066)
+    end
+  end
+
+  describe 'Search Deadliest Cyclones' do
+    it 'Grabs the 500 deadliest cyclones and puts them in order from deadliest to least deadly, can contain non-deadly cyclones' do
+      get '/api/v1/search/deadliest', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(500)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
+      expect(body[0]["date"]["day"]).to eq(22)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(158)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(1066)
+    end
+  end
+
+  describe 'Search Deadly Cyclones' do
+    it 'Grabs only cyclones that caused a death' do
+      get '/api/v1/search/deadly', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(73)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(2)
+      expect(body[0]["date"]["day"]).to eq(28)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(1)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(72)
+
+    end
+  end
+
+  describe 'Search Scale 5 Cyclones' do
+    it 'Grabs only cyclones with a Fujita Scale of 5' do
+      get '/api/v1/search/scale_5', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(9)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(5)
+      expect(body[0]["date"]["day"]).to eq(27)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(3)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(781)
+    end
+  end
+
+  describe 'Search Same Day Cyclones' do
+    it 'Grabs all tornadoes that occured on the day a cyclone with id 997' do
+      get '/api/v1/search/same_day,id:997', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(3)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
+      expect(body[0]["date"]["day"]).to eq(13)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(0)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(997)
+    end
+  end
+
+  describe 'Search By Radius' do
+    it 'Grabs all cyclones that occured within 25 miles of Mobile Al' do
+      get '/api/v1/search/radius_search,city:mobile,state:al,radius:25', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(4)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(2)
+      expect(body[0]["date"]["day"]).to eq(9)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(0)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(109)
+    end
+
+    it 'Grabs all cyclones that occured within 25 miles of Loudon TN' do
+      get '/api/v1/search/radius_search,city:loudon,state:tennessee,radius:25', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(body.length).to eq(18)
+      expect(body[0]["cycloneStrength"]["fScale"]).to eq(0)
+      expect(body[0]["date"]["day"]).to eq(27)
+      expect(body[0]["date"]["year"]).to eq(2011)
+      expect(body[0]["loss"]["fatalities"]).to eq(0)
+      expect(body[0]["path"]["segmentNum"]).to eq(1)
+      expect(body[0]["id"]).to eq(850)
+    end
+
+    it 'Grabs all cyclones that occured within 25 miles of Austin TX' do
+      get '/api/v1/search/radius_search,city:austin,state:tx,radius:25', {}, { "Accept" => "application/json" }
+      body = JSON.parse(response.body)
+
+      expect(body.length).to be(0)
+    end
+  end
 end

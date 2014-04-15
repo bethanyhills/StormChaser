@@ -123,13 +123,13 @@ describe Cyclone do
   describe "same day cyclones" do
     it "Given a cyclone id, returns all storms that occurred on the same day" do
       obj = {}
-      cyclones = Cyclone.same_day_cyclones({"id" => 586})
+      cyclones = Cyclone.same_day({"id" => 586})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
 
-      cyclones = Cyclone.same_day_cyclones({"id" => 275})
+      cyclones = Cyclone.same_day({"id" => 275})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
 
-      cyclones = Cyclone.same_day_cyclones({"id" => 1380})
+      cyclones = Cyclone.same_day({"id" => 1380})
       expect(cyclones.first.cyclone_date_id).to eq(cyclones.last.cyclone_date_id)
     end
   end
