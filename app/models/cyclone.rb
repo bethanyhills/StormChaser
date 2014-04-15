@@ -14,7 +14,7 @@ class Cyclone < ActiveRecord::Base
   scope :deadliest_cyclones_first, -> { order(fatalities: :desc) }
   scope :costliest_cyclones_first, -> { order(property_loss: :desc) }
   scope :scale_5_cyclones, -> { where('f_scale = 5') }
-  scope :same_day_cyclones, ->(id_obj) { where(cyclone_date_id: Cyclone.find(id_obj["id"]).cyclone_date_id) }
+  scope :same_day, ->(id_obj) { where(cyclone_date_id: Cyclone.find(id_obj["id"]).cyclone_date_id) }
 
   def self.historical_data(id)
 
@@ -36,7 +36,8 @@ class Cyclone < ActiveRecord::Base
     lng = response.body['results'][0]['geometry']['location']['lng']
 
     # .select won't return an active record model. Rewrite it?
-    cyclone = Cyclone.complete_cyclone_tracks.where(state: state)
+    cyclone = Cyclone.complete_cyclone_tracks
+    cyclone = cyclone.where(state: state) if state.length == 2
 
     cyclone.select{ |cyclone| cyclone.radius_search_results(lat, lng, radius) }
   end
@@ -237,15 +238,10 @@ class Cyclone < ActiveRecord::Base
         cyclone = cyclone[0...@cyclone_limit] if cyclone.length > @cyclone_limit
       else
         # cyclone = cyclone.limit(@cyclone_limit)
-        p cyclone.to_sql
         cyclone = Cyclone.includes(:cyclone_date, :historical_weather, :path).find_by_sql(cyclone.limit(@cyclone_limit).to_sql) #cyclone.limit(@cyclone_limit) #Finally, pulls the requested number of records (Default of 500)
       end
 
       cyclone = cyclone.to_json
-      p "Hello"
-      p cyclone
-      p "Goodbye"
-      cyclone
     }
   end
 
@@ -274,7 +270,7 @@ private
           search = search_params.shift # Pulls out the search name from the parameters
           search_params.each do |param|  # Go through and add the parameters to the arguments object
             split_param = param.split(":")
-            search_arg_obj[split_param[0]] = split_param[1]
+            search_arg_obj[split_param[0].downcase] = split_param[1]
           end
           cyclone = cyclone.send(search, search_arg_obj)
         else
@@ -334,7 +330,7 @@ private
       else
         cyclone = cyclone.where(split_selector[key] + relational_op + split_selector[value])
       end
-      p cyclone.first  #Used to force the ActiveRecord error catch below to work!!! Forces the Active Record Query to run
+      # p cyclone.first  #Used to force the ActiveRecord error catch below to work!!! Forces the Active Record Query to run
     rescue ActiveRecord::StatementInvalid => e
       return cyclone = {error: "#{split_selector[key]} is not a valid selector.", status: 400}
     end
