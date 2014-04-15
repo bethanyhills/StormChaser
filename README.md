@@ -21,6 +21,7 @@ Here is the available data:
 
 | Data Name | Description | Type | Location in the JSON |
 | ------------- | ------------- | ------------- | ------------- |
+| Cyclone ID | ID given to the cyclone by the database | Integer | historicalWeather[“hour”].id |
 | Day | Day of the month the cyclone touched down | Integer | cyclone.date.day |
 | Month | Month of the year the cyclone touched down | Integer | cyclone.date.month |
 | Year | Year the cyclone touched down | Integer | cyclone.date.year |
@@ -60,15 +61,16 @@ Here is the available data:
 | Property Loss | Average number of property loss for all cyclone records available for the touchdown year (millions $) | Float | cyclone.average.year.propertyLoss |
 | Fujita Scale | Average number of F-scale for all cyclone records available for the touchdown year | Float | cyclone.average.year.fScale |
 | Distance | Average number of distance for all cyclone records available for the touchdown year (miles) | Float | cyclone.average.year.distance |
-| Touchdown Temperature | Temperature at time of cyclone touchdown (F) | Float | touchdownWeather.temperature |
-| Touchdown Pressure | Pressure at time of cyclone touchdown (??) | Float | touchdownWeather.pressure |
-| Touchdown Wind Speed | Wind speed at time of cyclone touchdown (mph) | Float | touchdownWeather.windSpeed |
-| Touchdown Wind Bearing | Wind bearing at time of touchdown (degrees) | Integer | touchdownWeather.windBearing |
-| Hourly Temperature | Temperature at the location of the cyclone touchdown at a given hour during the day of the touchdown (F) | Float | historicalWeather[“hour”].temperature |
-| Hourly Pressure | Pressure at the location of the cyclone touchdown at a given hour during the day of the touchdown (??) | Float | historicalWeather[“hour”].pressure |
-| Hourly Wind Speed | Wind speed at the location of the cyclone touchdown at a given hour during the day of the touchdown (mph) | Float | historicalWeather[“hour”].windSpeed |
-| Hourly Wind Bearing | Wind bearing at the location of the cyclone touchdown at a given hour during the day of the touchdown (degrees) | Float | historicalWeather[“hour”].windBearing |
-| Cyclone ID | ID given to the cyclone by the database | Integer | historicalWeather[“hour”].id |
+| **Weather at Touchdown** | (If available) | | |
+| Temperature | Temperature at time of cyclone touchdown (F) | Float | touchdownWeather.temperature |
+| Pressure | Pressure at time of cyclone touchdown (mb) | Float | touchdownWeather.pressure |
+| Wind Speed | Wind speed at time of cyclone touchdown (mph) | Float | touchdownWeather.windSpeed |
+| Wind Bearing | Wind bearing at time of touchdown (degrees) | Integer | touchdownWeather.windBearing |
+| **Hourly Weather during Touchdown Day** | (If available) | | |
+| Temperature | Temperature at the location of the cyclone touchdown at a given hour during the day of the touchdown (F) | Float | historicalWeather[“hour”].temperature |
+| Pressure | Pressure at the location of the cyclone touchdown at a given hour during the day of the touchdown (mb) | Float | historicalWeather[“hour”].pressure |
+| Wind Speed | Wind speed at the location of the cyclone touchdown at a given hour during the day of the touchdown (mph) | Float | historicalWeather[“hour”].windSpeed |
+| Wind Bearing | Wind bearing at the location of the cyclone touchdown at a given hour during the day of the touchdown (degrees) | Float | historicalWeather[“hour”].windBearing |
 
 ### Searches
 
